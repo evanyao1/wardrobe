@@ -4,6 +4,69 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>🎀 我的衣橱</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABmJLR0QA/wD/AP+gvaeTAAADIklEQVR4nO3dMW7UMBQF0Ax0CXZAyxLYBStgBfTsoGIJLAGJBVAiJHZAyxLoVqLL5GVmnOfYz85/5xSpUmLH9r37/OzESgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAmzit7+cDXoAvz9+/xBIAAAAASUVORK5CYII="/>
+<script>
+// Generate pixel mirror icon as apple-touch-icon
+(function(){
+  const c=document.createElement('canvas');
+  c.width=180;c.height=180;
+  const ctx=c.getContext('2d');
+  const S=180/24; // each pixel = 7.5px
+
+  // Background - pink gradient
+  const bg=ctx.createLinearGradient(0,0,180,180);
+  bg.addColorStop(0,'#ffd0e8');bg.addColorStop(1,'#ffb8d8');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,180,180);
+
+  // Rounded corners feel - dark border
+  ctx.fillStyle='#3a1040';
+  ctx.fillRect(0,0,180,180);
+  const bg2=ctx.createLinearGradient(0,0,180,180);
+  bg2.addColorStop(0,'#ffd0e8');bg2.addColorStop(1,'#ffaac8');
+  ctx.fillStyle=bg2;ctx.fillRect(8,8,164,164);
+
+  const f=(x,y,w,h,col)=>{ctx.fillStyle=col;ctx.fillRect(x*S,y*S,w*S,h*S);};
+
+  // Mirror frame - dark border
+  f(7,2,10,1,'#3a1040');f(5,3,14,1,'#3a1040');f(4,4,16,1,'#3a1040');
+  f(3,5,18,1,'#3a1040');f(3,6,1,10,'#3a1040');f(20,6,1,10,'#3a1040');
+  f(3,16,18,1,'#3a1040');f(4,17,16,1,'#3a1040');
+
+  // Mirror frame fill - gold
+  f(7,2,10,1,'#ffd878');f(5,3,14,1,'#e8c060');f(4,4,16,1,'#ffd878');
+  f(3,5,18,1,'#e8c060');f(3,6,1,10,'#ffd878');f(20,6,1,10,'#ffd878');
+  f(3,16,18,1,'#e8c060');f(4,17,14,1,'#ffd878');
+
+  // Mirror glass - light blue reflection
+  f(4,5,16,12,'#d8f0ff');
+  f(5,5,14,12,'#e8f8ff');
+  f(6,6,4,3,'#ffffff'); // highlight
+
+  // Reflection shimmer lines
+  f(5,8,12,1,'rgba(255,255,255,0.5)');
+  f(5,11,10,1,'rgba(255,255,255,0.4)');
+  f(5,14,6,1,'rgba(255,255,255,0.3)');
+
+  // Handle
+  f(10,17,4,1,'#3a1040');f(10,18,4,1,'#e8c060');
+  f(11,19,2,1,'#3a1040');f(11,20,2,1,'#e8c060');
+  f(11,21,2,1,'#3a1040');
+
+  // Base
+  f(8,21,8,1,'#3a1040');f(8,22,8,1,'#e8c060');f(7,22,10,1,'#3a1040');
+
+  // Bow on top
+  f(8,1,2,2,'#ff80b0');f(14,1,2,2,'#ff80b0');
+  f(10,1,4,1,'#ff9ec8');f(10,2,4,1,'#ffd0e8');
+  f(9,1,1,1,'#3a1040');f(14,1,1,1,'#3a1040');
+
+  // Stars decoration
+  f(2,3,1,1,'#ffd878');f(21,4,1,1,'#ffd878');f(1,12,1,1,'#ff9ec8');f(22,10,1,1,'#ff9ec8');
+
+  const link=document.querySelector('link[rel="apple-touch-icon"]');
+  if(link)link.href=c.toDataURL('image/png');
+})();
+</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;image-rendering:pixelated;}
@@ -158,10 +221,11 @@ body{
   background:var(--pink);border:3px solid var(--dark);color:var(--white);
   font-size:26px;cursor:pointer;
   box-shadow:4px 4px 0 var(--dark);
-  display:flex;align-items:center;justify-content:center;z-index:200;
+  display:none;align-items:center;justify-content:center;z-index:200;
   font-weight:700;
 }
-.fab:active{box-shadow:none;transform:translate(4px,4px);}
+#page-wardrobe.active~* .fab-placeholder{display:none;}
+.fab.visible{display:flex;}
 
 /* TODAY - full blue pixel */
 #page-today{background:#d8f0ff;background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(100,180,255,0.08) 15px,rgba(100,180,255,0.08) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(100,180,255,0.08) 15px,rgba(100,180,255,0.08) 16px);}
@@ -316,6 +380,7 @@ body{
       <div class="stat-box"><span class="stat-num" id="stat-avg">¥0</span><span class="stat-label">均次成本</span></div>
     </div>
   </div>
+  <button onclick="recoverData()" style="margin:8px 14px 0;width:calc(100% - 28px);padding:10px;border:3px solid var(--dark);background:var(--yellow);color:var(--dark);font-family:'Press Start 2P',monospace;font-size:9px;cursor:pointer;box-shadow:3px 3px 0 var(--dark);display:block" id="recover-btn">🔍 恢复丢失的数据</button>
   <div class="toolbar">
     <input class="search" id="search-inp" placeholder="搜索名称、品牌…" oninput="renderWardrobe()">
     <button class="sort-btn" onclick="openSortMenu()">排序▼</button>
@@ -789,6 +854,7 @@ function switchTab(t){
     document.getElementById('page-'+p).classList.toggle('active',p===t);
     document.getElementById('tab-'+p).classList.toggle('active',p===t);
   });
+  document.querySelector('.fab').classList.toggle('visible',t==='wardrobe');
   if(t==='today')renderToday();if(t==='history')renderHistory();
 }
 function renderCatsBar(){document.getElementById('cats-bar').innerHTML=['全部',...CATS].map(c=>`<button class="cat-pill${filter===c?' active':''}" onclick="setFilter('${c}')">${c}</button>`).join('');}
@@ -1074,7 +1140,29 @@ function drawNavIcons(){
   });
 }
 
+function recoverData(){
+  const keys=['wardrobe','wardrobe2','wardrobe3','wardrobe4','wd5','wd6','wd7','wd8'];
+  const hkeys=['wardrobe3-history','wardrobe4-history','wd5-hist','wd6-hist','wd7-hist','wd8-hist'];
+  let bestItems=[];let bestHist=[];
+  keys.forEach(k=>{
+    try{const d=localStorage.getItem(k);if(d){const p=JSON.parse(d);if(p.length>bestItems.length)bestItems=p;}}catch(_){}
+  });
+  hkeys.forEach(k=>{
+    try{const d=localStorage.getItem(k);if(d){const p=JSON.parse(d);if(p.length>bestHist.length)bestHist=p;}}catch(_){}
+  });
+  if(bestItems.length>0){
+    items=bestItems;history=bestHist;
+    saveItems();saveHistory();
+    renderWardrobe();
+    document.getElementById('recover-btn').style.display='none';
+    alert('✅ 找回了 '+bestItems.length+' 件单品！');
+  } else {
+    alert('❌ 没有找到历史数据，可能已经清除了浏览器缓存');
+  }
+}
+
 drawNavIcons();load();renderCatsBar();renderWardrobe();
+document.querySelector('.fab').classList.add('visible');
 </script>
 </body>
 </html>
