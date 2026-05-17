@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>🪞 我的衣橱</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#f5f0eb;
+  --card:#fff;
+  --accent:#8b6f5e;
+  --accent2:#c4a882;
+  --text:#2a2220;
+  --text2:#8a7a72;
+  --text3:#b0a8a0;
+  --border:#ede8e2;
+  --green:#5a9a6f;
+  --yellow:#d49a30;
+  --red:#c0553a;
+  --tag-bg:#f0ebe6;
+  --shadow:0 4px 20px rgba(139,111,94,0.12);
+  --shadow2:0 2px 10px rgba(0,0,0,0.07);
+}
+body{background:var(--bg);font-family:'PingFang SC','Microsoft YaHei',sans-serif;min-height:100vh;color:var(--text);}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);display:flex;z-index:300;padding-bottom:env(safe-area-inset-bottom);}
+.nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0 8px;cursor:pointer;color:var(--text3);font-size:11px;gap:3px;transition:color 0.2s;}
+.nav-tab.active{color:var(--accent);}
+.nav-icon{font-size:22px;line-height:1;}
+.page{display:none;padding-bottom:80px;}
+.page.active{display:block;}
+.header{background:linear-gradient(135deg,#8b6f5e 0%,#c4a882 100%);padding:20px 18px 18px;color:#fff;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.08);}
+.header::after{content:'';position:absolute;bottom:-20px;left:20px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.06);}
+.header-title{font-size:24px;font-weight:700;letter-spacing:0.5px;position:relative;}
+.header-sub{font-size:13px;opacity:0.8;margin-top:3px;position:relative;}
+.header-stats{display:flex;gap:16px;margin-top:14px;position:relative;}
+.stat-box{background:rgba(255,255,255,0.18);border-radius:12px;padding:10px 14px;flex:1;text-align:center;backdrop-filter:blur(4px);}
+.stat-num{font-size:20px;font-weight:700;}
+.stat-label{font-size:11px;opacity:0.85;margin-top:1px;}
+.search-wrap{padding:14px 16px 0;}
+.search{width:100%;border:none;border-radius:12px;padding:10px 14px 10px 38px;font-size:13px;color:var(--text);outline:none;background:#fff;box-shadow:var(--shadow2);font-family:inherit;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23b0a8a0' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;}
+.cats-scroll{display:flex;gap:7px;overflow-x:auto;padding:12px 16px;scrollbar-width:none;}
+.cats-scroll::-webkit-scrollbar{display:none;}
+.cat-pill{white-space:nowrap;padding:6px 14px;border-radius:20px;font-size:12px;border:none;cursor:pointer;flex-shrink:0;font-family:inherit;background:#fff;color:var(--text2);box-shadow:var(--shadow2);transition:all 0.15s;}
+.cat-pill.active{background:var(--accent);color:#fff;box-shadow:0 3px 12px rgba(139,111,94,0.35);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:4px 16px 16px;}
+.empty-state{text-align:center;padding:60px 20px;color:var(--text3);}
+.empty-emoji{font-size:52px;margin-bottom:12px;}
+.empty-title{font-size:15px;color:var(--text2);margin-bottom:6px;}
+.empty-sub{font-size:12px;}
+.card{background:var(--card);border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:var(--shadow2);transition:all 0.18s;display:flex;flex-direction:column;position:relative;}
+.card:active{transform:scale(0.96);}
+.card-img{height:165px;flex-shrink:0;background:#f7f3ef;display:flex;align-items:center;justify-content:center;font-size:44px;background-size:cover;background-position:center;position:relative;}
+.wash-badge{position:absolute;top:8px;right:8px;border-radius:8px;padding:3px 7px;font-size:10px;font-weight:600;color:#fff;}
+.wash-clean{background:var(--green);}
+.wash-warn{background:var(--yellow);}
+.wash-dirty{background:var(--red);}
+.card-body{padding:10px 12px 12px;}
+.card-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-tags{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.tag{font-size:10px;border-radius:5px;padding:2px 6px;}
+.tag-cat{background:var(--tag-bg);color:var(--text2);}
+.tag-sea{background:#e8f4e8;color:#5a8a5a;}
+.cdot{width:11px;height:11px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.1);flex-shrink:0;display:inline-block;}
+.card-brand{font-size:10px;color:var(--text3);margin-top:3px;}
+.card-worn{font-size:10px;color:var(--text3);margin-top:2px;}
+.fab{position:fixed;bottom:74px;right:18px;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 18px rgba(139,111,94,0.45);display:flex;align-items:center;justify-content:center;z-index:200;}
+.today-header{background:linear-gradient(135deg,#6b8f71 0%,#a8c5a0 100%);padding:20px 18px 18px;color:#fff;position:relative;overflow:hidden;}
+.today-header::before{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,0.08);}
+.today-date{font-size:13px;opacity:0.85;position:relative;}
+.today-title{font-size:22px;font-weight:700;margin-top:2px;position:relative;}
+.today-count{font-size:13px;opacity:0.8;margin-top:3px;position:relative;}
+.section-title{font-size:13px;font-weight:600;color:var(--text2);padding:16px 16px 8px;letter-spacing:0.3px;}
+.outfit-list{padding:0 16px;display:flex;flex-direction:column;gap:8px;}
+.outfit-item{background:#fff;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow2);}
+.outfit-thumb{width:48px;height:48px;border-radius:10px;background:#f7f3ef;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;background-size:cover;background-position:center;}
+.outfit-info{flex:1;min-width:0;}
+.outfit-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.outfit-meta{font-size:11px;color:var(--text3);margin-top:2px;}
+.outfit-remove{background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:4px;flex-shrink:0;}
+.add-outfit-btn{margin:12px 16px 0;padding:13px;border-radius:14px;border:2px dashed var(--border);background:transparent;color:var(--text2);font-size:13px;cursor:pointer;width:calc(100% - 32px);font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;}
+.note-wrap{margin:12px 16px 0;}
+.note-inp{width:100%;border:none;border-radius:12px;padding:11px 14px;font-size:13px;color:var(--text);outline:none;background:#fff;box-shadow:var(--shadow2);font-family:inherit;resize:none;min-height:72px;}
+.save-day-btn{margin:14px 16px 0;padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,#6b8f71,#a8c5a0);color:#fff;font-size:14px;font-weight:600;cursor:pointer;width:calc(100% - 32px);font-family:inherit;}
+.history-header{background:linear-gradient(135deg,#7a6fa5 0%,#b5aed4 100%);padding:20px 18px 18px;color:#fff;position:relative;overflow:hidden;}
+.history-header::before{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,0.08);}
+.history-list{padding:0 16px;display:flex;flex-direction:column;gap:10px;margin-top:4px;}
+.history-card{background:#fff;border-radius:14px;padding:14px;box-shadow:var(--shadow2);}
+.history-date{font-size:12px;color:var(--text3);margin-bottom:6px;}
+.history-items{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
+.history-chip{font-size:11px;background:var(--tag-bg);color:var(--text2);border-radius:7px;padding:3px 8px;}
+.history-note{font-size:12px;color:var(--text2);line-height:1.5;background:#faf7f4;border-radius:8px;padding:7px 10px;margin-top:6px;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;display:none;align-items:flex-end;justify-content:center;padding:0;}
+.overlay.open{display:flex;}
+.sheet{background:#fff;border-radius:22px 22px 0 0;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,0.15);padding-bottom:env(safe-area-inset-bottom);}
+.sheet-handle{width:36px;height:4px;background:#e0d8d0;border-radius:2px;margin:12px auto 0;}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 0;}
+.sheet-title{font-size:16px;font-weight:700;color:var(--text);}
+.close-btn{background:none;border:none;font-size:22px;cursor:pointer;color:var(--text3);line-height:1;}
+.sheet-body{padding:14px 20px 0;}
+.img-upload{height:130px;border-radius:14px;border:2px dashed #e0d8d0;background:#faf7f4;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;margin-bottom:14px;overflow:hidden;background-size:cover;background-position:center;}
+.field{margin-bottom:13px;}
+.field-label{font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:500;}
+.inp{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--text);outline:none;background:#fdfcfb;font-family:inherit;}
+.inp:focus{border-color:var(--accent);}
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;}
+.chip{padding:5px 11px;border-radius:8px;font-size:12px;cursor:pointer;border:1.5px solid var(--border);background:#fdfcfb;color:var(--text2);font-family:inherit;transition:all 0.12s;}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.color-row{display:flex;flex-wrap:wrap;gap:6px;}
+.cswatch{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid rgba(0,0,0,0.1);flex-shrink:0;transition:border 0.12s;}
+.cswatch.active{border:3px solid var(--text);}
+.wash-row{display:flex;gap:8px;}
+.wash-opt{flex:1;padding:9px 6px;border-radius:10px;border:1.5px solid var(--border);background:#fdfcfb;font-size:12px;cursor:pointer;font-family:inherit;text-align:center;transition:all 0.12s;}
+.wash-opt.w0{color:var(--green);}
+.wash-opt.w0.active{background:#e8f5ec;border-color:var(--green);}
+.wash-opt.w1{color:var(--yellow);}
+.wash-opt.w1.active{background:#fdf5e0;border-color:var(--yellow);}
+.wash-opt.w2{color:var(--red);}
+.wash-opt.w2.active{background:#fdf0ed;border-color:var(--red);}
+.wash-days-row{display:flex;align-items:center;gap:10px;margin-top:8px;}
+.wash-days-label{font-size:12px;color:var(--text2);white-space:nowrap;}
+.wash-days-inp{width:60px;border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;font-size:13px;color:var(--text);outline:none;background:#fdfcfb;font-family:inherit;text-align:center;}
+.sheet-footer{padding:14px 20px 20px;display:flex;gap:10px;}
+.btn-del{flex:1;padding:12px 0;border-radius:12px;border:1.5px solid var(--border);background:#fff;color:var(--red);font-size:13px;cursor:pointer;font-family:inherit;}
+.btn-save{flex:2;padding:12px 0;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:600;}
+.btn-save:disabled{background:#e8e2dc;color:var(--text3);}
+.detail-img-wrap{height:220px;background:#f7f3ef;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;font-size:64px;border-radius:22px 22px 0 0;position:relative;}
+.detail-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.9);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.detail-body{padding:16px 20px 20px;}
+.detail-name{font-size:20px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.detail-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;}
+.dtag{font-size:12px;border-radius:8px;padding:4px 10px;}
+.detail-notes{font-size:13px;color:var(--text2);line-height:1.6;background:#faf7f4;border-radius:10px;padding:10px 13px;margin-bottom:14px;}
+.detail-wash{border-radius:10px;padding:10px 13px;margin-bottom:14px;font-size:13px;font-weight:500;}
+.detail-wash.w0{background:#e8f5ec;color:var(--green);}
+.detail-wash.w1{background:#fdf5e0;color:var(--yellow);}
+.detail-wash.w2{background:#fdf0ed;color:var(--red);}
+.detail-actions{display:flex;gap:8px;}
+.btn-wear{flex:1;padding:12px 0;border-radius:12px;border:none;background:linear-gradient(135deg,#6b8f71,#a8c5a0);color:#fff;font-size:13px;cursor:pointer;font-family:inherit;font-weight:600;}
+.btn-edit-detail{flex:1;padding:12px 0;border-radius:12px;border:1.5px solid var(--accent);background:#fff;color:var(--accent);font-size:13px;cursor:pointer;font-family:inherit;font-weight:600;}
+.pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 20px 20px;}
+.pick-item{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;border:2px solid transparent;transition:all 0.15s;}
+.pick-item.selected{border-color:var(--accent);}
+.pick-thumb{height:90px;background:#f7f3ef;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;font-size:28px;}
+.pick-name{font-size:11px;text-align:center;padding:5px 4px;background:#fff;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pick-check{position:absolute;top:5px;right:5px;width:20px;height:20px;border-radius:50%;background:var(--accent);display:none;align-items:center;justify-content:center;color:#fff;font-size:12px;}
+.pick-item.selected .pick-check{display:flex;}
+.pick-confirm{margin:0 20px 20px;padding:13px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:13px;font-weight:600;cursor:pointer;width:calc(100% - 40px);font-family:inherit;}
+</style>
+</head>
+<body>
+<div class="page active" id="page-wardrobe">
+  <div class="header">
+    <div class="header-title">🪞 我的衣橱</div>
+    <div class="header-sub">记录每一件心爱的单品</div>
+    <div class="header-stats">
+      <div class="stat-box"><div class="stat-num" id="stat-total">0</div><div class="stat-label">件单品</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-clean">0</div><div class="stat-label">待清洗</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-warn">0</div><div class="stat-label">需注意</div></div>
+    </div>
+  </div>
+  <div class="search-wrap"><input class="search" id="search-inp" placeholder="搜索名称、品牌…" oninput="renderWardrobe()"></div>
+  <div class="cats-scroll" id="cats-bar"></div>
+  <div id="wardrobe-grid"></div>
+  <button class="fab" onclick="openAddForm()">+</button>
+</div>
+<div class="page" id="page-today">
+  <div class="today-header">
+    <div class="today-date" id="today-date"></div>
+    <div class="today-title">今日穿搭</div>
+    <div class="today-count" id="today-count">还没有记录</div>
+  </div>
+  <div class="section-title">今天穿了什么</div>
+  <div class="outfit-list" id="outfit-list"></div>
+  <button class="add-outfit-btn" onclick="openPicker()"><span>👗</span> 从衣橱选择单品</button>
+  <div class="section-title">备注</div>
+  <div class="note-wrap"><textarea class="note-inp" id="today-note" placeholder="今天的穿搭心情、需要洗的衣服…"></textarea></div>
+  <button class="save-day-btn" onclick="saveToday()">💾 保存今日记录</button>
+</div>
+<div class="page" id="page-history">
+  <div class="history-header">
+    <div class="today-date">穿搭日记</div>
+    <div class="today-title">📖 历史记录</div>
+  </div>
+  <div id="history-list-wrap"></div>
+</div>
+<nav class="nav">
+  <div class="nav-tab active" id="tab-wardrobe" onclick="switchTab('wardrobe')"><div class="nav-icon">👗</div><span>衣橱</span></div>
+  <div class="nav-tab" id="tab-today" onclick="switchTab('today')"><div class="nav-icon">✨</div><span>今日</span></div>
+  <div class="nav-tab" id="tab-history" onclick="switchTab('history')"><div class="nav-icon">📖</div><span>记录</span></div>
+</nav>
+<div class="overlay" id="form-overlay" onclick="overlayClose(event,'form-overlay')">
+  <div class="sheet" onclick="event.stopPropagation()">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <span class="sheet-title" id="form-sheet-title">添加单品</span>
+      <button class="close-btn" onclick="closeSheet('form-overlay')">×</button>
+    </div>
+    <div class="sheet-body">
+      <div class="img-upload" id="img-preview" onclick="document.getElementById('img-input').click()">
+        <span style="font-size:26px">📷</span>
+        <span style="font-size:12px;color:var(--text3);margin-top:4px">点击上传图片</span>
+      </div>
+      <input type="file" id="img-input" accept="image/*" style="display:none" onchange="handleImg(this)">
+      <div class="field"><div class="field-label">名称 *</div><input class="inp" id="f-name" placeholder="eg. 白色棉质T恤" oninput="checkSaveBtn()"></div>
+      <div class="field"><div class="field-label">分类</div><div class="chip-row" id="f-cats"></div></div>
+      <div class="two-col">
+        <div class="field"><div class="field-label">季节</div><select class="inp" id="f-season"><option>春</option><option>夏</option><option>秋</option><option>冬</option><option selected>四季</option></select></div>
+        <div class="field"><div class="field-label">颜色</div><div class="color-row" id="f-colors"></div></div>
+      </div>
+      <div class="field"><div class="field-label">品牌</div><input class="inp" id="f-brand" placeholder="eg. UNIQLO"></div>
+      <div class="field">
+        <div class="field-label">清洁状态</div>
+        <div class="wash-row">
+          <button class="wash-opt w0 active" id="wo-0" onclick="setWash(0)">✅ 干净</button>
+          <button class="wash-opt w1" id="wo-1" onclick="setWash(1)">⚠️ 穿过</button>
+          <button class="wash-opt w2" id="wo-2" onclick="setWash(2)">🚫 要洗</button>
+        </div>
+        <div class="wash-days-row">
+          <span class="wash-days-label">穿几天提醒洗：</span>
+          <input class="wash-days-inp" id="f-wash-days" type="number" min="1" max="30" value="3">
+          <span style="font-size:12px;color:var(--text2)">天</span>
+        </div>
+      </div>
+      <div class="field"><div class="field-label">备注</div><textarea class="inp" id="f-notes" placeholder="购买时间、搭配建议…" style="resize:vertical;min-height:54px"></textarea></div>
+    </div>
+    <div class="sheet-footer">
+      <button class="btn-del" id="btn-del" style="display:none" onclick="deleteItem()">删除</button>
+      <button class="btn-save" id="btn-save" onclick="saveItem()" disabled>保存</button>
+    </div>
+  </div>
+</div>
+<div class="overlay" id="detail-overlay" onclick="overlayClose(event,'detail-overlay')">
+  <div class="sheet" onclick="event.stopPropagation()">
+    <div class="detail-img-wrap" id="d-img"><button class="detail-close" onclick="closeSheet('detail-overlay')">×</button></div>
+    <div class="detail-body">
+      <div class="detail-name" id="d-name"></div>
+      <div class="detail-tags" id="d-tags"></div>
+      <div class="detail-wash" id="d-wash"></div>
+      <div class="detail-notes" id="d-notes" style="display:none"></div>
+      <div class="detail-actions">
+        <button class="btn-wear" onclick="wearFromDetail()">👗 记录今日穿搭</button>
+        <button class="btn-edit-detail" onclick="editFromDetail()">编辑</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="overlay" id="picker-overlay" onclick="overlayClose(event,'picker-overlay')">
+  <div class="sheet" onclick="event.stopPropagation()">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head"><span class="sheet-title">选择今日单品</span><button class="close-btn" onclick="closeSheet('picker-overlay')">×</button></div>
+    <div class="pick-grid" id="pick-grid"></div>
+    <button class="pick-confirm" onclick="confirmPick()">确认选择</button>
+  </div>
+</div>
+<script>
+const CATS=['上衣','裤子','裙子','外套','鞋子','包包','配饰','其他'];
+const COLORS=['黑','白','灰','米','粉','红','橙','黄','绿','蓝','紫','棕'];
+const CMAP={黑:'#1a1a1a',白:'#f0ede8',灰:'#9e9e9e',米:'#e8dcc8',粉:'#f4a7b9',红:'#e53935',橙:'#fb8c00',黄:'#fdd835',绿:'#43a047',蓝:'#1e88e5',紫:'#8e24aa',棕:'#6d4c41'};
+let items=[],history=[],todayOutfit=[],filter='全部',editingId=null,detailId=null,formImg='',formCat='上衣',formColor='黑',formWash=0,pickSelected=[];
+function load(){
+  try{const d=localStorage.getItem('wardrobe3');if(d)items=JSON.parse(d);}catch(_){}
+  try{const d=localStorage.getItem('wardrobe3-history');if(d)history=JSON.parse(d);}catch(_){}
+  try{const d=localStorage.getItem('wardrobe3-today');if(d){const t=JSON.parse(d);todayOutfit=t.outfit||[];document.getElementById('today-note').value=t.note||'';}}catch(_){}
+}
+function saveItems(){try{localStorage.setItem('wardrobe3',JSON.stringify(items));}catch(_){}}
+function saveHistory(){try{localStorage.setItem('wardrobe3-history',JSON.stringify(history));}catch(_){}}
+function saveTodayLocal(){try{localStorage.setItem('wardrobe3-today',JSON.stringify({outfit:todayOutfit,note:document.getElementById('today-note').value}));}catch(_){}}
+function switchTab(t){
+  ['wardrobe','today','history'].forEach(p=>{
+    document.getElementById('page-'+p).classList.toggle('active',p===t);
+    document.getElementById('tab-'+p).classList.toggle('active',p===t);
+  });
+  if(t==='today')renderToday();
+  if(t==='history')renderHistory();
+}
+function renderCatsBar(){
+  document.getElementById('cats-bar').innerHTML=['全部',...CATS].map(c=>`<button class="cat-pill${filter===c?' active':''}" onclick="setFilter('${c}')">${c}</button>`).join('');
+}
+function setFilter(c){filter=c;renderCatsBar();renderWardrobe();}
+function washClass(item){
+  if(item.washStatus===2)return 'dirty';
+  if(item.washStatus===1&&item.wornCount>=(item.washDays||3))return 'warn';
+  return 'clean';
+}
+function renderWardrobe(){
+  const q=document.getElementById('search-inp').value.toLowerCase();
+  const list=items.filter(i=>(filter==='全部'||i.category===filter)&&(!q||i.name.toLowerCase().includes(q)||(i.brand||'').toLowerCase().includes(q)));
+  document.getElementById('stat-total').textContent=items.length;
+  document.getElementById('stat-clean').textContent=items.filter(i=>i.washStatus===2).length;
+  document.getElementById('stat-warn').textContent=items.filter(i=>i.washStatus===1&&i.wornCount>=(i.washDays||3)).length;
+  const el=document.getElementById('wardrobe-grid');
+  if(list.length===0){el.innerHTML=`<div class="empty-state"><div class="empty-emoji">🪞</div><div class="empty-title">衣橱空空的</div><div class="empty-sub">点右下角 + 添加第一件单品</div></div>`;return;}
+  const wc=item=>{const c=washClass(item);return c==='dirty'?'wash-dirty':c==='warn'?'wash-warn':'wash-clean';};
+  const wb=item=>{const c=washClass(item);return c==='dirty'?'要洗':c==='warn'?'快洗':'干净';};
+  el.innerHTML=`<div class="grid">${list.map(item=>{
+    const imgStyle=item.image?`background-image:url(${item.image});font-size:0`:'';
+    const dot=item.color?`<span class="cdot" style="background:${CMAP[item.color]||'#ccc'}"></span>`:'';
+    const sea=item.season?`<span class="tag tag-sea">${item.season}</span>`:'';
+    const brand=item.brand?`<div class="card-brand">${item.brand}</div>`:'';
+    const worn=item.wornCount?`<div class="card-worn">穿了 ${item.wornCount} 次</div>`:'';
+    return `<div class="card" onclick="openDetail('${item.id}')">
+      <div class="card-img" style="${imgStyle}">${item.image?'':'👕'}<span class="wash-badge ${wc(item)}">${wb(item)}</span></div>
+      <div class="card-body"><div class="card-name">${item.name}</div><div class="card-tags"><span class="tag tag-cat">${item.category}</span>${sea}${dot}</div>${brand}${worn}</div>
+    </div>`;
+  }).join('')}</div>`;
+}
+function renderFormCats(){document.getElementById('f-cats').innerHTML=CATS.map(c=>`<button class="chip${formCat===c?' active':''}" onclick="setFC('${c}')">${c}</button>`).join('');}
+function setFC(c){formCat=c;renderFormCats();}
+function renderFormColors(){document.getElementById('f-colors').innerHTML=COLORS.map(c=>`<div class="cswatch${formColor===c?' active':''}" style="background:${CMAP[c]}" title="${c}" onclick="setFCol('${c}')"></div>`).join('');}
+function setFCol(c){formColor=c;renderFormColors();}
+function setWash(v){formWash=v;[0,1,2].forEach(i=>{document.getElementById('wo-'+i).classList.toggle('active',i===v);});}
+function handleImg(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{formImg=ev.target.result;const el=document.getElementById('img-preview');el.style.backgroundImage=`url(${formImg})`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.innerHTML='';};r.readAsDataURL(f);}
+function checkSaveBtn(){document.getElementById('btn-save').disabled=!document.getElementById('f-name').value.trim();}
+function openAddForm(){
+  editingId=null;formImg='';formCat='上衣';formColor='黑';formWash=0;
+  document.getElementById('form-sheet-title').textContent='添加单品';
+  document.getElementById('f-name').value='';
+  document.getElementById('f-brand').value='';
+  document.getElementById('f-notes').value='';
+  document.getElementById('f-season').value='四季';
+  document.getElementById('f-wash-days').value='3';
+  document.getElementById('btn-del').style.display='none';
+  document.getElementById('btn-save').disabled=true;
+  const p=document.getElementById('img-preview');
+  p.style.backgroundImage='';p.innerHTML=`<span style="font-size:26px">📷</span><span style="font-size:12px;color:var(--text3);margin-top:4px">点击上传图片</span>`;
+  document.getElementById('img-input').value='';
+  setWash(0);renderFormCats();renderFormColors();
+  document.getElementById('form-overlay').classList.add('open');
+}
+function saveItem(){
+  const name=document.getElementById('f-name').value.trim();if(!name)return;
+  const item={id:editingId||String(Date.now()),name,category:formCat,season:document.getElementById('f-season').value,color:formColor,brand:document.getElementById('f-brand').value.trim(),notes:document.getElementById('f-notes').value.trim(),image:formImg,washStatus:formWash,washDays:parseInt(document.getElementById('f-wash-days').value)||3,wornCount:0};
+  if(editingId){const old=items.find(i=>i.id===editingId);if(old)item.wornCount=old.wornCount||0;items=items.map(i=>i.id===editingId?item:i);}
+  else items=[item,...items];
+  saveItems();closeSheet('form-overlay');renderWardrobe();
+}
+function deleteItem(){items=items.filter(i=>i.id!==editingId);saveItems();closeSheet('form-overlay');renderWardrobe();}
+function openDetail(id){
+  detailId=id;const item=items.find(i=>i.id===id);if(!item)return;
+  const di=document.getElementById('d-img');
+  if(item.image){di.style.backgroundImage=`url(${item.image})`;di.style.backgroundSize='cover';di.style.backgroundPosition='center';di.innerHTML=`<button class="detail-close" onclick="closeSheet('detail-overlay')">×</button>`;}
+  else{di.style.backgroundImage='';di.innerHTML=`<span style="font-size:64px">👕</span><button class="detail-close" onclick="closeSheet('detail-overlay')">×</button>`;}
+  document.getElementById('d-name').textContent=item.name;
+  const tags=[
+    `<span class="dtag" style="background:var(--tag-bg);color:var(--text2)">${item.category}</span>`,
+    item.season?`<span class="dtag" style="background:#e8f4e8;color:#5a8a5a">${item.season}</span>`:'',
+    item.color?`<span class="dtag" style="background:#f7f3ef;color:var(--text2);display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:${CMAP[item.color]};display:inline-block"></span>${item.color}</span>`:'',
+    item.brand?`<span class="dtag" style="background:#edf2ff;color:#4a6fa5">${item.brand}</span>`:''
+  ].join('');
+  document.getElementById('d-tags').innerHTML=tags;
+  const wc=washClass(item);
+  const dw=document.getElementById('d-wash');
+  dw.className=`detail-wash ${wc==='dirty'?'w2':wc==='warn'?'w1':'w0'}`;
+  dw.textContent=wc==='dirty'?'🚫 需要清洗':wc==='warn'?`⚠️ 已穿 ${item.wornCount} 次，该洗了`:`✅ 干净（已穿 ${item.wornCount||0} 次）`;
+  const dn=document.getElementById('d-notes');
+  if(item.notes){dn.textContent=item.notes;dn.style.display='block';}else{dn.style.display='none';}
+  document.getElementById('detail-overlay').classList.add('open');
+}
+function wearFromDetail(){
+  const item=items.find(i=>i.id===detailId);if(!item)return;
+  if(!todayOutfit.find(i=>i.id===item.id))todayOutfit.push({id:item.id,name:item.name,image:item.image||''});
+  saveTodayLocal();closeSheet('detail-overlay');switchTab('today');
+}
+function editFromDetail(){
+  const item=items.find(i=>i.id===detailId);if(!item)return;
+  closeSheet('detail-overlay');
+  editingId=item.id;formImg=item.image||'';formCat=item.category;formColor=item.color||'黑';formWash=item.washStatus||0;
+  document.getElementById('form-sheet-title').textContent='编辑单品';
+  document.getElementById('f-name').value=item.name;
+  document.getElementById('f-brand').value=item.brand||'';
+  document.getElementById('f-notes').value=item.notes||'';
+  document.getElementById('f-season').value=item.season||'四季';
+  document.getElementById('f-wash-days').value=item.washDays||3;
+  document.getElementById('btn-del').style.display='block';
+  document.getElementById('btn-save').disabled=false;
+  const p=document.getElementById('img-preview');
+  if(formImg){p.style.backgroundImage=`url(${formImg})`;p.style.backgroundSize='cover';p.style.backgroundPosition='center';p.innerHTML='';}
+  else{p.style.backgroundImage='';p.innerHTML=`<span style="font-size:26px">📷</span><span style="font-size:12px;color:var(--text3);margin-top:4px">点击上传图片</span>`;}
+  document.getElementById('img-input').value='';
+  setWash(formWash);renderFormCats();renderFormColors();
+  document.getElementById('form-overlay').classList.add('open');
+}
+function renderToday(){
+  const now=new Date();
+  document.getElementById('today-date').textContent=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 周${['日','一','二','三','四','五','六'][now.getDay()]}`;
+  document.getElementById('today-count').textContent=todayOutfit.length?`今天穿了 ${todayOutfit.length} 件单品`:'还没有记录';
+  const list=document.getElementById('outfit-list');
+  if(todayOutfit.length===0){list.innerHTML=`<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">还没有添加单品～</div>`;return;}
+  list.innerHTML=todayOutfit.map((o,idx)=>{
+    const thumbStyle=o.image?`background-image:url(${o.image});background-size:cover;background-position:center;font-size:0`:'';
+    return `<div class="outfit-item"><div class="outfit-thumb" style="${thumbStyle}">${o.image?'':'👕'}</div><div class="outfit-info"><div class="outfit-name">${o.name}</div><div class="outfit-meta">点击右侧移除</div></div><button class="outfit-remove" onclick="removeOutfit(${idx})">×</button></div>`;
+  }).join('');
+}
+function removeOutfit(idx){todayOutfit.splice(idx,1);saveTodayLocal();renderToday();}
+function openPicker(){
+  pickSelected=todayOutfit.map(o=>o.id);
+  document.getElementById('pick-grid').innerHTML=items.map(item=>{
+    const sel=pickSelected.includes(item.id);
+    const thumbStyle=item.image?`background-image:url(${item.image});background-size:cover;background-position:center;font-size:0`:'';
+    return `<div class="pick-item${sel?' selected':''}" id="pi-${item.id}" onclick="togglePick('${item.id}')"><div class="pick-thumb" style="${thumbStyle}">${item.image?'':'👕'}</div><div class="pick-name">${item.name}</div><div class="pick-check">✓</div></div>`;
+  }).join('');
+  document.getElementById('picker-overlay').classList.add('open');
+}
+function togglePick(id){
+  const idx=pickSelected.indexOf(id);
+  if(idx>=0)pickSelected.splice(idx,1);else pickSelected.push(id);
+  document.querySelectorAll('.pick-item').forEach(el=>{el.classList.toggle('selected',pickSelected.includes(el.id.replace('pi-','')));});
+}
+function confirmPick(){
+  todayOutfit=pickSelected.map(id=>{const item=items.find(i=>i.id===id);return item?{id:item.id,name:item.name,image:item.image||''}:null;}).filter(Boolean);
+  saveTodayLocal();closeSheet('picker-overlay');renderToday();
+}
+function saveToday(){
+  if(todayOutfit.length===0){alert('还没有选择今日单品哦～');return;}
+  const now=new Date();
+  const dateStr=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  const note=document.getElementById('today-note').value.trim();
+  todayOutfit.forEach(o=>{
+    const item=items.find(i=>i.id===o.id);
+    if(item){item.wornCount=(item.wornCount||0)+1;if(item.washStatus===0)item.washStatus=1;if(item.wornCount>=(item.washDays||3))item.washStatus=2;}
+  });
+  saveItems();
+  const existing=history.findIndex(h=>h.date===dateStr);
+  const entry={date:dateStr,outfit:todayOutfit.map(o=>o.name),note};
+  if(existing>=0)history[existing]=entry;else history.unshift(entry);
+  saveHistory();
+  todayOutfit=[];document.getElementById('today-note').value='';
+  saveTodayLocal();renderToday();renderWardrobe();
+  alert('✅ 记录已保存！');
+}
+function renderHistory(){
+  const wrap=document.getElementById('history-list-wrap');
+  if(history.length===0){wrap.innerHTML=`<div class="empty-state"><div class="empty-emoji">📖</div><div class="empty-title">还没有穿搭记录</div><div class="empty-sub">在今日页面记录穿搭后显示在这里</div></div>`;return;}
+  wrap.innerHTML=`<div class="history-list">${history.map(h=>`<div class="history-card"><div class="history-date">${h.date}</div><div class="history-items">${h.outfit.map(n=>`<span class="history-chip">${n}</span>`).join('')}</div>${h.note?`<div class="history-note">${h.note}</div>`:''}</div>`).join('')}</div>`;
+}
+function closeSheet(id){document.getElementById(id).classList.remove('open');}
+function overlayClose(e,id){if(e.target===document.getElementById(id))closeSheet(id);}
+load();renderCatsBar();renderWardrobe();renderToday();
+</script>
+</body>
+</html>
