@@ -4,519 +4,391 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>🎀 我的衣橱</title>
-<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABmJLR0QA/wD/AP+gvaeTAAADIklEQVR4nO3dMW7UMBQF0Ax0CXZAyxLYBStgBfTsoGIJLAGJBVAiJHZAyxLoVqLL5GVmnOfYz85/5xSpUmLH9r37/OzESgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAmzit7+cDXoAvz9+/xBIAAAAASUVORK5CYII="/>
-<script>
-// Generate pixel mirror icon as apple-touch-icon
-(function(){
-  const c=document.createElement('canvas');
-  c.width=180;c.height=180;
-  const ctx=c.getContext('2d');
-  const S=180/24; // each pixel = 7.5px
-
-  // Background - pink gradient
-  const bg=ctx.createLinearGradient(0,0,180,180);
-  bg.addColorStop(0,'#ffd0e8');bg.addColorStop(1,'#ffb8d8');
-  ctx.fillStyle=bg;ctx.fillRect(0,0,180,180);
-
-  // Rounded corners feel - dark border
-  ctx.fillStyle='#3a1040';
-  ctx.fillRect(0,0,180,180);
-  const bg2=ctx.createLinearGradient(0,0,180,180);
-  bg2.addColorStop(0,'#ffd0e8');bg2.addColorStop(1,'#ffaac8');
-  ctx.fillStyle=bg2;ctx.fillRect(8,8,164,164);
-
-  const f=(x,y,w,h,col)=>{ctx.fillStyle=col;ctx.fillRect(x*S,y*S,w*S,h*S);};
-
-  // Mirror frame - dark border
-  f(7,2,10,1,'#3a1040');f(5,3,14,1,'#3a1040');f(4,4,16,1,'#3a1040');
-  f(3,5,18,1,'#3a1040');f(3,6,1,10,'#3a1040');f(20,6,1,10,'#3a1040');
-  f(3,16,18,1,'#3a1040');f(4,17,16,1,'#3a1040');
-
-  // Mirror frame fill - gold
-  f(7,2,10,1,'#ffd878');f(5,3,14,1,'#e8c060');f(4,4,16,1,'#ffd878');
-  f(3,5,18,1,'#e8c060');f(3,6,1,10,'#ffd878');f(20,6,1,10,'#ffd878');
-  f(3,16,18,1,'#e8c060');f(4,17,14,1,'#ffd878');
-
-  // Mirror glass - light blue reflection
-  f(4,5,16,12,'#d8f0ff');
-  f(5,5,14,12,'#e8f8ff');
-  f(6,6,4,3,'#ffffff'); // highlight
-
-  // Reflection shimmer lines
-  f(5,8,12,1,'rgba(255,255,255,0.5)');
-  f(5,11,10,1,'rgba(255,255,255,0.4)');
-  f(5,14,6,1,'rgba(255,255,255,0.3)');
-
-  // Handle
-  f(10,17,4,1,'#3a1040');f(10,18,4,1,'#e8c060');
-  f(11,19,2,1,'#3a1040');f(11,20,2,1,'#e8c060');
-  f(11,21,2,1,'#3a1040');
-
-  // Base
-  f(8,21,8,1,'#3a1040');f(8,22,8,1,'#e8c060');f(7,22,10,1,'#3a1040');
-
-  // Bow on top
-  f(8,1,2,2,'#ff80b0');f(14,1,2,2,'#ff80b0');
-  f(10,1,4,1,'#ff9ec8');f(10,2,4,1,'#ffd0e8');
-  f(9,1,1,1,'#3a1040');f(14,1,1,1,'#3a1040');
-
-  // Stars decoration
-  f(2,3,1,1,'#ffd878');f(21,4,1,1,'#ffd878');f(1,12,1,1,'#ff9ec8');f(22,10,1,1,'#ff9ec8');
-
-  const link=document.querySelector('link[rel="apple-touch-icon"]');
-  if(link)link.href=c.toDataURL('image/png');
-})();
-</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;700&display=swap');
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;image-rendering:pixelated;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 :root{
-  --bg:#fce4f0;--bg2:#f8d0e8;--bg3:#fff0f8;
   --pink:#ff80b0;--pink2:#ffaac8;--pink3:#ffd0e8;--pink4:#fff0f8;
-  --blue:#80c8ff;--blue2:#b0dcff;--blue3:#d8f0ff;
-  --purple:#c878e8;--yellow:#ffd878;--green:#78e8a0;--red:#ff6878;
+  --blue:#80c8ff;--blue2:#b0dcff;--blue3:#d8f0ff;--blue4:#eef8ff;
+  --green:#50d090;--green2:#80e8b0;--green3:#c0ffe0;--green4:#e0fff0;
+  --yellow:#ffd878;--red:#ff6878;
   --dark:#3a1040;--mid:#7a4880;--light:#c8a0c8;
-  --white:#fffafd;
-  --text:#3a1040;--text2:#7a4880;--text3:#b890b8;
-  --border:#f0a8d0;--border2:#c8d8f8;
-  --shadow:0 4px 0 #d880b0,0 6px 0 rgba(0,0,0,0.1);
-  --shadow2:0 3px 0 #e8a0c8,0 5px 0 rgba(0,0,0,0.08);
-  --grad:linear-gradient(180deg,#ff9ec8 0%,#ff80b0 100%);
-  --grad-blue:linear-gradient(180deg,#a8d8ff 0%,#80c8ff 100%);
-  --pixel-border:2px solid var(--dark);
+  --white:#fffafd;--text:#3a1040;--text2:#7a4880;--text3:#b890b8;
+  --border:#f0a8d0;
 }
+body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:var(--text);background:var(--pink4);}
 
-body{
-  background:var(--bg);
-  background-image:
-    repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(255,160,200,0.08) 15px,rgba(255,160,200,0.08) 16px),
-    repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(255,160,200,0.08) 15px,rgba(255,160,200,0.08) 16px);
-  font-family:'Noto Sans SC','PingFang SC',sans-serif;
-  min-height:100vh;color:var(--text);
-}
-
-/* PIXEL FONT HEADINGS */
-.pixel{font-family:'Press Start 2P',monospace;letter-spacing:0;}
-
-/* NAV */
-.nav{position:fixed;bottom:0;left:0;right:0;background:#fff0f8;border-top:3px solid var(--dark);display:flex;z-index:300;padding-bottom:env(safe-area-inset-bottom);}
-.nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0 8px;cursor:pointer;color:var(--text3);font-size:10px;gap:3px;transition:all 0.1s;font-family:'Noto Sans SC',sans-serif;}
-.nav-tab.active .nav-label{font-weight:700;color:var(--dark);}
-#tab-wardrobe.active{background:var(--pink3);}
-#tab-today.active{background:var(--blue3);}
-#tab-history.active{background:#e8ffe8;}
-.nav-icon{line-height:1;transition:transform 0.1s;display:flex;align-items:center;justify-content:center;}
-.nav-tab.active .nav-icon{transform:scale(1.15);}
-.page{display:none;padding-bottom:84px;}
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;padding-bottom:90px;}
 .page.active{display:block;}
+#page-wardrobe{background:var(--pink4);background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(255,160,200,0.07) 15px,rgba(255,160,200,0.07) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(255,160,200,0.07) 15px,rgba(255,160,200,0.07) 16px);}
+#page-today{background:var(--blue4);background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(100,180,255,0.07) 15px,rgba(100,180,255,0.07) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(100,180,255,0.07) 15px,rgba(100,180,255,0.07) 16px);}
+#page-history{background:var(--green4);background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(80,200,130,0.07) 15px,rgba(80,200,130,0.07) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(80,200,130,0.07) 15px,rgba(80,200,130,0.07) 16px);}
 
-/* PIXEL CARD BASE */
-.pxcard{
-  background:var(--white);
-  border:2px solid var(--dark);
-  box-shadow:3px 3px 0 var(--dark);
-  border-radius:0;
-  position:relative;
-}
-.pxcard::before{content:'';position:absolute;top:2px;left:2px;right:-2px;bottom:-2px;background:var(--dark);z-index:-1;border-radius:0;}
+/* ── NAV ── */
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff0f8;border-top:3px solid var(--dark);display:flex;z-index:300;padding-bottom:env(safe-area-inset-bottom);}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0 8px;cursor:pointer;font-size:10px;gap:3px;color:var(--text3);font-family:'Noto Sans SC',sans-serif;border:none;background:transparent;}
+.nav-btn.active{color:var(--dark);}
+.nav-btn:nth-child(1).active{background:var(--pink3);}
+.nav-btn:nth-child(2).active{background:var(--blue3);}
+.nav-btn:nth-child(3).active{background:var(--green3);}
+.nav-icon{width:24px;height:24px;image-rendering:pixelated;}
 
-/* HEADER */
-.header{
-  background:linear-gradient(180deg,#ffd0e8 0%,#ffb8d8 50%,#ffa8cc 100%);
-  padding:20px 16px 18px;
-  border-bottom:3px solid var(--dark);
-  position:relative;overflow:hidden;
-}
-/* pixel deco dots */
-.header::before{content:'● ○ ● ○ ● ○ ● ○ ● ○ ● ○ ● ○ ●';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
-.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 8px,transparent 8px,transparent 12px);}
-.header-bow{text-align:center;font-size:28px;margin-bottom:6px;line-height:1;}
-.header-title{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--dark);text-align:center;margin-bottom:3px;text-shadow:2px 2px 0 rgba(255,255,255,0.5);}
-.header-sub{font-size:11px;color:var(--mid);text-align:center;margin-bottom:14px;}
-.header-stats{display:flex;gap:8px;}
-.stat-box{
-  background:var(--white);border:2px solid var(--dark);
-  box-shadow:2px 2px 0 var(--dark);
-  flex:1;text-align:center;padding:8px 4px;
-}
-.stat-num{font-family:'Press Start 2P',monospace;font-size:12px;color:var(--pink);display:block;}
-.stat-label{font-size:9px;color:var(--text3);margin-top:3px;display:block;}
+/* ── PIXEL HELPERS ── */
+.px-btn{border:2px solid var(--dark);cursor:pointer;font-family:'Press Start 2P',monospace;font-weight:700;box-shadow:3px 3px 0 var(--dark);transition:all 0.1s;}
+.px-btn:active{box-shadow:none;transform:translate(3px,3px);}
+.px-card{background:var(--white);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--dark);}
 
-/* TOOLBAR */
-.toolbar{display:flex;gap:8px;padding:12px 14px 0;}
-.search{
-  flex:1;background:var(--white);border:2px solid var(--dark);
-  padding:9px 12px 9px 36px;font-size:13px;color:var(--text);
-  outline:none;font-family:inherit;
-  box-shadow:2px 2px 0 var(--dark);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%23b890b8' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:12px center;
-}
-.search:focus{border-color:var(--pink);outline:2px solid var(--pink3);}
-.sort-btn{background:var(--yellow);border:2px solid var(--dark);padding:9px 12px;font-size:11px;color:var(--dark);cursor:pointer;white-space:nowrap;font-family:inherit;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
-.sort-btn:active{box-shadow:none;transform:translate(2px,2px);}
+/* ── PAGE 1: WARDROBE ── */
+.w-header{background:linear-gradient(180deg,#ffd0e8,#ffaac8);padding:20px 16px 18px;border-bottom:3px solid var(--dark);position:relative;overflow:hidden;}
+.w-header::before{content:'● ○ ● ○ ● ○ ● ○ ● ○ ● ○ ● ○ ●';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
+.w-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 8px,transparent 8px,transparent 12px);}
+.w-bow{text-align:center;font-size:26px;margin-bottom:6px;position:relative;}
+.w-title{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--dark);text-align:center;margin-bottom:3px;position:relative;text-shadow:1px 1px 0 rgba(255,255,255,0.5);}
+.w-sub{font-size:11px;color:var(--mid);text-align:center;margin-bottom:14px;position:relative;}
+.w-stats{display:flex;gap:8px;position:relative;}
+.stat-box{background:var(--white);border:2px solid var(--dark);box-shadow:2px 2px 0 var(--dark);flex:1;text-align:center;padding:8px 4px;}
+.stat-num{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--pink);display:block;}
+.stat-lbl{font-size:9px;color:var(--text3);margin-top:3px;display:block;}
 
-/* CATS */
-.cats-scroll{display:flex;gap:6px;overflow-x:auto;padding:10px 14px;scrollbar-width:none;}
-.cats-scroll::-webkit-scrollbar{display:none;}
-.cat-pill{white-space:nowrap;padding:6px 12px;font-size:11px;border:2px solid var(--dark);cursor:pointer;flex-shrink:0;font-family:inherit;background:var(--white);color:var(--text2);font-weight:700;box-shadow:2px 2px 0 var(--dark);transition:all 0.1s;}
+.w-toolbar{display:flex;gap:8px;padding:12px 14px 0;}
+.w-search{flex:1;background:var(--white);border:2px solid var(--dark);padding:9px 12px 9px 36px;font-size:13px;color:var(--text);outline:none;font-family:inherit;box-shadow:2px 2px 0 var(--dark);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%23b890b8' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;}
+.w-sort-btn{background:var(--yellow);border:2px solid var(--dark);padding:9px 12px;font-size:11px;color:var(--dark);cursor:pointer;font-family:inherit;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
+.w-sort-btn:active{box-shadow:none;transform:translate(2px,2px);}
+
+.cats-wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 14px;scrollbar-width:none;}
+.cats-wrap::-webkit-scrollbar{display:none;}
+.cat-pill{white-space:nowrap;padding:6px 12px;font-size:11px;border:2px solid var(--dark);cursor:pointer;flex-shrink:0;font-family:inherit;background:var(--white);color:var(--text2);font-weight:700;box-shadow:2px 2px 0 var(--dark);}
 .cat-pill:active{box-shadow:none;transform:translate(2px,2px);}
-.cat-pill.active{background:var(--pink);color:var(--white);border-color:var(--dark);}
+.cat-pill.on{background:var(--pink);color:#fff;}
 
-/* SECTION HEAD */
-.section-head{font-size:11px;font-weight:700;color:var(--dark);padding:10px 14px 6px;display:flex;align-items:center;gap:8px;font-family:'Press Start 2P',monospace;}
-.section-head::after{content:'';flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 4px,transparent 4px,transparent 8px);}
+.sec-head{font-size:10px;font-weight:700;color:var(--dark);padding:10px 14px 6px;display:flex;align-items:center;gap:8px;font-family:'Press Start 2P',monospace;}
+.sec-head::after{content:'';flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 4px,transparent 4px,transparent 8px);}
 
-/* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:14px;padding:0 14px 14px;}
-.empty-state{text-align:center;padding:60px 20px;color:var(--text3);}
-.empty-emoji{font-size:48px;margin-bottom:12px;}
-.empty-title{font-size:13px;color:var(--text2);margin-bottom:6px;font-weight:700;}
-.empty-sub{font-size:11px;}
-
-/* CARD */
-.card{
-  background:var(--white);border:2px solid var(--dark);
-  box-shadow:4px 4px 0 var(--dark);
-  cursor:pointer;display:flex;flex-direction:column;
-  transition:all 0.1s;
-}
+.card{background:var(--white);border:2px solid var(--dark);box-shadow:4px 4px 0 var(--dark);cursor:pointer;display:flex;flex-direction:column;}
 .card:active{box-shadow:none;transform:translate(4px,4px);}
-.card-img{
-  height:155px;flex-shrink:0;
-  background:linear-gradient(135deg,var(--pink3),var(--blue3));
-  display:flex;align-items:center;justify-content:center;
-  background-size:cover;background-position:center;
-  position:relative;border-bottom:2px solid var(--dark);
-  overflow:hidden;
-}
-.wash-badge{position:absolute;top:6px;right:6px;padding:2px 6px;font-size:9px;font-weight:700;border:2px solid var(--dark);font-family:'Press Start 2P',monospace;}
-.wash-clean{background:var(--green);color:var(--dark);}
-.wash-warn{background:var(--yellow);color:var(--dark);}
-.wash-dirty{background:var(--red);color:#fff;}
-.cost-badge{position:absolute;bottom:6px;left:6px;padding:2px 6px;font-size:9px;font-weight:700;background:var(--yellow);color:var(--dark);border:2px solid var(--dark);}
+.card-img{height:155px;flex-shrink:0;background:linear-gradient(135deg,var(--pink3),var(--blue3));display:flex;align-items:center;justify-content:center;border-bottom:2px solid var(--dark);position:relative;overflow:hidden;background-size:cover;background-position:center;}
+.wash-bdg{position:absolute;top:6px;right:6px;padding:2px 6px;font-size:9px;font-weight:700;border:2px solid var(--dark);font-family:'Press Start 2P',monospace;}
+.bdg-clean{background:#78e8a0;color:var(--dark);}
+.bdg-warn{background:var(--yellow);color:var(--dark);}
+.bdg-dirty{background:var(--red);color:#fff;}
+.cost-bdg{position:absolute;bottom:6px;left:6px;padding:2px 6px;font-size:9px;font-weight:700;background:var(--yellow);color:var(--dark);border:2px solid var(--dark);}
 .card-body{padding:9px 10px 10px;}
 .card-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .card-tags{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
 .tag{font-size:10px;padding:1px 5px;border:1.5px solid var(--dark);font-weight:700;}
-.tag-cat{background:var(--pink3);color:var(--dark);}
-.tag-sea{background:var(--blue3);color:var(--dark);}
+.tag-p{background:var(--pink3);}
+.tag-b{background:var(--blue3);}
 .cdot{width:10px;height:10px;border:1.5px solid var(--dark);flex-shrink:0;display:inline-block;}
 .card-brand{font-size:10px;color:var(--text3);margin-top:3px;}
 
-/* UNDIES */
 .undies-list{display:flex;flex-direction:column;gap:8px;padding:0 14px 14px;}
-.undies-row{background:var(--white);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--dark);padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all 0.1s;}
-.undies-row:active{box-shadow:none;transform:translate(3px,3px);}
-.undies-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--pink3),var(--blue3));display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--dark);}
-.undies-info{flex:1;min-width:0;}
-.undies-name{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.undies-meta{font-size:10px;color:var(--text3);margin-top:2px;display:flex;gap:5px;align-items:center;}
-.undies-badge{font-size:9px;padding:2px 6px;font-weight:700;border:2px solid var(--dark);flex-shrink:0;font-family:'Press Start 2P',monospace;}
-.undies-cost{font-size:10px;color:var(--pink);font-weight:700;}
+.u-row{background:var(--white);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--dark);padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.u-row:active{box-shadow:none;transform:translate(3px,3px);}
+.u-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--pink3),var(--blue3));display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--dark);}
+.u-info{flex:1;min-width:0;}
+.u-name{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.u-meta{font-size:10px;color:var(--text3);margin-top:2px;display:flex;gap:5px;align-items:center;}
+.u-cost{font-size:10px;color:var(--pink);font-weight:700;}
 
-/* FAB */
-.fab{
-  position:fixed;bottom:78px;right:16px;width:52px;height:52px;
-  background:var(--pink);border:3px solid var(--dark);color:var(--white);
-  font-size:26px;cursor:pointer;
-  box-shadow:4px 4px 0 var(--dark);
-  display:none;align-items:center;justify-content:center;z-index:200;
-  font-weight:700;
-}
-#page-wardrobe.active~* .fab-placeholder{display:none;}
-.fab.visible{display:flex;}
+.fab{position:fixed;bottom:78px;right:16px;width:52px;height:52px;background:var(--pink);border:3px solid var(--dark);color:#fff;font-size:28px;cursor:pointer;box-shadow:4px 4px 0 var(--dark);display:flex;align-items:center;justify-content:center;z-index:200;font-weight:700;line-height:1;}
+.fab:active{box-shadow:none;transform:translate(4px,4px);}
+.fab.hidden{display:none;}
 
-/* TODAY - full blue pixel */
-#page-today{background:#d8f0ff;background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(100,180,255,0.08) 15px,rgba(100,180,255,0.08) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(100,180,255,0.08) 15px,rgba(100,180,255,0.08) 16px);}
-.today-header{
-  background:linear-gradient(180deg,#a8d8ff 0%,#80c8ff 50%,#68b8f0 100%);
-  padding:20px 16px 18px;border-bottom:3px solid var(--dark);position:relative;overflow:hidden;
-}
-.today-header::before{content:'★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
-.today-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 8px,transparent 8px,transparent 12px);}
+.empty{text-align:center;padding:60px 20px;color:var(--text3);}
+.empty-e{font-size:48px;margin-bottom:12px;}
+.empty-t{font-size:13px;color:var(--text2);margin-bottom:6px;font-weight:700;}
+.empty-s{font-size:11px;}
+
+/* ── PAGE 2: TODAY ── */
+.t-header{background:linear-gradient(180deg,#a8d8ff,#68b8f0);padding:20px 16px 18px;border-bottom:3px solid var(--dark);position:relative;overflow:hidden;}
+.t-header::before{content:'★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
+.t-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 8px,transparent 8px,transparent 12px);}
 .t-date-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;position:relative;}
 .t-date-picker{background:rgba(255,255,255,0.9);border:2px solid var(--dark);padding:4px 8px;font-size:12px;color:var(--text);font-family:inherit;cursor:pointer;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
-.t-date-picker::-webkit-calendar-picker-indicator{opacity:0.7;}
-.today-title{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--dark);margin-bottom:3px;position:relative;text-shadow:2px 2px 0 rgba(255,255,255,0.5);}
-.today-count{font-size:11px;color:#2a5080;position:relative;}
-.s-title{font-size:11px;font-weight:700;color:var(--dark);padding:12px 14px 6px;display:flex;align-items:center;gap:8px;font-family:'Press Start 2P',monospace;}
-.s-title::after{content:'';flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 4px,transparent 4px,transparent 8px);}
-
+.t-title{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--dark);margin-bottom:3px;position:relative;text-shadow:1px 1px 0 rgba(255,255,255,0.5);}
+.t-count{font-size:11px;color:#2a5080;position:relative;}
+.sec-title{font-size:10px;font-weight:700;color:var(--dark);padding:12px 14px 6px;display:flex;align-items:center;gap:8px;font-family:'Press Start 2P',monospace;}
+.sec-title::after{content:'';flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 4px,transparent 4px,transparent 8px);}
 .outfit-list{padding:0 14px;display:flex;flex-direction:column;gap:7px;}
-.outfit-item{background:var(--white);border:2px solid var(--dark);box-shadow:2px 2px 0 var(--dark);padding:10px 12px;display:flex;align-items:center;gap:10px;}
-.outfit-thumb{width:42px;height:42px;background:linear-gradient(135deg,var(--blue3),#c8e8ff);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--dark);overflow:hidden;}
-.outfit-info{flex:1;min-width:0;}
-.outfit-name{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.outfit-remove{background:var(--red);border:2px solid var(--dark);color:#fff;font-size:14px;cursor:pointer;padding:3px 7px;flex-shrink:0;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
-.outfit-remove:active{box-shadow:none;transform:translate(2px,2px);}
-.add-outfit-btn{margin:10px 14px 0;padding:12px;border:2px dashed var(--dark);background:rgba(255,255,255,0.6);color:var(--dark);font-size:12px;cursor:pointer;width:calc(100% - 28px);font-family:inherit;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;}
+.o-item{background:var(--white);border:2px solid var(--dark);box-shadow:2px 2px 0 var(--dark);padding:10px 12px;display:flex;align-items:center;gap:10px;}
+.o-thumb{width:42px;height:42px;background:linear-gradient(135deg,var(--blue3),#c8e8ff);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--dark);overflow:hidden;}
+.o-name{flex:1;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.o-rm{background:var(--red);border:2px solid var(--dark);color:#fff;font-size:14px;cursor:pointer;padding:3px 7px;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
+.o-rm:active{box-shadow:none;transform:translate(2px,2px);}
+.add-btn{margin:10px 14px 0;padding:12px;border:2px dashed var(--dark);background:rgba(255,255,255,0.6);color:var(--dark);font-size:12px;cursor:pointer;width:calc(100% - 28px);font-family:inherit;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;}
 .note-wrap{margin:10px 14px 0;}
 .note-inp{width:100%;border:2px solid var(--dark);padding:10px 12px;font-size:13px;color:var(--text);outline:none;background:var(--white);font-family:inherit;resize:none;min-height:70px;box-shadow:2px 2px 0 var(--dark);}
 .note-inp:focus{outline:2px solid var(--blue);outline-offset:2px;}
-.save-day-btn{margin:12px 14px 0;padding:14px;border:3px solid var(--dark);background:var(--blue);color:var(--dark);font-size:12px;font-weight:700;cursor:pointer;width:calc(100% - 28px);font-family:'Press Start 2P',monospace;box-shadow:4px 4px 0 var(--dark);}
-.save-day-btn:active{box-shadow:none;transform:translate(4px,4px);}
+.save-btn{margin:12px 14px 0;padding:14px;border:3px solid var(--dark);background:var(--blue);color:var(--dark);font-size:11px;font-weight:700;cursor:pointer;width:calc(100% - 28px);font-family:'Press Start 2P',monospace;box-shadow:4px 4px 0 var(--dark);display:block;}
+.save-btn:active{box-shadow:none;transform:translate(4px,4px);}
 
-/* HISTORY - mint green surprise! */
-#page-history{background:#e0fff0;background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(80,200,130,0.08) 15px,rgba(80,200,130,0.08) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(80,200,130,0.08) 15px,rgba(80,200,130,0.08) 16px);}
-.history-header{background:linear-gradient(180deg,#80e8b0 0%,#50d090 50%,#38c080 100%);padding:20px 16px 18px;border-bottom:3px solid var(--dark);position:relative;overflow:hidden;}
-.history-header::before{content:'♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
-.history-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 8px,transparent 8px,transparent 12px);}
-.history-list{padding:0 14px;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
-.history-card{background:var(--white);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--dark);padding:12px;}
-.history-date{font-size:10px;color:#2a6040;margin-bottom:6px;display:flex;align-items:center;gap:4px;font-family:'Press Start 2P',monospace;}
-.history-items{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:4px;}
-.history-chip{font-size:10px;background:#c0ffe0;color:var(--dark);border:1.5px solid var(--dark);padding:2px 7px;font-weight:700;}
-.history-note{font-size:11px;color:#2a6040;line-height:1.6;background:#d0fff0;border:1.5px solid #50d090;padding:6px 10px;margin-top:6px;}
+/* ── PAGE 3: HISTORY ── */
+.h-header{background:linear-gradient(180deg,#80e8b0,#38c080);padding:20px 16px 18px;border-bottom:3px solid var(--dark);position:relative;overflow:hidden;}
+.h-header::before{content:'♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
+.h-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 8px,transparent 8px,transparent 12px);}
+.h-sub{font-size:8px;color:rgba(255,255,255,0.85);font-family:'Press Start 2P',monospace;margin-bottom:4px;position:relative;}
+.h-title{font-size:13px;font-weight:700;color:var(--dark);font-family:'Press Start 2P',monospace;position:relative;text-shadow:1px 1px 0 rgba(255,255,255,0.5);}
+.hist-list{padding:0 14px;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.hist-card{background:var(--white);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--dark);padding:12px;}
+.hist-date{font-size:10px;color:#2a6040;margin-bottom:6px;font-family:'Press Start 2P',monospace;}
+.hist-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:4px;}
+.hist-chip{font-size:10px;background:var(--green3);color:var(--dark);border:1.5px solid var(--dark);padding:2px 7px;font-weight:700;}
+.hist-note{font-size:11px;color:#2a6040;line-height:1.6;background:var(--green4);border:1.5px solid var(--green);padding:6px 10px;margin-top:6px;}
 
-/* SHEETS */
-.overlay{position:fixed;inset:0;background:rgba(58,16,64,0.4);z-index:1000;display:none;align-items:flex-end;justify-content:center;}
+/* ── SHEETS ── */
+.overlay{position:fixed;inset:0;background:rgba(58,16,64,0.45);z-index:1000;display:none;align-items:flex-end;justify-content:center;}
 .overlay.open{display:flex;}
-.sheet{background:var(--bg3);border-top:3px solid var(--dark);width:100%;max-height:93vh;overflow-y:auto;box-shadow:0 -4px 0 var(--dark);padding-bottom:env(safe-area-inset-bottom);}
+.sheet{background:var(--pink4);border-top:3px solid var(--dark);width:100%;max-height:93vh;overflow-y:auto;box-shadow:0 -4px 0 var(--dark);padding-bottom:env(safe-area-inset-bottom);}
 .sheet::before{content:'';display:block;width:40px;height:4px;background:var(--dark);margin:10px auto 0;}
-.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 0;}
-.sheet-title{font-size:13px;font-weight:700;color:var(--dark);font-family:'Press Start 2P',monospace;}
-.close-btn{background:var(--red);border:2px solid var(--dark);font-size:16px;cursor:pointer;color:#fff;padding:3px 8px;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
-.close-btn:active{box-shadow:none;transform:translate(2px,2px);}
-.sheet-body{padding:12px 18px 0;}
+.sh-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 0;}
+.sh-title{font-size:12px;font-weight:700;color:var(--dark);font-family:'Press Start 2P',monospace;}
+.sh-close{background:var(--red);border:2px solid var(--dark);font-size:16px;cursor:pointer;color:#fff;padding:3px 8px;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
+.sh-close:active{box-shadow:none;transform:translate(2px,2px);}
+.sh-body{padding:12px 16px 0;}
 .field{margin-bottom:12px;}
-.fl{font-size:10px;color:var(--dark);margin-bottom:5px;font-weight:700;font-family:'Press Start 2P',monospace;letter-spacing:0;}
+.fl{font-size:9px;color:var(--dark);margin-bottom:5px;font-weight:700;font-family:'Press Start 2P',monospace;}
 .inp{width:100%;border:2px solid var(--dark);padding:8px 10px;font-size:13px;color:var(--text);outline:none;background:var(--white);font-family:inherit;box-shadow:2px 2px 0 var(--dark);}
 .inp:focus{outline:2px solid var(--pink);outline-offset:1px;}
-
-/* PIXEL ICON GRID */
-.icon-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px;max-height:240px;overflow-y:auto;}
-.icon-opt{border:2px solid var(--dark);background:var(--white);padding:6px 3px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all 0.1s;box-shadow:2px 2px 0 var(--dark);}
+.icon-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px;max-height:220px;overflow-y:auto;}
+.icon-opt{border:2px solid var(--dark);background:var(--white);padding:6px 3px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;box-shadow:2px 2px 0 var(--dark);}
 .icon-opt:active{box-shadow:none;transform:translate(2px,2px);}
-.icon-opt.active{background:var(--pink3);border-color:var(--pink);}
-.icon-opt canvas{width:30px;height:30px;image-rendering:pixelated;}
+.icon-opt.on{background:var(--pink3);border-color:var(--pink);}
 .icon-opt span{font-size:8px;color:var(--text2);text-align:center;line-height:1.2;font-weight:700;}
-
 .img-upload{height:90px;border:2px dashed var(--dark);background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;margin-bottom:12px;overflow:hidden;background-size:cover;background-position:center;}
 .chip-row{display:flex;gap:6px;flex-wrap:wrap;}
-.chip{padding:5px 10px;font-size:11px;cursor:pointer;border:2px solid var(--dark);background:var(--white);color:var(--text2);font-family:inherit;font-weight:700;box-shadow:2px 2px 0 var(--dark);transition:all 0.1s;}
+.chip{padding:5px 10px;font-size:11px;cursor:pointer;border:2px solid var(--dark);background:var(--white);color:var(--text2);font-family:inherit;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
 .chip:active{box-shadow:none;transform:translate(2px,2px);}
-.chip.active{background:var(--pink);color:var(--white);}
+.chip.on{background:var(--pink);color:#fff;}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.color-row{display:flex;flex-wrap:wrap;gap:5px;}
-.cswatch{width:22px;height:22px;cursor:pointer;border:2px solid var(--dark);flex-shrink:0;}
-.cswatch.active{outline:3px solid var(--dark);outline-offset:2px;}
+.col-row{display:flex;flex-wrap:wrap;gap:5px;}
+.csw{width:22px;height:22px;cursor:pointer;border:2px solid var(--dark);flex-shrink:0;}
+.csw.on{outline:3px solid var(--dark);outline-offset:2px;}
 .wash-row{display:flex;gap:6px;}
 .wash-opt{flex:1;padding:8px 4px;border:2px solid var(--dark);background:var(--white);font-size:10px;cursor:pointer;font-family:inherit;text-align:center;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
 .wash-opt:active{box-shadow:none;transform:translate(2px,2px);}
-.wash-opt.w0.active{background:var(--green);}
-.wash-opt.w1.active{background:var(--yellow);}
-.wash-opt.w2.active{background:var(--red);color:#fff;}
-.wash-days-row{display:flex;align-items:center;gap:8px;margin-top:7px;}
+.wash-opt.w0.on{background:#78e8a0;}
+.wash-opt.w1.on{background:var(--yellow);}
+.wash-opt.w2.on{background:var(--red);color:#fff;}
+.wash-days{display:flex;align-items:center;gap:8px;margin-top:7px;}
 .wdl{font-size:11px;color:var(--text2);white-space:nowrap;font-weight:700;}
-.wdi{width:50px;border:2px solid var(--dark);padding:5px 7px;font-size:13px;color:var(--text);outline:none;background:var(--white);font-family:inherit;text-align:center;}
-.sheet-footer{padding:12px 18px 20px;display:flex;gap:8px;}
-.btn-del{flex:1;padding:11px 0;border:2px solid var(--dark);background:var(--red);color:#fff;font-size:11px;cursor:pointer;font-family:'Press Start 2P',monospace;box-shadow:3px 3px 0 var(--dark);}
+.wdi{width:50px;border:2px solid var(--dark);padding:5px;font-size:13px;color:var(--text);outline:none;background:var(--white);font-family:inherit;text-align:center;}
+.sh-footer{padding:12px 16px 20px;display:flex;gap:8px;}
+.btn-del{flex:1;padding:11px 0;border:2px solid var(--dark);background:var(--red);color:#fff;font-size:10px;cursor:pointer;font-family:'Press Start 2P',monospace;box-shadow:3px 3px 0 var(--dark);}
 .btn-del:active{box-shadow:none;transform:translate(3px,3px);}
-.btn-save{flex:2;padding:11px 0;border:2px solid var(--dark);background:var(--pink);color:#fff;font-size:11px;cursor:pointer;font-family:'Press Start 2P',monospace;font-weight:700;box-shadow:3px 3px 0 var(--dark);}
+.btn-save{flex:2;padding:11px 0;border:2px solid var(--dark);background:var(--pink);color:#fff;font-size:10px;cursor:pointer;font-family:'Press Start 2P',monospace;font-weight:700;box-shadow:3px 3px 0 var(--dark);}
 .btn-save:active{box-shadow:none;transform:translate(3px,3px);}
-.btn-save:disabled{background:var(--bg2);color:var(--text3);box-shadow:none;}
+.btn-save:disabled{background:#e8d0e8;color:var(--text3);box-shadow:none;}
 
-/* DETAIL */
-.detail-img-wrap{height:200px;background:linear-gradient(135deg,var(--pink3),var(--blue3));background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--dark);position:relative;}
-.detail-close{position:absolute;top:10px;right:10px;background:var(--red);border:2px solid var(--dark);color:#fff;width:30px;height:30px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
-.detail-close:active{box-shadow:none;transform:translate(2px,2px);}
-.detail-body{padding:14px 18px 18px;}
-.detail-name{font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px;}
-.detail-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
+/* detail */
+.d-img{height:200px;background:linear-gradient(135deg,var(--pink3),var(--blue3));background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--dark);position:relative;}
+.d-close{position:absolute;top:10px;right:10px;background:var(--red);border:2px solid var(--dark);color:#fff;width:30px;height:30px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
+.d-close:active{box-shadow:none;transform:translate(2px,2px);}
+.d-body{padding:14px 16px 18px;}
+.d-name{font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px;}
+.d-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
 .dtag{font-size:10px;padding:2px 8px;border:1.5px solid var(--dark);font-weight:700;}
-.detail-cost{background:var(--yellow);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--dark);padding:10px 12px;margin-bottom:10px;display:flex;gap:10px;}
-.dc-item{text-align:center;flex:1;}
-.dc-num{font-family:'Press Start 2P',monospace;font-size:13px;color:var(--dark);display:block;}
-.dc-label{font-size:9px;color:var(--mid);margin-top:3px;display:block;}
-.detail-wash{padding:8px 12px;margin-bottom:10px;font-size:12px;font-weight:700;border:2px solid var(--dark);}
-.detail-wash.w0{background:var(--green);}
-.detail-wash.w1{background:var(--yellow);}
-.detail-wash.w2{background:var(--red);color:#fff;}
-.detail-notes{font-size:12px;color:var(--text2);line-height:1.6;background:var(--blue3);border:1.5px solid var(--border2);padding:8px 10px;margin-bottom:12px;}
-.detail-actions{display:flex;gap:8px;}
-.btn-wear{flex:1;padding:11px 0;border:2px solid var(--dark);background:var(--blue);color:var(--dark);font-size:10px;cursor:pointer;font-family:'Press Start 2P',monospace;box-shadow:3px 3px 0 var(--dark);}
+.d-cost{background:var(--yellow);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--dark);padding:10px;margin-bottom:10px;display:flex;gap:10px;}
+.dc{text-align:center;flex:1;}
+.dc-n{font-family:'Press Start 2P',monospace;font-size:12px;color:var(--dark);display:block;}
+.dc-l{font-size:9px;color:var(--mid);margin-top:3px;display:block;}
+.d-wash{padding:8px 12px;margin-bottom:10px;font-size:12px;font-weight:700;border:2px solid var(--dark);}
+.d-wash.w0{background:#78e8a0;}.d-wash.w1{background:var(--yellow);}.d-wash.w2{background:var(--red);color:#fff;}
+.d-notes{font-size:12px;color:var(--text2);line-height:1.6;background:var(--blue3);border:1.5px solid #aad0f8;padding:8px 10px;margin-bottom:12px;}
+.d-actions{display:flex;gap:8px;}
+.btn-wear{flex:1;padding:11px 0;border:2px solid var(--dark);background:var(--blue);color:var(--dark);font-size:9px;cursor:pointer;font-family:'Press Start 2P',monospace;box-shadow:3px 3px 0 var(--dark);}
 .btn-wear:active{box-shadow:none;transform:translate(3px,3px);}
-.btn-edit-detail{flex:1;padding:11px 0;border:2px solid var(--dark);background:var(--pink3);color:var(--dark);font-size:10px;cursor:pointer;font-family:'Press Start 2P',monospace;box-shadow:3px 3px 0 var(--dark);}
-.btn-edit-detail:active{box-shadow:none;transform:translate(3px,3px);}
+.btn-edit{flex:1;padding:11px 0;border:2px solid var(--dark);background:var(--pink3);color:var(--dark);font-size:9px;cursor:pointer;font-family:'Press Start 2P',monospace;box-shadow:3px 3px 0 var(--dark);}
+.btn-edit:active{box-shadow:none;transform:translate(3px,3px);}
 
-/* PICKER */
-.pick-filter{display:flex;gap:5px;overflow-x:auto;padding:10px 18px 0;scrollbar-width:none;}
+/* picker */
+.pick-filter{display:flex;gap:5px;overflow-x:auto;padding:10px 16px 0;scrollbar-width:none;}
 .pick-filter::-webkit-scrollbar{display:none;}
 .pf-pill{white-space:nowrap;padding:5px 10px;font-size:10px;border:2px solid var(--dark);cursor:pointer;flex-shrink:0;font-family:inherit;background:var(--white);color:var(--text2);font-weight:700;box-shadow:2px 2px 0 var(--dark);}
 .pf-pill:active{box-shadow:none;transform:translate(2px,2px);}
-.pf-pill.active{background:var(--pink);color:#fff;}
-.pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 18px 16px;}
-.pick-item{border:2px solid var(--dark);overflow:hidden;cursor:pointer;position:relative;background:var(--white);box-shadow:2px 2px 0 var(--dark);transition:all 0.1s;}
-.pick-item:active{box-shadow:none;transform:translate(2px,2px);}
-.pick-item.selected{border-color:var(--pink);box-shadow:3px 3px 0 var(--pink);}
-.pick-thumb{height:84px;background:linear-gradient(135deg,var(--pink3),var(--blue3));display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1.5px solid var(--dark);}
-.pick-name{font-size:10px;text-align:center;padding:5px 3px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700;}
-.pick-check{position:absolute;top:4px;right:4px;width:18px;height:18px;background:var(--pink);display:none;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;border:1.5px solid var(--dark);}
-.pick-item.selected .pick-check{display:flex;}
-.pick-confirm{margin:0 18px 20px;padding:13px;border:3px solid var(--dark);background:var(--pink);color:#fff;font-size:11px;font-weight:700;cursor:pointer;width:calc(100% - 36px);font-family:'Press Start 2P',monospace;box-shadow:4px 4px 0 var(--dark);}
-.pick-confirm:active{box-shadow:none;transform:translate(4px,4px);}
+.pf-pill.on{background:var(--pink);color:#fff;}
+.pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 16px 16px;}
+.pi{border:2px solid var(--dark);overflow:hidden;cursor:pointer;position:relative;background:var(--white);box-shadow:2px 2px 0 var(--dark);}
+.pi:active{box-shadow:none;transform:translate(2px,2px);}
+.pi.on{border-color:var(--pink);box-shadow:3px 3px 0 var(--pink);}
+.pi-thumb{height:84px;background:linear-gradient(135deg,var(--pink3),var(--blue3));display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1.5px solid var(--dark);background-size:cover;background-position:center;}
+.pi-name{font-size:10px;text-align:center;padding:5px 3px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700;}
+.pi-chk{position:absolute;top:4px;right:4px;width:18px;height:18px;background:var(--pink);display:none;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;border:1.5px solid var(--dark);}
+.pi.on .pi-chk{display:flex;}
+.pick-ok{margin:0 16px 20px;padding:13px;border:3px solid var(--dark);background:var(--pink);color:#fff;font-size:10px;font-weight:700;cursor:pointer;width:calc(100% - 32px);font-family:'Press Start 2P',monospace;box-shadow:4px 4px 0 var(--dark);}
+.pick-ok:active{box-shadow:none;transform:translate(4px,4px);}
 
-/* SORT */
-.sort-menu{position:fixed;bottom:0;left:0;right:0;background:var(--bg3);border-top:3px solid var(--dark);padding:16px 18px 36px;z-index:2000;transform:translateY(100%);transition:transform 0.2s;}
+/* sort */
+.sort-bd{display:none;position:fixed;inset:0;background:rgba(58,16,64,0.4);z-index:1999;}
+.sort-menu{position:fixed;bottom:0;left:0;right:0;background:var(--pink4);border-top:3px solid var(--dark);padding:14px 16px 36px;z-index:2000;transform:translateY(100%);transition:transform 0.2s;}
 .sort-menu.open{transform:translateY(0);}
-.sort-menu::before{content:'';display:block;width:40px;height:4px;background:var(--dark);margin:0 auto 14px;}
-.sort-menu-title{font-size:11px;font-weight:700;color:var(--dark);margin-bottom:12px;font-family:'Press Start 2P',monospace;}
+.sort-menu::before{content:'';display:block;width:40px;height:4px;background:var(--dark);margin:0 auto 12px;}
+.sort-title{font-size:10px;font-weight:700;color:var(--dark);margin-bottom:10px;font-family:'Press Start 2P',monospace;}
 .sort-opt{padding:12px 0;border-bottom:1px dashed var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:13px;color:var(--text2);font-weight:700;}
-.sort-opt.active{color:var(--pink);}
+.sort-opt.on{color:var(--pink);}
+
+/* recover */
+.recover-btn{margin:10px 14px 0;width:calc(100% - 28px);padding:10px;border:3px solid var(--dark);background:var(--yellow);color:var(--dark);font-family:'Press Start 2P',monospace;font-size:9px;cursor:pointer;box-shadow:3px 3px 0 var(--dark);display:block;}
+.recover-btn:active{box-shadow:none;transform:translate(3px,3px);}
 </style>
 </head>
 <body>
 
+<!-- PAGE 1: WARDROBE -->
 <div class="page active" id="page-wardrobe">
-  <div class="header">
-    <div class="header-bow">🎀</div>
-    <div class="header-title pixel">MY WARDROBE</div>
-    <div class="header-sub">每一件单品都是你的故事 ♡</div>
-    <div class="header-stats">
-      <div class="stat-box"><span class="stat-num" id="stat-total">0</span><span class="stat-label">件单品</span></div>
-      <div class="stat-box"><span class="stat-num" id="stat-dirty">0</span><span class="stat-label">待清洗</span></div>
-      <div class="stat-box"><span class="stat-num" id="stat-cost">¥0</span><span class="stat-label">总花费</span></div>
-      <div class="stat-box"><span class="stat-num" id="stat-avg">¥0</span><span class="stat-label">均次成本</span></div>
+  <div class="w-header">
+    <div class="w-bow">🎀</div>
+    <div class="w-title">MY WARDROBE</div>
+    <div class="w-sub">每一件单品都是你的故事 ♡</div>
+    <div class="w-stats">
+      <div class="stat-box"><span class="stat-num" id="s-total">0</span><span class="stat-lbl">件单品</span></div>
+      <div class="stat-box"><span class="stat-num" id="s-dirty">0</span><span class="stat-lbl">待清洗</span></div>
+      <div class="stat-box"><span class="stat-num" id="s-cost">¥0</span><span class="stat-lbl">总花费</span></div>
+      <div class="stat-box"><span class="stat-num" id="s-avg">¥0</span><span class="stat-lbl">均次成本</span></div>
     </div>
   </div>
-  <button onclick="recoverData()" style="margin:8px 14px 0;width:calc(100% - 28px);padding:10px;border:3px solid var(--dark);background:var(--yellow);color:var(--dark);font-family:'Press Start 2P',monospace;font-size:9px;cursor:pointer;box-shadow:3px 3px 0 var(--dark);display:block" id="recover-btn">🔍 恢复丢失的数据</button>
-  <div class="toolbar">
-    <input class="search" id="search-inp" placeholder="搜索名称、品牌…" oninput="renderWardrobe()">
-    <button class="sort-btn" onclick="openSortMenu()">排序▼</button>
+  <button class="recover-btn" id="recover-btn" onclick="recoverData()">🔍 恢复丢失的数据</button>
+  <div class="w-toolbar">
+    <input class="w-search" id="search-inp" placeholder="搜索名称、品牌…" oninput="renderW()">
+    <button class="w-sort-btn" onclick="openSort()">排序▼</button>
   </div>
-  <div class="cats-scroll" id="cats-bar"></div>
-  <div id="wardrobe-content"></div>
-  <button class="fab" onclick="openAddForm()">+</button>
+  <div class="cats-wrap" id="cats-bar"></div>
+  <div id="w-content"></div>
+  <button class="fab" id="fab" onclick="openAdd()">+</button>
 </div>
 
+<!-- PAGE 2: TODAY -->
 <div class="page" id="page-today">
-  <div class="today-header">
+  <div class="t-header">
     <div class="t-date-row">
       <span style="font-size:16px">📅</span>
-      <input type="date" class="t-date-picker" id="today-date-inp" onchange="onDateChange()">
+      <input type="date" class="t-date-picker" id="date-inp" onchange="onDateChange()">
     </div>
-    <div class="today-title">TODAY'S OUTFIT</div>
-    <div class="today-count" id="today-count">还没有记录哦～</div>
+    <div class="t-title">TODAY'S OUTFIT</div>
+    <div class="t-count" id="t-count">还没有记录哦～</div>
   </div>
-  <div class="s-title">穿了什么</div>
+  <div class="sec-title">穿了什么</div>
   <div class="outfit-list" id="outfit-list"></div>
-  <button class="add-outfit-btn" onclick="openPicker()">🌸 从衣橱选择单品</button>
-  <div class="s-title">小日记</div>
-  <div class="note-wrap"><textarea class="note-inp" id="today-note" placeholder="今天的穿搭心情～"></textarea></div>
-  <button class="save-day-btn" onclick="saveToday()">SAVE ♡</button>
+  <button class="add-btn" onclick="openPicker()">🌸 从衣橱选择单品</button>
+  <div class="sec-title">小日记</div>
+  <div class="note-wrap"><textarea class="note-inp" id="note-inp" placeholder="今天的穿搭心情～"></textarea></div>
+  <button class="save-btn" onclick="saveToday()">SAVE ♡</button>
 </div>
 
+<!-- PAGE 3: HISTORY -->
 <div class="page" id="page-history">
-  <div class="history-header">
-    <div style="font-size:8px;color:rgba(255,255,255,0.8);font-family:'Press Start 2P',monospace;margin-bottom:4px;position:relative">OUTFIT DIARY</div>
-    <div style="font-size:13px;font-weight:700;color:var(--dark);font-family:'Press Start 2P',monospace;position:relative;text-shadow:2px 2px 0 rgba(255,255,255,0.5)">HISTORY 📗</div>
+  <div class="h-header">
+    <div class="h-sub">OUTFIT DIARY</div>
+    <div class="h-title">HISTORY 📗</div>
   </div>
-  <div id="history-list-wrap"></div>
+  <div id="hist-wrap"></div>
 </div>
 
+<!-- NAV -->
 <nav class="nav">
-  <div class="nav-tab active" id="tab-wardrobe" onclick="switchTab('wardrobe')">
-    <div class="nav-icon"><canvas id="nav-icon-0" width="24" height="24" style="image-rendering:pixelated"></canvas></div>
-    <span class="nav-label">衣橱</span>
-  </div>
-  <div class="nav-tab" id="tab-today" onclick="switchTab('today')">
-    <div class="nav-icon"><canvas id="nav-icon-1" width="24" height="24" style="image-rendering:pixelated"></canvas></div>
-    <span class="nav-label">今日</span>
-  </div>
-  <div class="nav-tab" id="tab-history" onclick="switchTab('history')">
-    <div class="nav-icon"><canvas id="nav-icon-2" width="24" height="24" style="image-rendering:pixelated"></canvas></div>
-    <span class="nav-label">记录</span>
-  </div>
+  <button class="nav-btn active" id="nb-wardrobe" onclick="goTab('wardrobe')">
+    <canvas class="nav-icon" id="ni-0" width="24" height="24"></canvas>
+    <span>衣橱</span>
+  </button>
+  <button class="nav-btn" id="nb-today" onclick="goTab('today')">
+    <canvas class="nav-icon" id="ni-1" width="24" height="24"></canvas>
+    <span>今日</span>
+  </button>
+  <button class="nav-btn" id="nb-history" onclick="goTab('history')">
+    <canvas class="nav-icon" id="ni-2" width="24" height="24"></canvas>
+    <span>记录</span>
+  </button>
 </nav>
 
-<div id="sort-backdrop" style="display:none;position:fixed;inset:0;background:rgba(58,16,64,0.4);z-index:1999" onclick="closeSortMenu()"></div>
+<!-- SORT -->
+<div class="sort-bd" id="sort-bd" onclick="closeSort()"></div>
 <div class="sort-menu" id="sort-menu">
-  <div class="sort-menu-title">SORT BY</div>
-  <div class="sort-opt active" id="so-0" onclick="setSort(0)"><span>最近添加</span><span id="sc-0">✓</span></div>
-  <div class="sort-opt" id="so-1" onclick="setSort(1)"><span>穿着次数（多→少）</span><span id="sc-1" style="display:none">✓</span></div>
-  <div class="sort-opt" id="so-2" onclick="setSort(2)"><span>穿着次数（少→多）</span><span id="sc-2" style="display:none">✓</span></div>
-  <div class="sort-opt" id="so-3" onclick="setSort(3)"><span>单次成本（高→低）</span><span id="sc-3" style="display:none">✓</span></div>
-  <div class="sort-opt" id="so-4" onclick="setSort(4)"><span>单次成本（低→高）</span><span id="sc-4" style="display:none">✓</span></div>
-  <div class="sort-opt" id="so-5" onclick="setSort(5)"><span>价格（高→低）</span><span id="sc-5" style="display:none">✓</span></div>
+  <div class="sort-title">SORT BY</div>
+  <div class="sort-opt on" id="so-0" onclick="setSort(0)"><span>最近添加</span><span id="sc-0">✓</span></div>
+  <div class="sort-opt" id="so-1" onclick="setSort(1)"><span>穿着次数 多→少</span><span id="sc-1" style="display:none">✓</span></div>
+  <div class="sort-opt" id="so-2" onclick="setSort(2)"><span>穿着次数 少→多</span><span id="sc-2" style="display:none">✓</span></div>
+  <div class="sort-opt" id="so-3" onclick="setSort(3)"><span>单次成本 高→低</span><span id="sc-3" style="display:none">✓</span></div>
+  <div class="sort-opt" id="so-4" onclick="setSort(4)"><span>单次成本 低→高</span><span id="sc-4" style="display:none">✓</span></div>
+  <div class="sort-opt" id="so-5" onclick="setSort(5)"><span>价格 高→低</span><span id="sc-5" style="display:none">✓</span></div>
 </div>
 
-<!-- FORM -->
-<div class="overlay" id="form-overlay" onclick="overlayClose(event,'form-overlay')">
+<!-- FORM SHEET -->
+<div class="overlay" id="form-ol" onclick="if(event.target===this)closeSheet('form-ol')">
   <div class="sheet" onclick="event.stopPropagation()">
-    <div class="sheet-head">
-      <span class="sheet-title" id="form-sheet-title">ADD ITEM</span>
-      <button class="close-btn" onclick="closeSheet('form-overlay')">✕</button>
+    <div class="sh-head">
+      <span class="sh-title" id="form-title">ADD ITEM</span>
+      <button class="sh-close" onclick="closeSheet('form-ol')">✕</button>
     </div>
-    <div class="sheet-body">
+    <div class="sh-body">
       <div class="field"><div class="fl">SELECT ICON</div><div class="icon-grid" id="icon-grid"></div></div>
       <div class="field">
         <div class="fl">OR UPLOAD PHOTO</div>
-        <div class="img-upload" id="img-preview" onclick="document.getElementById('img-input').click()">
+        <div class="img-upload" id="img-prev" onclick="document.getElementById('img-inp').click()">
           <span style="font-size:22px">📷</span>
           <span style="font-size:11px;color:var(--text3);margin-top:3px">点击上传（覆盖图标）</span>
         </div>
-        <input type="file" id="img-input" accept="image/*" style="display:none" onchange="handleImg(this)">
+        <input type="file" id="img-inp" accept="image/*" style="display:none" onchange="handleImg(this)">
       </div>
-      <div class="field"><div class="fl">NAME *</div><input class="inp" id="f-name" placeholder="eg. 白色吊带裙" oninput="checkSaveBtn()"></div>
+      <div class="field"><div class="fl">NAME *</div><input class="inp" id="f-name" placeholder="eg. 白色吊带裙" oninput="checkSave()"></div>
       <div class="field"><div class="fl">CATEGORY</div><div class="chip-row" id="f-cats"></div></div>
       <div class="two-col">
         <div class="field"><div class="fl">SEASON</div>
           <select class="inp" id="f-season"><option>春</option><option>夏</option><option>秋</option><option>冬</option><option selected>四季</option></select>
         </div>
-        <div class="field"><div class="fl">COLOR</div><div class="color-row" id="f-colors"></div></div>
+        <div class="field"><div class="fl">COLOR</div><div class="col-row" id="f-colors"></div></div>
       </div>
       <div class="two-col">
         <div class="field"><div class="fl">BRAND</div><input class="inp" id="f-brand" placeholder="ZARA"></div>
-        <div class="field"><div class="fl">PRICE (¥)</div><input class="inp" id="f-price" type="number" min="0" placeholder="0"></div>
+        <div class="field"><div class="fl">PRICE ¥</div><input class="inp" id="f-price" type="number" min="0" placeholder="0"></div>
       </div>
       <div class="field">
         <div class="fl">WASH STATUS</div>
         <div class="wash-row">
-          <button class="wash-opt w0 active" id="wo-0" onclick="setWash(0)">✅ 干净</button>
+          <button class="wash-opt w0 on" id="wo-0" onclick="setWash(0)">✅ 干净</button>
           <button class="wash-opt w1" id="wo-1" onclick="setWash(1)">⚠️ 穿过</button>
           <button class="wash-opt w2" id="wo-2" onclick="setWash(2)">🚫 要洗</button>
         </div>
-        <div class="wash-days-row">
+        <div class="wash-days">
           <span class="wdl">穿几天提醒洗：</span>
-          <input class="wdi" id="f-wash-days" type="number" min="1" max="30" value="3">
+          <input class="wdi" id="f-days" type="number" min="1" max="30" value="3">
           <span style="font-size:12px;color:var(--text2);font-weight:700">天</span>
         </div>
       </div>
-      <div class="field"><div class="fl">NOTES</div><textarea class="inp" id="f-notes" placeholder="购买时间、搭配建议…" style="resize:vertical;min-height:52px"></textarea></div>
+      <div class="field"><div class="fl">NOTES</div><textarea class="inp" id="f-notes" placeholder="备注…" style="resize:vertical;min-height:52px"></textarea></div>
     </div>
-    <div class="sheet-footer">
-      <button class="btn-del" id="btn-del" style="display:none" onclick="deleteItem()">DELETE</button>
+    <div class="sh-footer">
+      <button class="btn-del" id="btn-del" style="display:none" onclick="delItem()">DELETE</button>
       <button class="btn-save" id="btn-save" onclick="saveItem()" disabled>SAVE ♡</button>
     </div>
   </div>
 </div>
 
-<!-- DETAIL -->
-<div class="overlay" id="detail-overlay" onclick="overlayClose(event,'detail-overlay')">
+<!-- DETAIL SHEET -->
+<div class="overlay" id="detail-ol" onclick="if(event.target===this)closeSheet('detail-ol')">
   <div class="sheet" onclick="event.stopPropagation()">
-    <div class="detail-img-wrap" id="d-img"><button class="detail-close" onclick="closeSheet('detail-overlay')">✕</button></div>
-    <div class="detail-body">
-      <div class="detail-name" id="d-name"></div>
-      <div class="detail-tags" id="d-tags"></div>
-      <div class="detail-cost" id="d-cost"></div>
-      <div class="detail-wash" id="d-wash"></div>
-      <div class="detail-notes" id="d-notes" style="display:none"></div>
-      <div class="detail-actions">
-        <button class="btn-wear" onclick="wearFromDetail()">WEAR TODAY</button>
-        <button class="btn-edit-detail" onclick="editFromDetail()">EDIT ✏️</button>
+    <div class="d-img" id="d-img"><button class="d-close" onclick="closeSheet('detail-ol')">✕</button></div>
+    <div class="d-body">
+      <div class="d-name" id="d-name"></div>
+      <div class="d-tags" id="d-tags"></div>
+      <div class="d-cost" id="d-cost"></div>
+      <div class="d-wash" id="d-wash"></div>
+      <div class="d-notes" id="d-notes" style="display:none"></div>
+      <div class="d-actions">
+        <button class="btn-wear" onclick="wearNow()">WEAR TODAY</button>
+        <button class="btn-edit" onclick="editNow()">EDIT ✏️</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PICKER -->
-<div class="overlay" id="picker-overlay" onclick="overlayClose(event,'picker-overlay')">
+<!-- PICKER SHEET -->
+<div class="overlay" id="picker-ol" onclick="if(event.target===this)closeSheet('picker-ol')">
   <div class="sheet" onclick="event.stopPropagation()">
-    <div class="sheet-head"><span class="sheet-title">SELECT ITEMS</span><button class="close-btn" onclick="closeSheet('picker-overlay')">✕</button></div>
+    <div class="sh-head"><span class="sh-title">SELECT ITEMS</span><button class="sh-close" onclick="closeSheet('picker-ol')">✕</button></div>
     <div class="pick-filter" id="pick-filter"></div>
     <div class="pick-grid" id="pick-grid"></div>
-    <button class="pick-confirm" onclick="confirmPick()">CONFIRM ♡</button>
+    <button class="pick-ok" onclick="confirmPick()">CONFIRM ♡</button>
   </div>
 </div>
 
@@ -524,645 +396,369 @@ body{
 const CATS=['上衣','裤子','裙子','外套','鞋子','包包','配饰','内衣','内裤','其他'];
 const COLORS=['黑','白','灰','米','粉','红','橙','黄','绿','蓝','紫','棕'];
 const CMAP={黑:'#1a1a1a',白:'#f0ede8',灰:'#9e9e9e',米:'#e8dcc8',粉:'#f4a7b9',红:'#e53935',橙:'#fb8c00',黄:'#fdd835',绿:'#43a047',蓝:'#1e88e5',紫:'#8e24aa',棕:'#6d4c41'};
+const BRA=['bra','bra2','strapless'],UND=['brief','boxer','highwaist','thong','boyshort'],INNER=['内衣','内裤'];
+const ILABELS={tshirt:'T恤',shirt:'衬衫',knit:'针织衫',camisole:'吊带',crop:'抹胸',sportbra:'运动内衣',jeans:'牛仔裤',widepants:'阔腿裤',shorts:'短裤',leggings:'打底裤',suitpants:'西装裤',drapepants:'垂感裤',yogapants:'瑜伽裤',dress:'连衣裙',slipdress:'吊带裙',skirt:'半身裙',pleated:'百褶裙',coat:'风衣',blazer:'西装',cardigan:'开衫',puffer:'羽绒服',jacket:'外套',uv:'防晒衣',heels:'高跟鞋',sneakers:'运动鞋',boots:'靴子',sandals:'凉鞋',loafers:'乐福鞋',tote:'托特包',crossbody:'斜挎包',handbag:'手提包',bucket:'水桶包',hat:'帽子',scarf:'围巾',belt:'腰带',earrings:'耳环',necklace:'项链',bra:'内衣',bra2:'无钢圈',strapless:'抹胸内衣',brief:'三角裤',boxer:'平角裤',highwaist:'高腰裤',thong:'丁字裤',boyshort:'平口裤'};
+const IKEYS=Object.keys(ILABELS);
 
-// Pixel art icons using canvas
-function drawPixelIcon(key,size=30){
-  const c=document.createElement('canvas');
-  c.width=size;c.height=size;
-  const ctx=c.getContext('2d');
-  ctx.imageSmoothingEnabled=false;
-  const s=size/16;
-  const fill=(x,y,w,h,color)=>{ctx.fillStyle=color;ctx.fillRect(x*s,y*s,w*s,h*s);};
+// pixel art drawing
+function drawPx(key,size){
+  const c=document.createElement('canvas');c.width=size;c.height=size;
+  const ctx=c.getContext('2d');ctx.imageSmoothingEnabled=false;
+  const S=size/16;
+  const f=(x,y,w,h,col)=>{ctx.fillStyle=col;ctx.fillRect(x*S,y*S,w*S,h*S);};
   const patterns={
-    tshirt:()=>{
-      fill(1,4,2,6,'#ff9ec8');fill(13,4,2,6,'#ff9ec8'); // sleeves
-      fill(3,2,10,10,'#ff9ec8'); // body
-      fill(5,1,6,3,'#ffd0e8'); // collar area
-      fill(6,0,4,2,'#ff80b0'); // collar
-      // pixel outline
-      fill(0,3,1,8,'#3a1040');fill(15,3,1,8,'#3a1040');
-      fill(1,2,2,1,'#3a1040');fill(13,2,2,1,'#3a1040');
-      fill(3,1,10,1,'#3a1040');fill(3,12,10,1,'#3a1040');
-    },
-    shirt:()=>{
-      fill(1,4,2,6,'#e0d4f8');fill(13,4,2,6,'#e0d4f8');
-      fill(3,2,10,10,'#e0d4f8');
-      fill(6,0,4,2,'#c8b0f0');
-      fill(7,2,2,8,'#c8b0f0'); // buttons
-      fill(0,3,1,8,'#3a1040');fill(15,3,1,8,'#3a1040');
-      fill(3,12,10,1,'#3a1040');
-    },
-    knit:()=>{
-      fill(1,4,2,6,'#ffd4a8');fill(13,4,2,6,'#ffd4a8');
-      fill(3,2,10,10,'#ffd4a8');
-      fill(6,0,4,2,'#ffb880');
-      // knit texture
-      for(let i=0;i<5;i++){fill(3+i*2,5,1,2,'#ffb880');}
-      for(let i=0;i<5;i++){fill(4+i*2,8,1,2,'#ffb880');}
-    },
-    camisole:()=>{
-      fill(4,0,8,2,'#ff9ec8'); // straps
-      fill(3,2,10,10,'#ffb8d8');
-      fill(4,1,1,2,'#ff80b0');fill(11,1,1,2,'#ff80b0');
-      fill(2,12,12,1,'#3a1040');
-    },
-    crop:()=>{
-      fill(2,2,12,7,'#ffd4e8');
-      fill(2,8,12,2,'#ffb8d0');
-      fill(1,1,1,8,'#3a1040');fill(14,1,1,8,'#3a1040');
-      fill(2,0,12,1,'#3a1040');fill(2,9,12,1,'#3a1040');
-    },
-    sportbra:()=>{
-      fill(2,2,12,7,'#c8e8ff');
-      fill(5,1,2,2,'#80c8ff');fill(9,1,2,2,'#80c8ff'); // straps
-      fill(2,8,12,1,'#80c8ff');
-      fill(1,1,1,8,'#3a1040');fill(14,1,1,8,'#3a1040');
-    },
-    jeans:()=>{
-      fill(2,0,12,2,'#6080c0'); // waistband
-      fill(2,2,5,12,'#4060a0');fill(9,2,5,12,'#4060a0');
-      fill(7,2,2,6,'#3050808');
-      fill(1,0,1,14,'#3a1040');fill(14,0,1,14,'#3a1040');
-      fill(7,0,2,1,'#3a1040');
-    },
-    widepants:()=>{
-      fill(2,0,12,2,'#d4c0f0');
-      fill(2,2,4,12,'#c0a8e8');fill(10,2,4,12,'#c0a8e8');
-      fill(6,2,4,6,'#b098d8');
-      fill(1,0,1,14,'#3a1040');fill(15,0,1,14,'#3a1040');
-    },
-    shorts:()=>{
-      fill(2,0,12,2,'#80c8ff');
-      fill(2,2,5,7,'#60b0f0');fill(9,2,5,7,'#60b0f0');
-      fill(7,2,2,4,'#50a0e0');
-      fill(1,0,1,9,'#3a1040');fill(14,0,1,9,'#3a1040');fill(2,9,12,1,'#3a1040');
-    },
-    leggings:()=>{
-      fill(3,0,10,2,'#d0a8f0');
-      fill(3,2,4,13,'#c090e8');fill(9,2,4,13,'#c090e8');
-      fill(7,2,2,6,'#b080d8');
-    },
-    suitpants:()=>{
-      fill(2,0,12,2,'#a0a8c0');
-      fill(2,2,5,13,'#9098b8');fill(9,2,5,13,'#9098b8');
-      fill(7,2,2,6,'#8088a8');
-      fill(1,0,1,15,'#3a1040');fill(14,0,1,15,'#3a1040');
-    },
-    drapepants:()=>{
-      fill(1,0,14,2,'#e8c8f8');
-      fill(1,2,5,13,'#d8b0f0');fill(10,2,5,13,'#d8b0f0');
-      fill(6,2,4,6,'#c8a0e8');
-    },
-    yogapants:()=>{
-      fill(3,0,10,2,'#80f0c0');
-      fill(3,2,4,13,'#60e0a8');fill(9,2,4,13,'#60e0a8');
-      fill(7,2,2,6,'#50d098');
-    },
-    dress:()=>{
-      fill(4,0,8,2,'#ff80b0'); // straps
-      fill(5,1,1,2,'#ff6090');fill(10,1,1,2,'#ff6090');
-      fill(3,2,10,6,'#ffaac8'); // bodice
-      fill(1,8,14,7,'#ffccdd'); // skirt flare
-      fill(2,7,12,2,'#ff90b8'); // waist
-    },
-    slipdress:()=>{
-      fill(5,0,2,3,'#ffb8d8');fill(9,0,2,3,'#ffb8d8'); // straps
-      fill(3,3,10,5,'#ffd0e8');
-      fill(1,8,14,7,'#ffe0f0');
-      fill(2,7,12,2,'#ffaac8');
-    },
-    skirt:()=>{
-      fill(3,0,10,3,'#c0d8ff'); // waistband
-      fill(1,3,14,12,'#d8e8ff');
-      fill(4,5,8,1,'#b0c8f8'); // detail line
-      fill(0,3,1,12,'#3a1040');fill(15,3,1,12,'#3a1040');fill(1,15,14,1,'#3a1040');
-    },
-    pleated:()=>{
-      fill(3,0,10,3,'#d0b0f0');
-      fill(1,3,14,12,'#e8d0f8');
-      for(let i=0;i<6;i++){fill(2+i*2,3,1,12,'#c8a0e8');}
-    },
-    coat:()=>{
-      fill(1,3,3,9,'#b8c8e8');fill(12,3,3,9,'#b8c8e8'); // sleeves
-      fill(4,1,8,11,'#c8d8f0');
-      fill(6,0,4,2,'#a8b8d8'); // collar
-      fill(7,2,2,9,'#a8b8d8'); // front opening
-    },
-    blazer:()=>{
-      fill(1,3,3,9,'#a0a8c8');fill(12,3,3,9,'#a0a8c8');
-      fill(4,1,8,11,'#b0b8d0');
-      fill(5,1,3,5,'#fff');fill(8,1,3,5,'#fff'); // lapels
-      fill(7,7,2,4,'#888'); // buttons
-    },
-    cardigan:()=>{
-      fill(1,3,3,9,'#f0c8e0');fill(12,3,3,9,'#f0c8e0');
-      fill(4,1,8,11,'#f8d8f0');
-      fill(7,1,2,9,'#e0b0d0');
-      fill(8,3,1,1,'#ff80b0');fill(8,6,1,1,'#ff80b0');fill(8,9,1,1,'#ff80b0');
-    },
-    puffer:()=>{
-      fill(1,3,3,8,'#c0e0f8');fill(12,3,3,8,'#c0e0f8');
-      fill(4,1,8,10,'#d0e8ff');
-      for(let i=0;i<4;i++){fill(4,3+i*2,8,1,'#a0c8e8');}
-    },
-    jacket:()=>{
-      fill(1,3,3,9,'#d0d8e8');fill(12,3,3,9,'#d0d8e8');
-      fill(4,1,8,11,'#e0e8f0');
-      fill(7,1,2,9,'#c0c8d8');
-    },
-    uv:()=>{
-      fill(1,3,3,8,'#fff8d0');fill(12,3,3,8,'#fff8d0');
-      fill(4,1,8,10,'#fffce0');
-      fill(7,0,2,1,'#ffd840');fill(6,1,4,1,'#ffd840'); // sun detail
-    },
-    heels:()=>{
-      fill(0,8,10,4,'#ffb8d0'); // shoe body
-      fill(2,6,8,3,'#ff90b8'); // upper
-      fill(9,8,2,7,'#ff80b0'); // heel
-      fill(0,12,11,1,'#3a1040');fill(9,7,1,1,'#3a1040');
-    },
-    sneakers:()=>{
-      fill(0,6,14,5,'#b0d0f8'); // body
-      fill(0,10,14,2,'#80b0e8'); // sole
-      fill(0,4,8,4,'#d0e4ff'); // upper
-      fill(4,5,6,1,'#6090c8'); // stripe
-    },
-    boots:()=>{
-      fill(3,0,8,12,'#a0a0b8'); // shaft
-      fill(1,10,12,5,'#9090a8'); // foot
-      fill(2,8,1,4,'#888898');fill(11,8,1,4,'#888898'); // seam
-    },
-    sandals:()=>{
-      fill(1,10,12,3,'#f0d090'); // sole
-      fill(3,6,4,5,'#e0b060'); // strap L
-      fill(9,6,4,5,'#e0b060'); // strap R
-      fill(2,5,12,2,'#d0a050'); // ankle strap
-    },
-    loafers:()=>{
-      fill(1,6,12,6,'#c8b0e8'); // body
-      fill(1,11,12,2,'#a890c8'); // sole
-      fill(4,4,8,4,'#d8c0f0'); // upper
-      fill(6,6,4,2,'#c0a0e0'); // bow
-    },
-    tote:()=>{
-      fill(2,4,12,11,'#b8d4ff'); // bag body
-      fill(4,1,3,4,'#90b8e8'); // handle L
-      fill(9,1,3,4,'#90b8e8'); // handle R
-      fill(2,8,12,1,'#90b8e8'); // pocket line
-      fill(1,4,1,11,'#3a1040');fill(14,4,1,11,'#3a1040');fill(2,15,12,1,'#3a1040');
-    },
-    crossbody:()=>{
-      fill(3,3,10,11,'#ffb8d0');
-      fill(5,1,3,3,'#ff98b8'); // strap L
-      fill(8,1,3,3,'#ff98b8'); // strap R
-      fill(5,7,6,3,'#ff80b0'); // flap
-      fill(7,8,2,2,'#ffd0e8'); // clasp
-    },
-    handbag:()=>{
-      fill(2,4,12,11,'#e0b8f8');
-      fill(4,1,3,4,'#c898e8');fill(9,1,3,4,'#c898e8');
-      fill(7,9,2,2,'#ffd878'); // clasp
-      fill(1,4,1,11,'#3a1040');fill(14,4,1,11,'#3a1040');
-    },
-    bucket:()=>{
-      fill(3,3,10,12,'#a8f0d0');
-      fill(5,1,2,3,'#80d8b0');fill(9,1,2,3,'#80d8b0');
-      fill(3,6,10,1,'#80d8b0'); // detail
-      fill(2,3,1,12,'#3a1040');fill(14,3,1,12,'#3a1040');fill(3,15,10,1,'#3a1040');
-    },
-    hat:()=>{
-      fill(0,8,16,4,'#b0d0ff'); // brim
-      fill(3,2,10,8,'#90b8f0'); // crown
-      fill(4,1,8,2,'#78a8e0'); // top
-      fill(5,9,6,1,'#ffd878'); // ribbon
-    },
-    scarf:()=>{
-      fill(2,0,12,5,'#ffb8d0');
-      fill(6,4,4,11,'#ff98b8'); // hanging part
-      for(let i=0;i<6;i++){fill(2+i*2,0,1,5,'#ff98b8');}
-    },
-    belt:()=>{
-      fill(0,6,11,4,'#d0b0f0');
-      fill(11,5,5,6,'#c090e0');
-      fill(12,6,3,4,'none');fill(13,7,1,2,'#ffd878'); // buckle
-      fill(0,6,11,1,'#3a1040');fill(0,9,11,1,'#3a1040');
-    },
-    earrings:()=>{
-      fill(4,0,2,2,'#ffb8d0');fill(10,0,2,2,'#ffb8d0'); // hooks
-      fill(3,2,4,8,'#ffd0e8');fill(9,2,4,8,'#ffd0e8'); // drops
-      fill(4,9,2,3,'#ffb8d0');fill(10,9,2,3,'#ffb8d0'); // bottom
-    },
-    necklace:()=>{
-      // chain arc
-      for(let i=0;i<8;i++){fill(1+i,2+Math.round(Math.sin(i/7*Math.PI)*5),2,2,'#e0b0f8');}
-      fill(6,10,4,4,'#ffd878'); // pendant
-      fill(7,11,2,2,'#ffea88');
-    },
-    // 内衣
-    bra:()=>{
-      fill(1,3,6,7,'#ffc8e8'); // cup L
-      fill(9,3,6,7,'#ffc8e8'); // cup R
-      fill(7,6,2,4,'#ff90c0'); // center
-      fill(3,2,2,2,'#ffaad0');fill(11,2,2,2,'#ffaad0'); // straps
-      fill(1,10,14,1,'#ff90c0'); // band
-    },
-    bra2:()=>{
-      fill(1,4,6,6,'#f0c8ff');fill(9,4,6,6,'#f0c8ff');
-      fill(7,6,2,4,'#d090f0');
-      fill(3,2,2,3,'#e0b0f8');fill(11,2,2,3,'#e0b0f8');
-      fill(1,10,14,1,'#d090f0');
-    },
-    strapless:()=>{
-      fill(1,4,14,7,'#ffb0e0');
-      fill(1,4,14,1,'#ff80c0');
-      fill(1,10,14,1,'#ff80c0');
-      fill(6,5,4,5,'rgba(255,255,255,0.3)'); // highlight
-    },
-    // 内裤
-    brief:()=>{
-      fill(2,1,12,5,'#ffb0e0'); // waistband
-      fill(2,5,12,9,'#ffc8e8'); // body
-      fill(4,9,8,5,'#ffb0d8'); // leg
-      fill(1,1,1,13,'#3a1040');fill(14,1,1,13,'#3a1040');
-    },
-    boxer:()=>{
-      fill(2,1,12,3,'#a0c8ff'); // waistband
-      fill(2,4,5,10,'#b8d8ff');fill(9,4,5,10,'#b8d8ff');
-      fill(7,4,2,6,'#90b8f0');
-    },
-    highwaist:()=>{
-      fill(2,0,12,4,'#d0a0f0'); // waistband
-      fill(2,4,5,11,'#e0b8f8');fill(9,4,5,11,'#e0b8f8');
-      fill(7,4,2,7,'#c890e0');
-    },
-    thong:()=>{
-      fill(1,2,14,4,'#ffb0d0'); // waistband
-      fill(6,5,4,10,'#ff90b8'); // center
-      fill(2,9,5,2,'#ffb0d0');fill(9,9,5,2,'#ffb0d0'); // sides
-    },
-    boyshort:()=>{
-      fill(2,1,12,3,'#b8e0ff'); // waistband
-      fill(2,4,5,9,'#c8e8ff');fill(9,4,5,9,'#c8e8ff');
-      fill(7,4,2,6,'#a8d0f0');
-    },
+    tshirt:()=>{f(1,4,2,6,'#ff9ec8');f(13,4,2,6,'#ff9ec8');f(3,2,10,10,'#ff9ec8');f(6,0,4,2,'#ff80b0');f(0,3,1,8,'#3a1040');f(15,3,1,8,'#3a1040');f(3,12,10,1,'#3a1040');},
+    shirt:()=>{f(1,4,2,6,'#e0d4f8');f(13,4,2,6,'#e0d4f8');f(3,2,10,10,'#e0d4f8');f(6,0,4,2,'#c8b0f0');f(7,2,2,8,'#c8b0f0');},
+    knit:()=>{f(1,4,2,6,'#ffd4a8');f(13,4,2,6,'#ffd4a8');f(3,2,10,10,'#ffd4a8');for(let i=0;i<5;i++){f(3+i*2,5,1,2,'#ffb880');f(4+i*2,8,1,2,'#ffb880');}},
+    camisole:()=>{f(4,0,8,2,'#ff9ec8');f(3,2,10,10,'#ffb8d8');f(4,1,1,2,'#ff80b0');f(11,1,1,2,'#ff80b0');},
+    crop:()=>{f(2,2,12,7,'#ffd4e8');f(1,1,1,8,'#3a1040');f(14,1,1,8,'#3a1040');},
+    sportbra:()=>{f(2,2,12,7,'#c8e8ff');f(5,1,2,2,'#80c8ff');f(9,1,2,2,'#80c8ff');},
+    jeans:()=>{f(2,0,12,2,'#6080c0');f(2,2,5,12,'#4060a0');f(9,2,5,12,'#4060a0');f(7,2,2,6,'#3050a0');},
+    widepants:()=>{f(2,0,12,2,'#d4c0f0');f(2,2,4,12,'#c0a8e8');f(10,2,4,12,'#c0a8e8');f(6,2,4,6,'#b098d8');},
+    shorts:()=>{f(2,0,12,2,'#80c8ff');f(2,2,5,7,'#60b0f0');f(9,2,5,7,'#60b0f0');},
+    leggings:()=>{f(3,0,10,2,'#d0a8f0');f(3,2,4,13,'#c090e8');f(9,2,4,13,'#c090e8');},
+    suitpants:()=>{f(2,0,12,2,'#a0a8c0');f(2,2,5,13,'#9098b8');f(9,2,5,13,'#9098b8');},
+    drapepants:()=>{f(1,0,14,2,'#e8c8f8');f(1,2,5,13,'#d8b0f0');f(10,2,5,13,'#d8b0f0');},
+    yogapants:()=>{f(3,0,10,2,'#80f0c0');f(3,2,4,13,'#60e0a8');f(9,2,4,13,'#60e0a8');},
+    dress:()=>{f(4,0,8,2,'#ff80b0');f(5,1,1,2,'#ff6090');f(10,1,1,2,'#ff6090');f(3,2,10,6,'#ffaac8');f(1,8,14,7,'#ffccd8');f(2,7,12,2,'#ff90b8');},
+    slipdress:()=>{f(5,0,2,3,'#ffb8d8');f(9,0,2,3,'#ffb8d8');f(3,3,10,5,'#ffd0e8');f(1,8,14,7,'#ffe0f0');},
+    skirt:()=>{f(3,0,10,3,'#c0d8ff');f(1,3,14,12,'#d8e8ff');f(4,5,8,1,'#b0c8f8');},
+    pleated:()=>{f(3,0,10,3,'#d0b0f0');f(1,3,14,12,'#e8d0f8');for(let i=0;i<6;i++)f(2+i*2,3,1,12,'#c8a0e8');},
+    coat:()=>{f(1,3,3,9,'#b8c8e8');f(12,3,3,9,'#b8c8e8');f(4,1,8,11,'#c8d8f0');f(6,0,4,2,'#a8b8d8');f(7,2,2,9,'#a8b8d8');},
+    blazer:()=>{f(1,3,3,9,'#a0a8c8');f(12,3,3,9,'#a0a8c8');f(4,1,8,11,'#b0b8d0');f(5,1,3,5,'#fff');f(8,1,3,5,'#fff');},
+    cardigan:()=>{f(1,3,3,9,'#f0c8e0');f(12,3,3,9,'#f0c8e0');f(4,1,8,11,'#f8d8f0');f(7,1,2,9,'#e0b0d0');f(8,3,1,1,'#ff80b0');f(8,6,1,1,'#ff80b0');f(8,9,1,1,'#ff80b0');},
+    puffer:()=>{f(1,3,3,8,'#c0e0f8');f(12,3,3,8,'#c0e0f8');f(4,1,8,10,'#d0e8ff');for(let i=0;i<4;i++)f(4,3+i*2,8,1,'#a0c8e8');},
+    jacket:()=>{f(1,3,3,9,'#d0d8e8');f(12,3,3,9,'#d0d8e8');f(4,1,8,11,'#e0e8f0');f(7,1,2,9,'#c0c8d8');},
+    uv:()=>{f(1,3,3,8,'#fff8d0');f(12,3,3,8,'#fff8d0');f(4,1,8,10,'#fffce0');f(7,0,2,1,'#ffd840');f(6,1,4,1,'#ffd840');},
+    heels:()=>{f(0,8,10,4,'#ffb8d0');f(2,6,8,3,'#ff90b8');f(9,8,2,7,'#ff80b0');f(0,12,11,1,'#3a1040');},
+    sneakers:()=>{f(0,6,14,5,'#b0d0f8');f(0,10,14,2,'#80b0e8');f(0,4,8,4,'#d0e4ff');f(4,5,6,1,'#6090c8');},
+    boots:()=>{f(3,0,8,12,'#a0a0b8');f(1,10,12,5,'#9090a8');},
+    sandals:()=>{f(1,10,12,3,'#f0d090');f(3,6,4,5,'#e0b060');f(9,6,4,5,'#e0b060');f(2,5,12,2,'#d0a050');},
+    loafers:()=>{f(1,6,12,6,'#c8b0e8');f(1,11,12,2,'#a890c8');f(4,4,8,4,'#d8c0f0');f(6,6,4,2,'#c0a0e0');},
+    tote:()=>{f(2,4,12,11,'#b8d4ff');f(4,1,3,4,'#90b8e8');f(9,1,3,4,'#90b8e8');f(2,8,12,1,'#90b8e8');},
+    crossbody:()=>{f(3,3,10,11,'#ffb8d0');f(5,1,3,3,'#ff98b8');f(8,1,3,3,'#ff98b8');f(5,7,6,3,'#ff80b0');},
+    handbag:()=>{f(2,4,12,11,'#e0b8f8');f(4,1,3,4,'#c898e8');f(9,1,3,4,'#c898e8');f(7,9,2,2,'#ffd878');},
+    bucket:()=>{f(3,3,10,12,'#a8f0d0');f(5,1,2,3,'#80d8b0');f(9,1,2,3,'#80d8b0');f(3,6,10,1,'#80d8b0');},
+    hat:()=>{f(0,8,16,4,'#b0d0ff');f(3,2,10,8,'#90b8f0');f(4,1,8,2,'#78a8e0');f(5,9,6,1,'#ffd878');},
+    scarf:()=>{f(2,0,12,5,'#ffb8d0');f(6,4,4,11,'#ff98b8');for(let i=0;i<6;i++)f(2+i*2,0,1,5,'#ff98b8');},
+    belt:()=>{f(0,6,11,4,'#d0b0f0');f(11,5,5,6,'#c090e0');f(13,7,1,2,'#ffd878');},
+    earrings:()=>{f(4,0,2,2,'#ffb8d0');f(10,0,2,2,'#ffb8d0');f(3,2,4,8,'#ffd0e8');f(9,2,4,8,'#ffd0e8');f(4,9,2,3,'#ffb8d0');f(10,9,2,3,'#ffb8d0');},
+    necklace:()=>{for(let i=0;i<8;i++)f(1+i,2+Math.round(Math.sin(i/7*Math.PI)*5),2,2,'#e0b0f8');f(6,10,4,4,'#ffd878');},
+    bra:()=>{f(1,3,6,7,'#ffc8e8');f(9,3,6,7,'#ffc8e8');f(7,6,2,4,'#ff90c0');f(3,2,2,2,'#ffaad0');f(11,2,2,2,'#ffaad0');f(1,10,14,1,'#ff90c0');},
+    bra2:()=>{f(1,4,6,6,'#f0c8ff');f(9,4,6,6,'#f0c8ff');f(7,6,2,4,'#d090f0');f(3,2,2,3,'#e0b0f8');f(11,2,2,3,'#e0b0f8');f(1,10,14,1,'#d090f0');},
+    strapless:()=>{f(1,4,14,7,'#ffb0e0');f(1,4,14,1,'#ff80c0');f(1,10,14,1,'#ff80c0');},
+    brief:()=>{f(2,1,12,5,'#ffb0e0');f(2,5,12,9,'#ffc8e8');f(4,9,8,5,'#ffb0d8');},
+    boxer:()=>{f(2,1,12,3,'#a0c8ff');f(2,4,5,10,'#b8d8ff');f(9,4,5,10,'#b8d8ff');f(7,4,2,6,'#90b8f0');},
+    highwaist:()=>{f(2,0,12,4,'#d0a0f0');f(2,4,5,11,'#e0b8f8');f(9,4,5,11,'#e0b8f8');f(7,4,2,7,'#c890e0');},
+    thong:()=>{f(1,2,14,4,'#ffb0d0');f(6,5,4,10,'#ff90b8');f(2,9,5,2,'#ffb0d0');f(9,9,5,2,'#ffb0d0');},
+    boyshort:()=>{f(2,1,12,3,'#b8e0ff');f(2,4,5,9,'#c8e8ff');f(9,4,5,9,'#c8e8ff');f(7,4,2,6,'#a8d0f0');},
   };
-  if(patterns[key]){
-    ctx.fillStyle='transparent';
-    ctx.clearRect(0,0,size,size);
-    patterns[key]();
-  }
+  if(patterns[key])patterns[key]();
   return c;
 }
+function iconUrl(key,size=30){return drawPx(key||'tshirt',size).toDataURL();}
 
-const ICON_KEYS=['tshirt','shirt','knit','camisole','crop','sportbra','jeans','widepants','shorts','leggings','suitpants','drapepants','yogapants','dress','slipdress','skirt','pleated','coat','blazer','cardigan','puffer','jacket','uv','heels','sneakers','boots','sandals','loafers','tote','crossbody','handbag','bucket','hat','scarf','belt','earrings','necklace','bra','bra2','strapless','brief','boxer','highwaist','thong','boyshort'];
-const ICON_LABELS={tshirt:'T恤',shirt:'衬衫',knit:'针织衫',camisole:'吊带',crop:'抹胸',sportbra:'运动内衣',jeans:'牛仔裤',widepants:'阔腿裤',shorts:'短裤',leggings:'打底裤',suitpants:'西装裤',drapepants:'垂感裤',yogapants:'瑜伽裤',dress:'连衣裙',slipdress:'吊带裙',skirt:'半身裙',pleated:'百褶裙',coat:'风衣',blazer:'西装',cardigan:'开衫',puffer:'羽绒服',jacket:'外套',uv:'防晒衣',heels:'高跟鞋',sneakers:'运动鞋',boots:'靴子',sandals:'凉鞋',loafers:'乐福鞋',tote:'托特包',crossbody:'斜挎包',handbag:'手提包',bucket:'水桶包',hat:'帽子',scarf:'围巾',belt:'腰带',earrings:'耳环',necklace:'项链',bra:'内衣',bra2:'无钢圈',strapless:'抹胸内衣',brief:'三角裤',boxer:'平角裤',highwaist:'高腰裤',thong:'丁字裤',boyshort:'平口裤'};
-const BRA_KEYS=['bra','bra2','strapless'];
-const UNDERWEAR_KEYS=['brief','boxer','highwaist','thong','boyshort'];
-const INNER_CATS=['内衣','内裤'];
+// NAV ICONS
+function drawNavIcons(){
+  function px(id,fn){const c=document.getElementById(id);if(!c)return;const ctx=c.getContext('2d');ctx.imageSmoothingEnabled=false;const f=(x,y,w,h,col)=>{ctx.fillStyle=col;ctx.fillRect(x,y,w,h);};fn(f);}
+  px('ni-0',f=>{f(8,2,8,1,'#ff80b0');f(7,3,10,1,'#ff9ec8');f(6,4,12,1,'#ffb8d8');f(5,5,14,2,'#ff9ec8');f(4,7,16,2,'#ffb8d8');f(3,9,18,4,'#ff80b0');f(8,1,8,1,'#ff5090');f(7,0,2,1,'#ff5090');f(15,0,2,1,'#ff5090');f(9,0,6,1,'#ffb8d8');});
+  px('ni-1',f=>{f(10,0,4,4,'#80c8ff');f(10,8,4,16,'#80c8ff');f(0,10,24,4,'#80c8ff');f(4,4,4,4,'#b8e0ff');f(16,4,4,4,'#b8e0ff');f(4,16,4,4,'#b8e0ff');f(16,16,4,4,'#b8e0ff');});
+  px('ni-2',f=>{f(4,1,17,22,'#80e8b0');f(3,1,2,22,'#38c080');f(6,5,10,2,'#3a1040');f(6,9,10,2,'#3a1040');f(6,13,7,2,'#3a1040');f(3,0,18,1,'#3a1040');f(3,23,18,1,'#3a1040');f(2,1,1,22,'#3a1040');f(21,1,1,22,'#3a1040');f(18,0,4,1,'#ff80b0');f(19,1,2,5,'#ff80b0');f(18,6,4,1,'#ff80b0');});
+}
 
-function getIconCanvas(key,size=30){return drawPixelIcon(key||'tshirt',size);}
-function iconDataUrl(key,size=30){return getIconCanvas(key,size).toDataURL();}
-
-let items=[],history=[],todayOutfit=[],filter='全部',sortMode=0;
-let editingId=null,detailId=null,formImg='',formIconKey='tshirt',formCat='上衣',formColor='黑',formWash=0;
-let pickSelected=[],pickFilter='全部',currentDate='';
+// DATA
+let items=[],history=[],outfit=[],filter='全部',sortMode=0,editId=null,detailId=null;
+let fImg='',fIcon='tshirt',fCat='上衣',fCol='黑',fWash=0,pickSel=[],pickFil='全部';
 
 function todayStr(){const n=new Date();return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;}
 
-function migrateData(){
-  const keys=['wardrobe','wardrobe2','wardrobe3','wardrobe4','wd5','wd6','wd7'];
-  const hkeys=['wardrobe3-history','wardrobe4-history','wd5-hist','wd6-hist','wd7-hist'];
-  for(const k of [...keys].reverse()){try{const d=localStorage.getItem(k);if(d){const p=JSON.parse(d);if(p.length>0){items=p;break;}}}catch(_){}}
-  for(const k of [...hkeys].reverse()){try{const d=localStorage.getItem(k);if(d){const p=JSON.parse(d);if(p.length>0){history=p;break;}}}catch(_){}}
+function migrate(){
+  const ks=['wardrobe','wardrobe2','wardrobe3','wardrobe4','wd5','wd6','wd7','wd8'];
+  const hks=['wardrobe3-history','wardrobe4-history','wd5-hist','wd6-hist','wd7-hist','wd8-hist'];
+  let best=[];
+  for(const k of ks){try{const d=localStorage.getItem(k);if(d){const p=JSON.parse(d);if(p.length>best.length)best=p;}}catch(_){}}
+  if(best.length>0)items=best;
+  let bh=[];
+  for(const k of hks){try{const d=localStorage.getItem(k);if(d){const p=JSON.parse(d);if(p.length>bh.length)bh=p;}}catch(_){}}
+  if(bh.length>0)history=bh;
 }
+
 function load(){
-  migrateData();currentDate=todayStr();
-  const di=document.getElementById('today-date-inp');
-  di.value=currentDate;di.max=currentDate;
-  loadDayData(currentDate);
+  migrate();
+  const di=document.getElementById('date-inp');
+  di.value=todayStr();di.max=todayStr();
+  loadDay(todayStr());
+  if(items.length>0)document.getElementById('recover-btn').style.display='none';
 }
-function saveItems(){try{localStorage.setItem('wd8',JSON.stringify(items));}catch(_){}}
-function saveHistory(){try{localStorage.setItem('wd8-hist',JSON.stringify(history));}catch(_){}}
-function loadDayData(date){
-  const rec=history.find(h=>h.date===date);
-  todayOutfit=rec?JSON.parse(JSON.stringify(rec.outfit_items||[])):[]; 
-  document.getElementById('today-note').value=rec?rec.note||'':'';
-}
-
-function switchTab(t){
-  ['wardrobe','today','history'].forEach(p=>{
-    document.getElementById('page-'+p).classList.toggle('active',p===t);
-    document.getElementById('tab-'+p).classList.toggle('active',p===t);
-  });
-  document.querySelector('.fab').classList.toggle('visible',t==='wardrobe');
-  if(t==='today')renderToday();if(t==='history')renderHistory();
-}
-function renderCatsBar(){document.getElementById('cats-bar').innerHTML=['全部',...CATS].map(c=>`<button class="cat-pill${filter===c?' active':''}" onclick="setFilter('${c}')">${c}</button>`).join('');}
-function setFilter(c){filter=c;renderCatsBar();renderWardrobe();}
-function unitCost(item){if(!item.price||!item.wornCount)return null;return (item.price/item.wornCount).toFixed(1);}
-function washClass(item){if(item.washStatus===2)return 'dirty';if(item.washStatus===1&&item.wornCount>=(item.washDays||3))return 'warn';return 'clean';}
-function getSorted(list){
-  const arr=[...list];
-  if(sortMode===1)arr.sort((a,b)=>(b.wornCount||0)-(a.wornCount||0));
-  else if(sortMode===2)arr.sort((a,b)=>(a.wornCount||0)-(b.wornCount||0));
-  else if(sortMode===3)arr.sort((a,b)=>{const ca=a.price&&a.wornCount?a.price/a.wornCount:9999,cb=b.price&&b.wornCount?b.price/b.wornCount:9999;return cb-ca;});
-  else if(sortMode===4)arr.sort((a,b)=>{const ca=a.price&&a.wornCount?a.price/a.wornCount:9999,cb=b.price&&b.wornCount?b.price/b.wornCount:9999;return ca-cb;});
-  else if(sortMode===5)arr.sort((a,b)=>(b.price||0)-(a.price||0));
-  return arr;
-}
-
-function getItemImg(item,size=70){
-  if(item.image)return `<div style="position:absolute;inset:0;background:url(${item.image}) center/cover no-repeat;"></div>`;
-  return `<img src="${iconDataUrl(item.iconKey||'tshirt',size)}" style="width:${size}px;height:${size}px;image-rendering:pixelated;" alt="">`;
-}
-
-function renderWardrobe(){
-  const q=document.getElementById('search-inp').value.toLowerCase();
-  let list=items.filter(i=>(filter==='全部'||i.category===filter)&&(!q||i.name.toLowerCase().includes(q)||(i.brand||'').toLowerCase().includes(q)));
-  list=getSorted(list);
-  const totalCost=items.reduce((s,i)=>s+(i.price||0),0);
-  const wi=items.filter(i=>i.wornCount>0&&i.price);
-  const avgCost=wi.length?wi.reduce((s,i)=>s+i.price/i.wornCount,0)/wi.length:0;
-  document.getElementById('stat-total').textContent=items.length;
-  document.getElementById('stat-dirty').textContent=items.filter(i=>i.washStatus===2).length;
-  document.getElementById('stat-cost').textContent='¥'+totalCost;
-  document.getElementById('stat-avg').textContent='¥'+(avgCost?avgCost.toFixed(0):0);
-  const el=document.getElementById('wardrobe-content');
-  if(list.length===0){el.innerHTML=`<div class="empty-state"><div class="empty-emoji">🎀</div><div class="empty-title">衣橱空空的</div><div class="empty-sub">点右下角 + 添加第一件单品</div></div>`;return;}
-  const wc=i=>{const c=washClass(i);return c==='dirty'?'wash-dirty':c==='warn'?'wash-warn':'wash-clean';};
-  const wb=i=>{const c=washClass(i);return c==='dirty'?'要洗':c==='warn'?'快洗':'干净';};
-  const normalItems=list.filter(i=>!INNER_CATS.includes(i.category));
-  const braItems=list.filter(i=>i.category==='内衣');
-  const undiesItems=list.filter(i=>i.category==='内裤');
-  let html='';
-  if(normalItems.length>0){
-    if(filter==='全部'&&(braItems.length||undiesItems.length))html+=`<div class="section-head">ITEMS</div>`;
-    html+=`<div class="grid">${normalItems.map(item=>{
-      const uc=unitCost(item);
-      return `<div class="card" onclick="openDetail('${item.id}')">
-        <div class="card-img" style="position:relative">${getItemImg(item,70)}<span class="wash-badge ${wc(item)}">${wb(item)}</span>${uc?`<span class="cost-badge">¥${uc}/次</span>`:''}</div>
-        <div class="card-body"><div class="card-name">${item.name}</div><div class="card-tags"><span class="tag tag-cat">${item.category}</span>${item.season?`<span class="tag tag-sea">${item.season}</span>`:''} ${item.color?`<span class="cdot" style="background:${CMAP[item.color]||'#ccc'}"></span>`:''}</div>${item.brand?`<div class="card-brand">${item.brand}</div>`:''}</div>
-      </div>`;
-    }).join('')}</div>`;
-  }
-  if(braItems.length>0){
-    html+=`<div class="section-head">内衣</div><div class="grid">${braItems.map(item=>{
-      const uc=unitCost(item);
-      return `<div class="card" onclick="openDetail('${item.id}')">
-        <div class="card-img" style="position:relative">${getItemImg(item,70)}<span class="wash-badge ${wc(item)}">${wb(item)}</span>${uc?`<span class="cost-badge">¥${uc}/次</span>`:''}</div>
-        <div class="card-body"><div class="card-name">${item.name}</div><div class="card-tags"><span class="tag tag-cat">${item.category}</span>${item.color?`<span class="cdot" style="background:${CMAP[item.color]||'#ccc'}"></span>`:''}</div></div>
-      </div>`;
-    }).join('')}</div>`;
-  }
-  if(undiesItems.length>0){
-    html+=`<div class="section-head">内裤</div><div class="undies-list">${undiesItems.map(item=>{
-      const uc=unitCost(item);const wcc=washClass(item);
-      const bc=wcc==='dirty'?'background:var(--red);color:#fff':wcc==='warn'?'background:var(--yellow);color:var(--dark)':'background:var(--green);color:var(--dark)';
-      return `<div class="undies-row" onclick="openDetail('${item.id}')">
-        <div class="undies-icon"><img src="${iconDataUrl(item.iconKey||'brief',32)}" style="width:32px;height:32px;image-rendering:pixelated;" alt=""></div>
-        <div class="undies-info"><div class="undies-name">${item.name}</div>
-        <div class="undies-meta">${item.color?`<span class="cdot" style="background:${CMAP[item.color]||'#ccc'}"></span>`:''} ${item.brand?`<span>${item.brand}</span>`:''} ${item.wornCount?`<span>穿${item.wornCount}次</span>`:''} ${uc?`<span class="undies-cost">¥${uc}/次</span>`:''}</div></div>
-        <span class="undies-badge" style="${bc}">${wcc==='dirty'?'要洗':wcc==='warn'?'快洗':'干净'}</span>
-      </div>`;
-    }).join('')}</div>`;
-  }
-  el.innerHTML=html||`<div class="empty-state"><div class="empty-emoji">🎀</div><div class="empty-title">没有找到单品</div></div>`;
-}
-
-function openSortMenu(){document.getElementById('sort-menu').classList.add('open');document.getElementById('sort-backdrop').style.display='block';}
-function closeSortMenu(){document.getElementById('sort-menu').classList.remove('open');document.getElementById('sort-backdrop').style.display='none';}
-function setSort(v){sortMode=v;for(let i=0;i<6;i++){document.getElementById('so-'+i).classList.toggle('active',i===v);document.getElementById('sc-'+i).style.display=i===v?'':'none';}closeSortMenu();renderWardrobe();}
-
-function renderIconGrid(){
-  let keys;
-  if(formCat==='内衣')keys=BRA_KEYS;
-  else if(formCat==='内裤')keys=UNDERWEAR_KEYS;
-  else keys=ICON_KEYS.filter(k=>!BRA_KEYS.includes(k)&&!UNDERWEAR_KEYS.includes(k));
-  const grid=document.getElementById('icon-grid');
-  grid.innerHTML='';
-  keys.forEach(k=>{
-    const div=document.createElement('div');
-    div.className='icon-opt'+(formIconKey===k?' active':'');
-    div.onclick=()=>setIcon(k);
-    const canvas=drawPixelIcon(k,30);
-    canvas.style.width='30px';canvas.style.height='30px';
-    const label=document.createElement('span');
-    label.textContent=ICON_LABELS[k]||k;
-    div.appendChild(canvas);div.appendChild(label);
-    grid.appendChild(div);
-  });
-}
-function setIcon(k){formIconKey=k;renderIconGrid();}
-function renderFormCats(){document.getElementById('f-cats').innerHTML=CATS.map(c=>`<button class="chip${formCat===c?' active':''}" onclick="setFC('${c}')">${c}</button>`).join('');}
-function setFC(c){formCat=c;if(c==='内衣')formIconKey='bra';else if(c==='内裤')formIconKey='brief';else if(BRA_KEYS.includes(formIconKey)||UNDERWEAR_KEYS.includes(formIconKey))formIconKey='tshirt';renderFormCats();renderIconGrid();}
-function renderFormColors(){document.getElementById('f-colors').innerHTML=COLORS.map(c=>`<div class="cswatch${formColor===c?' active':''}" style="background:${CMAP[c]}" title="${c}" onclick="setFCol('${c}')"></div>`).join('');}
-function setFCol(c){formColor=c;renderFormColors();}
-function setWash(v){formWash=v;[0,1,2].forEach(i=>{document.getElementById('wo-'+i).classList.toggle('active',i===v);});}
-function handleImg(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{formImg=ev.target.result;const el=document.getElementById('img-preview');el.style.backgroundImage=`url(${formImg})`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.innerHTML='';};r.readAsDataURL(f);}
-function checkSaveBtn(){document.getElementById('btn-save').disabled=!document.getElementById('f-name').value.trim();}
-
-function openAddForm(){
-  editingId=null;formImg='';formCat='上衣';formIconKey='tshirt';formColor='黑';formWash=0;
-  document.getElementById('form-sheet-title').textContent='ADD ITEM';
-  ['f-name','f-brand','f-notes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('f-price').value='';
-  document.getElementById('f-season').value='四季';document.getElementById('f-wash-days').value='3';
-  document.getElementById('btn-del').style.display='none';document.getElementById('btn-save').disabled=true;
-  const p=document.getElementById('img-preview');
-  p.style.backgroundImage='';p.innerHTML=`<span style="font-size:22px">📷</span><span style="font-size:11px;color:var(--text3);margin-top:3px">点击上传（覆盖图标）</span>`;
-  document.getElementById('img-input').value='';
-  setWash(0);renderIconGrid();renderFormCats();renderFormColors();
-  document.getElementById('form-overlay').classList.add('open');
-}
-function saveItem(){
-  const name=document.getElementById('f-name').value.trim();if(!name)return;
-  const price=parseFloat(document.getElementById('f-price').value)||0;
-  const item={id:editingId||String(Date.now()),name,category:formCat,season:document.getElementById('f-season').value,color:formColor,brand:document.getElementById('f-brand').value.trim(),notes:document.getElementById('f-notes').value.trim(),image:formImg,iconKey:formIconKey,washStatus:formWash,washDays:parseInt(document.getElementById('f-wash-days').value)||3,wornCount:0,price};
-  if(editingId){const old=items.find(i=>i.id===editingId);if(old)item.wornCount=old.wornCount||0;items=items.map(i=>i.id===editingId?item:i);}
-  else items=[item,...items];
-  saveItems();closeSheet('form-overlay');renderWardrobe();
-}
-function deleteItem(){items=items.filter(i=>i.id!==editingId);saveItems();closeSheet('form-overlay');renderWardrobe();}
-
-function openDetail(id){
-  detailId=id;const item=items.find(i=>i.id===id);if(!item)return;
-  const di=document.getElementById('d-img');
-  if(item.image){di.style.backgroundImage=`url(${item.image})`;di.style.backgroundSize='cover';di.style.backgroundPosition='center';di.innerHTML=`<button class="detail-close" onclick="closeSheet('detail-overlay')">✕</button>`;}
-  else{di.style.backgroundImage='';di.innerHTML=`<img src="${iconDataUrl(item.iconKey||'tshirt',80)}" style="width:80px;height:80px;image-rendering:pixelated;" alt=""><button class="detail-close" onclick="closeSheet('detail-overlay')">✕</button>`;}
-  document.getElementById('d-name').textContent=item.name;
-  const tags=[
-    `<span class="dtag" style="background:var(--pink3);color:var(--dark)">${item.category}</span>`,
-    item.season?`<span class="dtag" style="background:var(--blue3);color:var(--dark)">${item.season}</span>`:'',
-    item.color?`<span class="dtag" style="background:var(--white);color:var(--dark);display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:${CMAP[item.color]};display:inline-block;border:1px solid var(--dark)"></span>${item.color}</span>`:'',
-    item.brand?`<span class="dtag" style="background:var(--yellow);color:var(--dark)">${item.brand}</span>`:''
-  ].join('');
-  document.getElementById('d-tags').innerHTML=tags;
-  const uc=unitCost(item);
-  document.getElementById('d-cost').innerHTML=`
-    <div class="dc-item"><span class="dc-num">¥${item.price||0}</span><span class="dc-label">购买价格</span></div>
-    <div class="dc-item"><span class="dc-num">${item.wornCount||0}</span><span class="dc-label">穿着次数</span></div>
-    <div class="dc-item"><span class="dc-num">${uc?'¥'+uc:'-'}</span><span class="dc-label">每次成本</span></div>`;
-  const wc=washClass(item);
-  const dw=document.getElementById('d-wash');
-  dw.className=`detail-wash ${wc==='dirty'?'w2':wc==='warn'?'w1':'w0'}`;
-  dw.textContent=wc==='dirty'?'🚫 需要清洗':wc==='warn'?`⚠️ 已穿${item.wornCount}次，该洗了`:`✅ 干净（已穿${item.wornCount||0}次）`;
-  const dn=document.getElementById('d-notes');
-  if(item.notes){dn.textContent=item.notes;dn.style.display='block';}else{dn.style.display='none';}
-  document.getElementById('detail-overlay').classList.add('open');
-}
-function wearFromDetail(){
-  const item=items.find(i=>i.id===detailId);if(!item)return;
-  if(!todayOutfit.find(o=>o.id===item.id))todayOutfit.push({id:item.id,name:item.name,image:item.image||'',iconKey:item.iconKey||'tshirt'});
-  closeSheet('detail-overlay');switchTab('today');renderToday();
-}
-function editFromDetail(){
-  const item=items.find(i=>i.id===detailId);if(!item)return;
-  closeSheet('detail-overlay');
-  editingId=item.id;formImg=item.image||'';formIconKey=item.iconKey||'tshirt';formCat=item.category;formColor=item.color||'黑';formWash=item.washStatus||0;
-  document.getElementById('form-sheet-title').textContent='EDIT ITEM';
-  document.getElementById('f-name').value=item.name;document.getElementById('f-brand').value=item.brand||'';
-  document.getElementById('f-notes').value=item.notes||'';document.getElementById('f-season').value=item.season||'四季';
-  document.getElementById('f-wash-days').value=item.washDays||3;document.getElementById('f-price').value=item.price||'';
-  document.getElementById('btn-del').style.display='block';document.getElementById('btn-save').disabled=false;
-  const p=document.getElementById('img-preview');
-  if(formImg){p.style.backgroundImage=`url(${formImg})`;p.style.backgroundSize='cover';p.style.backgroundPosition='center';p.innerHTML='';}
-  else{p.style.backgroundImage='';p.innerHTML=`<span style="font-size:22px">📷</span><span style="font-size:11px;color:var(--text3);margin-top:3px">点击上传（覆盖图标）</span>`;}
-  document.getElementById('img-input').value='';
-  setWash(formWash);renderIconGrid();renderFormCats();renderFormColors();
-  document.getElementById('form-overlay').classList.add('open');
-}
-
-function onDateChange(){currentDate=document.getElementById('today-date-inp').value;loadDayData(currentDate);renderToday();}
-function renderToday(){
-  document.getElementById('today-count').textContent=todayOutfit.length?`穿了 ${todayOutfit.length} 件单品 ♡`:'还没有记录哦～';
-  const list=document.getElementById('outfit-list');
-  if(todayOutfit.length===0){list.innerHTML=`<div style="text-align:center;padding:16px;color:var(--text3);font-size:12px;font-weight:700">还没有添加单品～</div>`;return;}
-  list.innerHTML=todayOutfit.map((o,idx)=>{
-    const tc=o.image?`<div style="width:100%;height:100%;background:url(${o.image}) center/cover no-repeat;"></div>`:`<img src="${iconDataUrl(o.iconKey||'tshirt',32)}" style="width:32px;height:32px;image-rendering:pixelated;" alt="">`;
-    return `<div class="outfit-item"><div class="outfit-thumb">${tc}</div><div class="outfit-info"><div class="outfit-name">${o.name}</div></div><button class="outfit-remove" onclick="removeOutfit(${idx})">✕</button></div>`;
-  }).join('');
-}
-function removeOutfit(idx){todayOutfit.splice(idx,1);renderToday();}
-function openPicker(){
-  pickSelected=todayOutfit.map(o=>o.id);pickFilter='全部';
-  renderPickFilter();renderPickGrid();
-  document.getElementById('picker-overlay').classList.add('open');
-}
-function renderPickFilter(){document.getElementById('pick-filter').innerHTML=['全部',...CATS].map(c=>`<button class="pf-pill${pickFilter===c?' active':''}" onclick="setPickFilter('${c}')">${c}</button>`).join('');}
-function setPickFilter(c){pickFilter=c;renderPickFilter();renderPickGrid();}
-function renderPickGrid(){
-  const filtered=items.filter(i=>pickFilter==='全部'||i.category===pickFilter);
-  const grid=document.getElementById('pick-grid');
-  if(filtered.length===0){grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text3);font-size:12px;font-weight:700">这个分类还没有单品</div>`;return;}
-  grid.innerHTML='';
-  filtered.forEach(item=>{
-    const sel=pickSelected.includes(item.id);
-    const div=document.createElement('div');
-    div.className='pick-item'+(sel?' selected':'');
-    div.id='pi-'+item.id;
-    div.onclick=()=>togglePick(item.id);
-    const thumb=document.createElement('div');
-    thumb.className='pick-thumb';
-    if(item.image){thumb.style.backgroundImage=`url(${item.image})`;thumb.style.backgroundSize='cover';thumb.style.backgroundPosition='center';}
-    else{const img=document.createElement('img');img.src=iconDataUrl(item.iconKey||'tshirt',40);img.style.cssText='width:40px;height:40px;image-rendering:pixelated;';thumb.appendChild(img);}
-    const name=document.createElement('div');name.className='pick-name';name.textContent=item.name;
-    const check=document.createElement('div');check.className='pick-check';check.textContent='✓';
-    div.appendChild(thumb);div.appendChild(name);div.appendChild(check);
-    grid.appendChild(div);
-  });
-}
-function togglePick(id){
-  const idx=pickSelected.indexOf(id);
-  if(idx>=0)pickSelected.splice(idx,1);else pickSelected.push(id);
-  renderPickGrid();
-}
-function confirmPick(){
-  todayOutfit=pickSelected.map(id=>{const item=items.find(i=>i.id===id);return item?{id:item.id,name:item.name,image:item.image||'',iconKey:item.iconKey||'tshirt'}:null;}).filter(Boolean);
-  closeSheet('picker-overlay');renderToday();
-}
-function saveToday(){
-  if(todayOutfit.length===0){alert('还没有选择单品哦～🎀');return;}
-  const date=document.getElementById('today-date-inp').value||todayStr();
-  const note=document.getElementById('today-note').value.trim();
-  const existing=history.find(h=>h.date===date);
-  todayOutfit.forEach(o=>{
-    const item=items.find(i=>i.id===o.id);
-    if(item){
-      const alreadyWorn=existing&&(existing.outfit_items||[]).find(oi=>oi.id===o.id);
-      if(!alreadyWorn){item.wornCount=(item.wornCount||0)+1;if(item.washStatus===0)item.washStatus=1;if(item.wornCount>=(item.washDays||3))item.washStatus=2;}
-    }
-  });
-  saveItems();
-  const entry={date,outfit_items:JSON.parse(JSON.stringify(todayOutfit)),outfit:todayOutfit.map(o=>o.name),note};
-  const idx=history.findIndex(h=>h.date===date);
-  if(idx>=0)history[idx]=entry;else history.unshift(entry);
-  history.sort((a,b)=>b.date.localeCompare(a.date));
-  saveHistory();renderWardrobe();
-  alert('✅ 保存成功！♡');
-}
-function renderHistory(){
-  const wrap=document.getElementById('history-list-wrap');
-  if(history.length===0){wrap.innerHTML=`<div class="empty-state"><div class="empty-emoji">📖</div><div class="empty-title">还没有穿搭记录</div><div class="empty-sub">在今日页面保存后显示在这里</div></div>`;return;}
-  wrap.innerHTML=`<div class="history-list">${history.map(h=>`<div class="history-card"><div class="history-date">🎀 ${h.date}</div><div class="history-items">${(h.outfit||[]).map(n=>`<span class="history-chip">${n}</span>`).join('')}</div>${h.note?`<div class="history-note">💭 ${h.note}</div>`:''}</div>`).join('')}</div>`;
-}
-function closeSheet(id){document.getElementById(id).classList.remove('open');}
-function overlayClose(e,id){if(e.target===document.getElementById(id))closeSheet(id);}
-
-function drawNavIcons(){
-  function px(canvasId,drawFn){
-    const c=document.getElementById(canvasId);if(!c)return;
-    const ctx=c.getContext('2d');ctx.imageSmoothingEnabled=false;
-    const f=(x,y,w,h,col)=>{ctx.fillStyle=col;ctx.fillRect(x,y,w,h);};
-    drawFn(f);
-  }
-  // Pink dress icon
-  px('nav-icon-0',f=>{
-    f(9,2,6,1,'#ff80b0');f(8,3,8,1,'#ff9ec8'); // neckline
-    f(6,4,12,1,'#ffb8d8');f(5,5,14,2,'#ff9ec8');f(4,7,16,2,'#ffb8d8'); // skirt flare
-    f(3,9,18,4,'#ff80b0');f(9,1,6,1,'#ff5090'); // waist + straps
-    f(8,0,2,1,'#ff5090');f(14,0,2,1,'#ff5090'); // bow
-    f(10,0,4,1,'#ffb8d8');
-  });
-  // Blue star sparkle icon
-  px('nav-icon-1',f=>{
-    f(10,0,4,4,'#80c8ff');f(10,8,4,16,'#80c8ff'); // vertical
-    f(0,10,24,4,'#80c8ff'); // horizontal
-    f(4,4,4,4,'#b8e0ff');f(16,4,4,4,'#b8e0ff'); // diagonal dots
-    f(4,16,4,4,'#b8e0ff');f(16,16,4,4,'#b8e0ff');
-    f(10,0,4,1,'#3a1040');f(9,1,1,1,'#3a1040');f(14,1,1,1,'#3a1040');
-  });
-  // Green book icon
-  px('nav-icon-2',f=>{
-    f(4,1,17,22,'#80e8b0');f(3,1,2,22,'#38c080'); // book body + spine
-    f(6,5,10,2,'#3a1040');f(6,9,10,2,'#3a1040');f(6,13,7,2,'#3a1040'); // lines
-    f(3,0,18,1,'#3a1040');f(3,23,18,1,'#3a1040');f(2,1,1,22,'#3a1040');f(21,1,1,22,'#3a1040');
-    f(18,0,4,1,'#ff80b0');f(19,1,2,5,'#ff80b0');f(18,6,4,1,'#ff80b0'); // ribbon bookmark
-  });
+function save(){try{localStorage.setItem('wd9',JSON.stringify(items));}catch(_){}}
+function saveH(){try{localStorage.setItem('wd9-hist',JSON.stringify(history));}catch(_){}}
+function loadDay(date){
+  const r=history.find(h=>h.date===date);
+  outfit=r?JSON.parse(JSON.stringify(r.outfit_items||[])):[];
+  document.getElementById('note-inp').value=r?r.note||'':'';
 }
 
 function recoverData(){
-  const keys=['wardrobe','wardrobe2','wardrobe3','wardrobe4','wd5','wd6','wd7','wd8'];
-  const hkeys=['wardrobe3-history','wardrobe4-history','wd5-hist','wd6-hist','wd7-hist','wd8-hist'];
-  let bestItems=[];let bestHist=[];
-  keys.forEach(k=>{
-    try{const d=localStorage.getItem(k);if(d){const p=JSON.parse(d);if(p.length>bestItems.length)bestItems=p;}}catch(_){}
-  });
-  hkeys.forEach(k=>{
-    try{const d=localStorage.getItem(k);if(d){const p=JSON.parse(d);if(p.length>bestHist.length)bestHist=p;}}catch(_){}
-  });
-  if(bestItems.length>0){
-    items=bestItems;history=bestHist;
-    saveItems();saveHistory();
-    renderWardrobe();
-    document.getElementById('recover-btn').style.display='none';
-    alert('✅ 找回了 '+bestItems.length+' 件单品！');
-  } else {
-    alert('❌ 没有找到历史数据，可能已经清除了浏览器缓存');
-  }
+  migrate();
+  if(items.length>0){save();saveH();renderW();document.getElementById('recover-btn').style.display='none';alert('✅ 找回 '+items.length+' 件单品！');}
+  else alert('❌ 没有找到历史数据');
 }
 
-drawNavIcons();load();renderCatsBar();renderWardrobe();
-document.querySelector('.fab').classList.add('visible');
+// TAB
+function goTab(t){
+  ['wardrobe','today','history'].forEach(p=>{
+    document.getElementById('page-'+p).classList.toggle('active',p===t);
+    document.getElementById('nb-'+p).classList.toggle('active',p===t);
+  });
+  document.getElementById('fab').classList.toggle('hidden',t!=='wardrobe');
+  if(t==='today')renderToday();
+  if(t==='history')renderHistory();
+}
+
+// WARDROBE RENDER
+function renderW(){
+  const q=document.getElementById('search-inp').value.toLowerCase();
+  let list=items.filter(i=>(filter==='全部'||i.category===filter)&&(!q||i.name.toLowerCase().includes(q)||(i.brand||'').toLowerCase().includes(q)));
+  // sort
+  if(sortMode===1)list.sort((a,b)=>(b.wornCount||0)-(a.wornCount||0));
+  else if(sortMode===2)list.sort((a,b)=>(a.wornCount||0)-(b.wornCount||0));
+  else if(sortMode===3)list.sort((a,b)=>(b.price&&b.wornCount?b.price/b.wornCount:0)-(a.price&&a.wornCount?a.price/a.wornCount:0));
+  else if(sortMode===4)list.sort((a,b)=>(a.price&&a.wornCount?a.price/a.wornCount:9999)-(b.price&&b.wornCount?b.price/b.wornCount:9999));
+  else if(sortMode===5)list.sort((a,b)=>(b.price||0)-(a.price||0));
+
+  const tc=items.reduce((s,i)=>s+(i.price||0),0);
+  const wi=items.filter(i=>i.wornCount>0&&i.price);
+  const avg=wi.length?wi.reduce((s,i)=>s+i.price/i.wornCount,0)/wi.length:0;
+  document.getElementById('s-total').textContent=items.length;
+  document.getElementById('s-dirty').textContent=items.filter(i=>i.washStatus===2).length;
+  document.getElementById('s-cost').textContent='¥'+tc;
+  document.getElementById('s-avg').textContent='¥'+(avg?avg.toFixed(0):0);
+
+  const el=document.getElementById('w-content');
+  if(list.length===0){el.innerHTML=`<div class="empty"><div class="empty-e">🎀</div><div class="empty-t">衣橱空空的</div><div class="empty-s">点右下角 + 添加第一件单品</div></div>`;return;}
+
+  const wc=i=>i.washStatus===2?'bdg-dirty':i.washStatus===1&&i.wornCount>=(i.washDays||3)?'bdg-warn':'bdg-clean';
+  const wb=i=>i.washStatus===2?'要洗':i.washStatus===1&&i.wornCount>=(i.washDays||3)?'快洗':'干净';
+  const uc=i=>i.price&&i.wornCount?(i.price/i.wornCount).toFixed(1):null;
+
+  const normal=list.filter(i=>!INNER.includes(i.category));
+  const bras=list.filter(i=>i.category==='内衣');
+  const undies=list.filter(i=>i.category==='内裤');
+
+  let html='';
+  const cardHtml=item=>{
+    const u=uc(item);
+    const imgContent=item.image?`<div style="position:absolute;inset:0;background:url(${item.image}) center/cover no-repeat"></div>`:`<img src="${iconUrl(item.iconKey||'tshirt',70)}" style="width:70px;height:70px;image-rendering:pixelated" alt="">`;
+    return `<div class="card" onclick="openDetail('${item.id}')">
+      <div class="card-img" style="position:relative">${imgContent}<span class="wash-bdg ${wc(item)}">${wb(item)}</span>${u?`<span class="cost-bdg">¥${u}/次</span>`:''}</div>
+      <div class="card-body"><div class="card-name">${item.name}</div><div class="card-tags"><span class="tag tag-p">${item.category}</span>${item.season?`<span class="tag tag-b">${item.season}</span>`:''} ${item.color?`<span class="cdot" style="background:${CMAP[item.color]||'#ccc'}"></span>`:''}</div>${item.brand?`<div class="card-brand">${item.brand}</div>`:''}</div>
+    </div>`;
+  };
+
+  if(normal.length){if(filter==='全部'&&(bras.length||undies.length))html+=`<div class="sec-head">ITEMS</div>`;html+=`<div class="grid">${normal.map(cardHtml).join('')}</div>`;}
+  if(bras.length){html+=`<div class="sec-head">内衣</div><div class="grid">${bras.map(cardHtml).join('')}</div>`;}
+  if(undies.length){
+    html+=`<div class="sec-head">内裤</div><div class="undies-list">${undies.map(item=>{
+      const u=uc(item);const wcc=item.washStatus===2?'bdg-dirty':item.washStatus===1&&item.wornCount>=(item.washDays||3)?'bdg-warn':'bdg-clean';
+      const wbb=item.washStatus===2?'要洗':item.washStatus===1&&item.wornCount>=(item.washDays||3)?'快洗':'干净';
+      const bc=wcc==='bdg-dirty'?'background:var(--red);color:#fff':wcc==='bdg-warn'?'background:var(--yellow);color:var(--dark)':'background:#78e8a0;color:var(--dark)';
+      return `<div class="u-row" onclick="openDetail('${item.id}')">
+        <div class="u-icon"><img src="${iconUrl(item.iconKey||'brief',32)}" style="width:32px;height:32px;image-rendering:pixelated" alt=""></div>
+        <div class="u-info"><div class="u-name">${item.name}</div><div class="u-meta">${item.color?`<span class="cdot" style="background:${CMAP[item.color]||'#ccc'}"></span>`:''} ${item.brand?`<span>${item.brand}</span>`:''} ${item.wornCount?`<span>穿${item.wornCount}次</span>`:''} ${u?`<span class="u-cost">¥${u}/次</span>`:''}</div></div>
+        <span style="font-size:9px;padding:2px 6px;font-weight:700;border:2px solid var(--dark);font-family:'Press Start 2P',monospace;${bc}">${wbb}</span>
+      </div>`;
+    }).join('')}</div>`;
+  }
+  el.innerHTML=html;
+}
+
+function renderCats(){document.getElementById('cats-bar').innerHTML=['全部',...CATS].map(c=>`<button class="cat-pill${filter===c?' on':''}" onclick="setFilter('${c}')">${c}</button>`).join('');}
+function setFilter(c){filter=c;renderCats();renderW();}
+
+// SORT
+function openSort(){document.getElementById('sort-menu').classList.add('open');document.getElementById('sort-bd').style.display='block';}
+function closeSort(){document.getElementById('sort-menu').classList.remove('open');document.getElementById('sort-bd').style.display='none';}
+function setSort(v){sortMode=v;for(let i=0;i<6;i++){document.getElementById('so-'+i).classList.toggle('on',i===v);document.getElementById('sc-'+i).style.display=i===v?'':'none';}closeSort();renderW();}
+
+// FORM
+function renderIconGrid(){
+  let keys=fCat==='内衣'?BRA:fCat==='内裤'?UND:IKEYS.filter(k=>!BRA.includes(k)&&!UND.includes(k));
+  const g=document.getElementById('icon-grid');g.innerHTML='';
+  keys.forEach(k=>{
+    const d=document.createElement('div');d.className='icon-opt'+(fIcon===k?' on':'');d.onclick=()=>{fIcon=k;renderIconGrid();};
+    const cv=drawPx(k,30);cv.style.cssText='width:30px;height:30px;image-rendering:pixelated;';
+    const sp=document.createElement('span');sp.textContent=ILABELS[k]||k;
+    d.appendChild(cv);d.appendChild(sp);g.appendChild(d);
+  });
+}
+function renderFormCats(){document.getElementById('f-cats').innerHTML=CATS.map(c=>`<button class="chip${fCat===c?' on':''}" onclick="setFCat('${c}')">${c}</button>`).join('');}
+function setFCat(c){fCat=c;if(c==='内衣')fIcon='bra';else if(c==='内裤')fIcon='brief';else if(BRA.includes(fIcon)||UND.includes(fIcon))fIcon='tshirt';renderFormCats();renderIconGrid();}
+function renderFormCols(){document.getElementById('f-colors').innerHTML=COLORS.map(c=>`<div class="csw${fCol===c?' on':''}" style="background:${CMAP[c]}" title="${c}" onclick="setFCol('${c}')"></div>`).join('');}
+function setFCol(c){fCol=c;renderFormCols();}
+function setWash(v){fWash=v;[0,1,2].forEach(i=>document.getElementById('wo-'+i).classList.toggle('on',i===v));}
+function handleImg(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{fImg=ev.target.result;const el=document.getElementById('img-prev');el.style.backgroundImage=`url(${fImg})`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.innerHTML='';};r.readAsDataURL(f);}
+function checkSave(){document.getElementById('btn-save').disabled=!document.getElementById('f-name').value.trim();}
+
+function openAdd(){
+  editId=null;fImg='';fCat='上衣';fIcon='tshirt';fCol='黑';fWash=0;
+  document.getElementById('form-title').textContent='ADD ITEM';
+  ['f-name','f-brand','f-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-price').value='';
+  document.getElementById('f-season').value='四季';document.getElementById('f-days').value='3';
+  document.getElementById('btn-del').style.display='none';document.getElementById('btn-save').disabled=true;
+  const p=document.getElementById('img-prev');p.style.backgroundImage='';p.innerHTML=`<span style="font-size:22px">📷</span><span style="font-size:11px;color:var(--text3);margin-top:3px">点击上传（覆盖图标）</span>`;
+  document.getElementById('img-inp').value='';
+  setWash(0);renderIconGrid();renderFormCats();renderFormCols();
+  document.getElementById('form-ol').classList.add('open');
+}
+
+function saveItem(){
+  const name=document.getElementById('f-name').value.trim();if(!name)return;
+  const price=parseFloat(document.getElementById('f-price').value)||0;
+  const item={id:editId||String(Date.now()),name,category:fCat,season:document.getElementById('f-season').value,color:fCol,brand:document.getElementById('f-brand').value.trim(),notes:document.getElementById('f-notes').value.trim(),image:fImg,iconKey:fIcon,washStatus:fWash,washDays:parseInt(document.getElementById('f-days').value)||3,wornCount:0,price};
+  if(editId){const old=items.find(i=>i.id===editId);if(old)item.wornCount=old.wornCount||0;items=items.map(i=>i.id===editId?item:i);}
+  else items=[item,...items];
+  save();closeSheet('form-ol');renderW();
+}
+function delItem(){items=items.filter(i=>i.id!==editId);save();closeSheet('form-ol');renderW();}
+
+// DETAIL
+function openDetail(id){
+  detailId=id;const item=items.find(i=>i.id===id);if(!item)return;
+  const di=document.getElementById('d-img');
+  if(item.image){di.style.backgroundImage=`url(${item.image})`;di.style.backgroundSize='cover';di.style.backgroundPosition='center';di.innerHTML=`<button class="d-close" onclick="closeSheet('detail-ol')">✕</button>`;}
+  else{di.style.backgroundImage='';di.innerHTML=`<img src="${iconUrl(item.iconKey||'tshirt',80)}" style="width:80px;height:80px;image-rendering:pixelated" alt=""><button class="d-close" onclick="closeSheet('detail-ol')">✕</button>`;}
+  document.getElementById('d-name').textContent=item.name;
+  document.getElementById('d-tags').innerHTML=[
+    `<span class="dtag" style="background:var(--pink3)">${item.category}</span>`,
+    item.season?`<span class="dtag" style="background:var(--blue3)">${item.season}</span>`:'',
+    item.color?`<span class="dtag" style="background:#fff;display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:${CMAP[item.color]};display:inline-block;border:1px solid var(--dark)"></span>${item.color}</span>`:'',
+    item.brand?`<span class="dtag" style="background:var(--yellow)">${item.brand}</span>`:''
+  ].join('');
+  const u=item.price&&item.wornCount?(item.price/item.wornCount).toFixed(1):'-';
+  document.getElementById('d-cost').innerHTML=`<div class="dc"><span class="dc-n">¥${item.price||0}</span><span class="dc-l">购买价格</span></div><div class="dc"><span class="dc-n">${item.wornCount||0}次</span><span class="dc-l">穿着次数</span></div><div class="dc"><span class="dc-n">${u==='−'?'-':'¥'+u}</span><span class="dc-l">每次成本</span></div>`;
+  const wc=item.washStatus===2?'w2':item.washStatus===1&&item.wornCount>=(item.washDays||3)?'w1':'w0';
+  const dw=document.getElementById('d-wash');dw.className=`d-wash ${wc}`;
+  dw.textContent=item.washStatus===2?'🚫 需要清洗':item.washStatus===1&&item.wornCount>=(item.washDays||3)?`⚠️ 已穿${item.wornCount}次，该洗了`:`✅ 干净（已穿${item.wornCount||0}次）`;
+  const dn=document.getElementById('d-notes');
+  if(item.notes){dn.textContent=item.notes;dn.style.display='block';}else{dn.style.display='none';}
+  document.getElementById('detail-ol').classList.add('open');
+}
+function wearNow(){
+  const item=items.find(i=>i.id===detailId);if(!item)return;
+  if(!outfit.find(o=>o.id===item.id))outfit.push({id:item.id,name:item.name,image:item.image||'',iconKey:item.iconKey||'tshirt'});
+  closeSheet('detail-ol');goTab('today');renderToday();
+}
+function editNow(){
+  const item=items.find(i=>i.id===detailId);if(!item)return;
+  closeSheet('detail-ol');
+  editId=item.id;fImg=item.image||'';fIcon=item.iconKey||'tshirt';fCat=item.category;fCol=item.color||'黑';fWash=item.washStatus||0;
+  document.getElementById('form-title').textContent='EDIT ITEM';
+  document.getElementById('f-name').value=item.name;document.getElementById('f-brand').value=item.brand||'';
+  document.getElementById('f-notes').value=item.notes||'';document.getElementById('f-season').value=item.season||'四季';
+  document.getElementById('f-days').value=item.washDays||3;document.getElementById('f-price').value=item.price||'';
+  document.getElementById('btn-del').style.display='block';document.getElementById('btn-save').disabled=false;
+  const p=document.getElementById('img-prev');
+  if(fImg){p.style.backgroundImage=`url(${fImg})`;p.style.backgroundSize='cover';p.style.backgroundPosition='center';p.innerHTML='';}
+  else{p.style.backgroundImage='';p.innerHTML=`<span style="font-size:22px">📷</span><span style="font-size:11px;color:var(--text3);margin-top:3px">点击上传（覆盖图标）</span>`;}
+  document.getElementById('img-inp').value='';
+  setWash(fWash);renderIconGrid();renderFormCats();renderFormCols();
+  document.getElementById('form-ol').classList.add('open');
+}
+
+// TODAY
+function onDateChange(){loadDay(document.getElementById('date-inp').value);renderToday();}
+function renderToday(){
+  document.getElementById('t-count').textContent=outfit.length?`穿了 ${outfit.length} 件单品 ♡`:'还没有记录哦～';
+  const el=document.getElementById('outfit-list');
+  if(!outfit.length){el.innerHTML=`<div style="text-align:center;padding:16px;color:var(--text3);font-size:12px;font-weight:700">还没有添加单品～</div>`;return;}
+  el.innerHTML=outfit.map((o,i)=>{
+    const tc=o.image?`<div style="width:100%;height:100%;background:url(${o.image}) center/cover no-repeat"></div>`:`<img src="${iconUrl(o.iconKey||'tshirt',32)}" style="width:32px;height:32px;image-rendering:pixelated" alt="">`;
+    return `<div class="o-item"><div class="o-thumb">${tc}</div><div class="o-name">${o.name}</div><button class="o-rm" onclick="rmOutfit(${i})">✕</button></div>`;
+  }).join('');
+}
+function rmOutfit(i){outfit.splice(i,1);renderToday();}
+
+function openPicker(){
+  pickSel=outfit.map(o=>o.id);pickFil='全部';renderPickFilter();renderPickGrid();
+  document.getElementById('picker-ol').classList.add('open');
+}
+function renderPickFilter(){document.getElementById('pick-filter').innerHTML=['全部',...CATS].map(c=>`<button class="pf-pill${pickFil===c?' on':''}" onclick="setPF('${c}')">${c}</button>`).join('');}
+function setPF(c){pickFil=c;renderPickFilter();renderPickGrid();}
+function renderPickGrid(){
+  const filtered=items.filter(i=>pickFil==='全部'||i.category===pickFil);
+  const g=document.getElementById('pick-grid');
+  if(!filtered.length){g.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text3);font-size:12px;font-weight:700">这个分类还没有单品</div>`;return;}
+  g.innerHTML='';
+  filtered.forEach(item=>{
+    const sel=pickSel.includes(item.id);
+    const div=document.createElement('div');div.className='pi'+(sel?' on':'');div.onclick=()=>{const i=pickSel.indexOf(item.id);if(i>=0)pickSel.splice(i,1);else pickSel.push(item.id);renderPickGrid();};
+    const thumb=document.createElement('div');thumb.className='pi-thumb';
+    if(item.image){thumb.style.backgroundImage=`url(${item.image})`;thumb.style.backgroundSize='cover';thumb.style.backgroundPosition='center';}
+    else{const img=document.createElement('img');img.src=iconUrl(item.iconKey||'tshirt',40);img.style.cssText='width:40px;height:40px;image-rendering:pixelated;';thumb.appendChild(img);}
+    const name=document.createElement('div');name.className='pi-name';name.textContent=item.name;
+    const chk=document.createElement('div');chk.className='pi-chk';chk.textContent='✓';
+    div.appendChild(thumb);div.appendChild(name);div.appendChild(chk);g.appendChild(div);
+  });
+}
+function confirmPick(){
+  outfit=pickSel.map(id=>{const item=items.find(i=>i.id===id);return item?{id:item.id,name:item.name,image:item.image||'',iconKey:item.iconKey||'tshirt'}:null;}).filter(Boolean);
+  closeSheet('picker-ol');renderToday();
+}
+
+function saveToday(){
+  if(!outfit.length){alert('还没有选择单品哦～🎀');return;}
+  const date=document.getElementById('date-inp').value||todayStr();
+  const note=document.getElementById('note-inp').value.trim();
+  const existing=history.find(h=>h.date===date);
+  outfit.forEach(o=>{
+    const item=items.find(i=>i.id===o.id);
+    if(item){
+      const already=existing&&(existing.outfit_items||[]).find(oi=>oi.id===o.id);
+      if(!already){item.wornCount=(item.wornCount||0)+1;if(item.washStatus===0)item.washStatus=1;if(item.wornCount>=(item.washDays||3))item.washStatus=2;}
+    }
+  });
+  save();
+  const entry={date,outfit_items:JSON.parse(JSON.stringify(outfit)),outfit:outfit.map(o=>o.name),note};
+  const idx=history.findIndex(h=>h.date===date);
+  if(idx>=0)history[idx]=entry;else history.unshift(entry);
+  history.sort((a,b)=>b.date.localeCompare(a.date));
+  saveH();renderW();
+  alert('✅ 保存成功！♡');
+}
+
+// HISTORY
+function renderHistory(){
+  const w=document.getElementById('hist-wrap');
+  if(!history.length){w.innerHTML=`<div class="empty"><div class="empty-e">📖</div><div class="empty-t">还没有穿搭记录</div><div class="empty-s">在今日页面保存后显示</div></div>`;return;}
+  w.innerHTML=`<div class="hist-list">${history.map(h=>`<div class="hist-card"><div class="hist-date">🌿 ${h.date}</div><div class="hist-chips">${(h.outfit||[]).map(n=>`<span class="hist-chip">${n}</span>`).join('')}</div>${h.note?`<div class="hist-note">💭 ${h.note}</div>`:''}</div>`).join('')}</div>`;
+}
+
+function closeSheet(id){document.getElementById(id).classList.remove('open');}
+
+// APPLE ICON
+(function(){
+  const c=document.createElement('canvas');c.width=180;c.height=180;
+  const ctx=c.getContext('2d');
+  const bg=ctx.createLinearGradient(0,0,180,180);bg.addColorStop(0,'#ffd0e8');bg.addColorStop(1,'#ffaac8');
+  ctx.fillStyle='#3a1040';ctx.fillRect(0,0,180,180);
+  ctx.fillStyle=bg;ctx.fillRect(8,8,164,164);
+  const S=180/24;
+  const f=(x,y,w,h,col)=>{ctx.fillStyle=col;ctx.fillRect(x*S,y*S,w*S,h*S);};
+  f(7,2,10,1,'#3a1040');f(5,3,14,1,'#3a1040');f(4,4,16,1,'#3a1040');f(3,5,18,1,'#3a1040');f(3,6,1,10,'#3a1040');f(20,6,1,10,'#3a1040');f(3,16,18,1,'#3a1040');f(4,17,16,1,'#3a1040');
+  f(7,2,10,1,'#ffd878');f(5,3,14,1,'#e8c060');f(4,4,16,1,'#ffd878');f(3,5,18,1,'#e8c060');f(3,6,1,10,'#ffd878');f(20,6,1,10,'#ffd878');f(3,16,18,1,'#e8c060');f(4,17,14,1,'#ffd878');
+  f(4,5,16,12,'#d8f0ff');f(5,5,14,12,'#e8f8ff');f(6,6,4,3,'#ffffff');
+  f(5,8,12,1,'rgba(255,255,255,0.5)');f(5,11,10,1,'rgba(255,255,255,0.4)');
+  f(10,17,4,1,'#3a1040');f(10,18,4,1,'#e8c060');f(11,19,2,1,'#3a1040');f(11,20,2,1,'#e8c060');f(11,21,2,1,'#3a1040');
+  f(8,21,8,1,'#3a1040');f(8,22,8,1,'#e8c060');f(7,22,10,1,'#3a1040');
+  f(8,1,2,2,'#ff80b0');f(14,1,2,2,'#ff80b0');f(10,1,4,1,'#ff9ec8');f(10,2,4,1,'#ffd0e8');
+  f(2,3,1,1,'#ffd878');f(21,4,1,1,'#ffd878');f(1,12,1,1,'#ff9ec8');f(22,10,1,1,'#ff9ec8');
+  let link=document.querySelector('link[rel="apple-touch-icon"]');
+  if(!link){link=document.createElement('link');link.rel='apple-touch-icon';document.head.appendChild(link);}
+  link.href=c.toDataURL('image/png');
+})();
+
+drawNavIcons();load();renderCats();renderW();
 </script>
 </body>
 </html>
