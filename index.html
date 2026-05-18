@@ -11,68 +11,71 @@
   --pink:#ff80b0;--pink2:#ffaac8;--pink3:#ffd0e8;--pink4:#fff0f8;
   --blue:#80c8ff;--blue2:#b0dcff;--blue3:#d8f0ff;--blue4:#eef8ff;
   --green:#50d090;--green2:#80e8b0;--green3:#c0ffe0;--green4:#e0fff0;
-  --yellow:#ffd878;--red:#ff6878;
+  --aqua:#60d8f0;--aqua2:#90e8f8;--aqua3:#c8f4ff;--aqua4:#eafcff;
+  --yellow:#ffd878;--red:#ff6878;--purple:#c878e8;
   --dark:#3a1040;--mid:#7a4880;--light:#c8a0c8;
   --white:#fffafd;--text:#3a1040;--text2:#7a4880;--text3:#b890b8;
   --border:#f0a8d0;
 }
 body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:var(--text);background:var(--pink4);}
 
-/* ── PAGES ── */
 .page{display:none;min-height:100vh;padding-bottom:90px;}
 .page.active{display:block;}
 #page-wardrobe{background:var(--pink4);background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(255,160,200,0.07) 15px,rgba(255,160,200,0.07) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(255,160,200,0.07) 15px,rgba(255,160,200,0.07) 16px);}
 #page-today{background:var(--blue4);background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(100,180,255,0.07) 15px,rgba(100,180,255,0.07) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(100,180,255,0.07) 15px,rgba(100,180,255,0.07) 16px);}
 #page-history{background:var(--green4);background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(80,200,130,0.07) 15px,rgba(80,200,130,0.07) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(80,200,130,0.07) 15px,rgba(80,200,130,0.07) 16px);}
+#page-laundry{background:var(--aqua4);background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(80,200,240,0.07) 15px,rgba(80,200,240,0.07) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(80,200,240,0.07) 15px,rgba(80,200,240,0.07) 16px);}
 
-/* ── NAV ── */
+/* BUBBLES */
+.bubble{position:absolute;border-radius:50%;background:rgba(255,255,255,0.5);border:2px solid rgba(255,255,255,0.8);animation:float var(--d,4s) var(--dl,0s) infinite ease-in-out;}
+@keyframes float{0%,100%{transform:translateY(0) scale(1);opacity:0.6;}50%{transform:translateY(-12px) scale(1.1);opacity:1;}}
+
+/* NAV */
 .nav{position:fixed;bottom:0;left:0;right:0;background:#fff0f8;border-top:3px solid var(--dark);display:flex;z-index:300;padding-bottom:env(safe-area-inset-bottom);}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0 8px;cursor:pointer;font-size:10px;gap:3px;color:var(--text3);font-family:'Noto Sans SC',sans-serif;border:none;background:transparent;}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 0 7px;cursor:pointer;font-size:9px;gap:2px;color:var(--text3);font-family:'Noto Sans SC',sans-serif;border:none;background:transparent;}
 .nav-btn.active{color:var(--dark);}
 .nav-btn:nth-child(1).active{background:var(--pink3);}
 .nav-btn:nth-child(2).active{background:var(--blue3);}
 .nav-btn:nth-child(3).active{background:var(--green3);}
-.nav-icon{width:24px;height:24px;image-rendering:pixelated;}
+.nav-btn:nth-child(4).active{background:var(--aqua3);}
+.nav-icon{width:22px;height:22px;image-rendering:pixelated;}
 
-/* ── PIXEL HELPERS ── */
-.px-btn{border:2px solid var(--dark);cursor:pointer;font-family:'Press Start 2P',monospace;font-weight:700;box-shadow:3px 3px 0 var(--dark);transition:all 0.1s;}
-.px-btn:active{box-shadow:none;transform:translate(3px,3px);}
+/* PIXEL COMMON */
 .px-card{background:var(--white);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--dark);}
+.px-btn{border:2px solid var(--dark);cursor:pointer;font-family:'Press Start 2P',monospace;box-shadow:2px 2px 0 var(--dark);}
+.px-btn:active{box-shadow:none;transform:translate(2px,2px);}
 
-/* ── PAGE 1: WARDROBE ── */
+/* ── PAGE 1 ── */
 .w-header{background:linear-gradient(180deg,#ffd0e8,#ffaac8);padding:20px 16px 18px;border-bottom:3px solid var(--dark);position:relative;overflow:hidden;}
-.w-header::before{content:'● ○ ● ○ ● ○ ● ○ ● ○ ● ○ ● ○ ●';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
+.w-header::before{content:'● ○ ● ○ ● ○ ● ○ ● ○ ● ○ ●';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
 .w-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 8px,transparent 8px,transparent 12px);}
 .w-bow{text-align:center;font-size:26px;margin-bottom:6px;position:relative;}
-.w-title{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--dark);text-align:center;margin-bottom:3px;position:relative;text-shadow:1px 1px 0 rgba(255,255,255,0.5);}
+.w-title{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--dark);text-align:center;margin-bottom:3px;position:relative;}
 .w-sub{font-size:11px;color:var(--mid);text-align:center;margin-bottom:14px;position:relative;}
 .w-stats{display:flex;gap:8px;position:relative;}
 .stat-box{background:var(--white);border:2px solid var(--dark);box-shadow:2px 2px 0 var(--dark);flex:1;text-align:center;padding:8px 4px;}
 .stat-num{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--pink);display:block;}
 .stat-lbl{font-size:9px;color:var(--text3);margin-top:3px;display:block;}
-
 .w-toolbar{display:flex;gap:8px;padding:12px 14px 0;}
 .w-search{flex:1;background:var(--white);border:2px solid var(--dark);padding:9px 12px 9px 36px;font-size:13px;color:var(--text);outline:none;font-family:inherit;box-shadow:2px 2px 0 var(--dark);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%23b890b8' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;}
-.w-sort-btn{background:var(--yellow);border:2px solid var(--dark);padding:9px 12px;font-size:11px;color:var(--dark);cursor:pointer;font-family:inherit;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
-.w-sort-btn:active{box-shadow:none;transform:translate(2px,2px);}
-
+.w-sort{background:var(--yellow);border:2px solid var(--dark);padding:9px 12px;font-size:11px;color:var(--dark);cursor:pointer;font-family:inherit;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
+.w-sort:active{box-shadow:none;transform:translate(2px,2px);}
 .cats-wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 14px;scrollbar-width:none;}
 .cats-wrap::-webkit-scrollbar{display:none;}
 .cat-pill{white-space:nowrap;padding:6px 12px;font-size:11px;border:2px solid var(--dark);cursor:pointer;flex-shrink:0;font-family:inherit;background:var(--white);color:var(--text2);font-weight:700;box-shadow:2px 2px 0 var(--dark);}
 .cat-pill:active{box-shadow:none;transform:translate(2px,2px);}
 .cat-pill.on{background:var(--pink);color:#fff;}
-
 .sec-head{font-size:10px;font-weight:700;color:var(--dark);padding:10px 14px 6px;display:flex;align-items:center;gap:8px;font-family:'Press Start 2P',monospace;}
 .sec-head::after{content:'';flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 4px,transparent 4px,transparent 8px);}
-
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:14px;padding:0 14px 14px;}
 .card{background:var(--white);border:2px solid var(--dark);box-shadow:4px 4px 0 var(--dark);cursor:pointer;display:flex;flex-direction:column;}
 .card:active{box-shadow:none;transform:translate(4px,4px);}
 .card-img{height:155px;flex-shrink:0;background:linear-gradient(135deg,var(--pink3),var(--blue3));display:flex;align-items:center;justify-content:center;border-bottom:2px solid var(--dark);position:relative;overflow:hidden;background-size:cover;background-position:center;}
 .wash-bdg{position:absolute;top:6px;right:6px;padding:2px 6px;font-size:9px;font-weight:700;border:2px solid var(--dark);font-family:'Press Start 2P',monospace;}
 .bdg-clean{background:#78e8a0;color:var(--dark);}
-.bdg-warn{background:var(--yellow);color:var(--dark);}
-.bdg-dirty{background:var(--red);color:#fff;}
+.bdg-worn{background:#ffd878;color:var(--dark);}
+.bdg-wash{background:#ff9060;color:#fff;}
+.bdg-dry{background:#60c8f0;color:var(--dark);}
 .cost-bdg{position:absolute;bottom:6px;left:6px;padding:2px 6px;font-size:9px;font-weight:700;background:var(--yellow);color:var(--dark);border:2px solid var(--dark);}
 .card-body{padding:9px 10px 10px;}
 .card-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -82,7 +85,6 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
 .tag-b{background:var(--blue3);}
 .cdot{width:10px;height:10px;border:1.5px solid var(--dark);flex-shrink:0;display:inline-block;}
 .card-brand{font-size:10px;color:var(--text3);margin-top:3px;}
-
 .undies-list{display:flex;flex-direction:column;gap:8px;padding:0 14px 14px;}
 .u-row{background:var(--white);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--dark);padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;}
 .u-row:active{box-shadow:none;transform:translate(3px,3px);}
@@ -90,24 +92,21 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
 .u-info{flex:1;min-width:0;}
 .u-name{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .u-meta{font-size:10px;color:var(--text3);margin-top:2px;display:flex;gap:5px;align-items:center;}
-.u-cost{font-size:10px;color:var(--pink);font-weight:700;}
-
-.fab{position:fixed;bottom:78px;right:16px;width:52px;height:52px;background:var(--pink);border:3px solid var(--dark);color:#fff;font-size:28px;cursor:pointer;box-shadow:4px 4px 0 var(--dark);display:flex;align-items:center;justify-content:center;z-index:200;font-weight:700;line-height:1;}
+.fab{position:fixed;bottom:80px;right:16px;width:52px;height:52px;background:var(--pink);border:3px solid var(--dark);color:#fff;font-size:28px;cursor:pointer;box-shadow:4px 4px 0 var(--dark);display:flex;align-items:center;justify-content:center;z-index:200;font-weight:700;line-height:1;}
 .fab:active{box-shadow:none;transform:translate(4px,4px);}
 .fab.hidden{display:none;}
-
-.empty{text-align:center;padding:60px 20px;color:var(--text3);}
-.empty-e{font-size:48px;margin-bottom:12px;}
-.empty-t{font-size:13px;color:var(--text2);margin-bottom:6px;font-weight:700;}
+.empty{text-align:center;padding:50px 20px;color:var(--text3);}
+.empty-e{font-size:44px;margin-bottom:10px;}
+.empty-t{font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:700;}
 .empty-s{font-size:11px;}
 
-/* ── PAGE 2: TODAY ── */
+/* ── PAGE 2 ── */
 .t-header{background:linear-gradient(180deg,#a8d8ff,#68b8f0);padding:20px 16px 18px;border-bottom:3px solid var(--dark);position:relative;overflow:hidden;}
-.t-header::before{content:'★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
+.t-header::before{content:'★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
 .t-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 8px,transparent 8px,transparent 12px);}
 .t-date-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;position:relative;}
-.t-date-picker{background:rgba(255,255,255,0.9);border:2px solid var(--dark);padding:4px 8px;font-size:12px;color:var(--text);font-family:inherit;cursor:pointer;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
-.t-title{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--dark);margin-bottom:3px;position:relative;text-shadow:1px 1px 0 rgba(255,255,255,0.5);}
+.t-date-pick{background:rgba(255,255,255,0.9);border:2px solid var(--dark);padding:4px 8px;font-size:12px;color:var(--text);font-family:inherit;cursor:pointer;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
+.t-title{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--dark);margin-bottom:3px;position:relative;}
 .t-count{font-size:11px;color:#2a5080;position:relative;}
 .sec-title{font-size:10px;font-weight:700;color:var(--dark);padding:12px 14px 6px;display:flex;align-items:center;gap:8px;font-family:'Press Start 2P',monospace;}
 .sec-title::after{content:'';flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 4px,transparent 4px,transparent 8px);}
@@ -115,27 +114,57 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
 .o-item{background:var(--white);border:2px solid var(--dark);box-shadow:2px 2px 0 var(--dark);padding:10px 12px;display:flex;align-items:center;gap:10px;}
 .o-thumb{width:42px;height:42px;background:linear-gradient(135deg,var(--blue3),#c8e8ff);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--dark);overflow:hidden;}
 .o-name{flex:1;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.o-rm{background:var(--red);border:2px solid var(--dark);color:#fff;font-size:14px;cursor:pointer;padding:3px 7px;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
+.o-rm{background:var(--red);border:2px solid var(--dark);color:#fff;font-size:13px;cursor:pointer;padding:3px 7px;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
 .o-rm:active{box-shadow:none;transform:translate(2px,2px);}
 .add-btn{margin:10px 14px 0;padding:12px;border:2px dashed var(--dark);background:rgba(255,255,255,0.6);color:var(--dark);font-size:12px;cursor:pointer;width:calc(100% - 28px);font-family:inherit;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;}
 .note-wrap{margin:10px 14px 0;}
 .note-inp{width:100%;border:2px solid var(--dark);padding:10px 12px;font-size:13px;color:var(--text);outline:none;background:var(--white);font-family:inherit;resize:none;min-height:70px;box-shadow:2px 2px 0 var(--dark);}
-.note-inp:focus{outline:2px solid var(--blue);outline-offset:2px;}
-.save-btn{margin:12px 14px 0;padding:14px;border:3px solid var(--dark);background:var(--blue);color:var(--dark);font-size:11px;font-weight:700;cursor:pointer;width:calc(100% - 28px);font-family:'Press Start 2P',monospace;box-shadow:4px 4px 0 var(--dark);display:block;}
+.save-btn{margin:12px 14px 0;padding:13px;border:3px solid var(--dark);background:var(--blue);color:var(--dark);font-size:11px;font-weight:700;cursor:pointer;width:calc(100% - 28px);font-family:'Press Start 2P',monospace;box-shadow:4px 4px 0 var(--dark);display:block;}
 .save-btn:active{box-shadow:none;transform:translate(4px,4px);}
 
-/* ── PAGE 3: HISTORY ── */
+/* ── PAGE 3 ── */
 .h-header{background:linear-gradient(180deg,#80e8b0,#38c080);padding:20px 16px 18px;border-bottom:3px solid var(--dark);position:relative;overflow:hidden;}
-.h-header::before{content:'♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
+.h-header::before{content:'♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣ ♠ ♣';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:4px;}
 .h-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 8px,transparent 8px,transparent 12px);}
 .h-sub{font-size:8px;color:rgba(255,255,255,0.85);font-family:'Press Start 2P',monospace;margin-bottom:4px;position:relative;}
-.h-title{font-size:13px;font-weight:700;color:var(--dark);font-family:'Press Start 2P',monospace;position:relative;text-shadow:1px 1px 0 rgba(255,255,255,0.5);}
+.h-title{font-size:13px;font-weight:700;color:var(--dark);font-family:'Press Start 2P',monospace;position:relative;}
 .hist-list{padding:0 14px;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
 .hist-card{background:var(--white);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--dark);padding:12px;}
-.hist-date{font-size:10px;color:#2a6040;margin-bottom:6px;font-family:'Press Start 2P',monospace;}
+.hist-date{font-size:10px;color:#2a6040;margin-bottom:6px;font-family:'Press Start 2P',monospace;display:flex;align-items:center;justify-content:space-between;}
+.hist-date-del{background:var(--red);border:1.5px solid var(--dark);color:#fff;font-size:9px;cursor:pointer;padding:2px 6px;font-weight:700;box-shadow:1px 1px 0 var(--dark);}
+.hist-date-del:active{box-shadow:none;transform:translate(1px,1px);}
 .hist-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:4px;}
 .hist-chip{font-size:10px;background:var(--green3);color:var(--dark);border:1.5px solid var(--dark);padding:2px 7px;font-weight:700;}
 .hist-note{font-size:11px;color:#2a6040;line-height:1.6;background:var(--green4);border:1.5px solid var(--green);padding:6px 10px;margin-top:6px;}
+
+/* ── PAGE 4: LAUNDRY ── */
+.l-header{background:linear-gradient(180deg,#90e8f8,#40c8e8);padding:20px 16px 18px;border-bottom:3px solid var(--dark);position:relative;overflow:hidden;}
+.l-header::before{content:'○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○';position:absolute;top:6px;left:0;right:0;text-align:center;font-size:10px;color:rgba(255,255,255,0.7);letter-spacing:5px;}
+.l-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 8px,transparent 8px,transparent 12px);}
+.l-deco{text-align:center;font-size:24px;margin-bottom:6px;position:relative;letter-spacing:6px;}
+.l-title{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--dark);text-align:center;margin-bottom:3px;position:relative;}
+.l-sub{font-size:11px;color:#1a5060;text-align:center;position:relative;}
+.l-stats{display:flex;gap:8px;margin-top:12px;position:relative;}
+.l-stat{background:rgba(255,255,255,0.8);border:2px solid var(--dark);box-shadow:2px 2px 0 var(--dark);flex:1;text-align:center;padding:8px 4px;}
+.l-stat-n{font-family:'Press Start 2P',monospace;font-size:13px;color:var(--aqua);display:block;}
+.l-stat-l{font-size:9px;color:var(--text3);margin-top:2px;display:block;}
+.laundry-section{margin:0 14px 14px;}
+.l-sec-head{font-size:10px;font-weight:700;color:var(--dark);padding:12px 0 8px;display:flex;align-items:center;gap:8px;font-family:'Press Start 2P',monospace;}
+.l-sec-head::after{content:'';flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 4px,transparent 4px,transparent 8px);}
+.l-items{display:flex;flex-direction:column;gap:8px;}
+.l-item{background:var(--white);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--dark);padding:11px 12px;display:flex;align-items:center;gap:10px;position:relative;}
+.l-thumb{width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--dark);overflow:hidden;background:linear-gradient(135deg,var(--aqua3),var(--blue3));background-size:cover;background-position:center;}
+.l-info{flex:1;min-width:0;}
+.l-name{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.l-meta{font-size:10px;color:var(--text3);margin-top:2px;}
+.l-actions{display:flex;gap:6px;flex-shrink:0;}
+.l-action-btn{padding:5px 8px;font-size:9px;font-weight:700;border:2px solid var(--dark);cursor:pointer;font-family:'Press Start 2P',monospace;box-shadow:2px 2px 0 var(--dark);white-space:nowrap;}
+.l-action-btn:active{box-shadow:none;transform:translate(2px,2px);}
+.btn-towash{background:#ff9060;color:#fff;}
+.btn-todry{background:var(--aqua2);color:var(--dark);}
+.btn-toclean{background:#78e8a0;color:var(--dark);}
+.btn-undo{background:var(--white);color:var(--text3);font-size:8px;}
+.l-empty{text-align:center;padding:20px;color:var(--text3);font-size:11px;border:2px dashed var(--border);background:rgba(255,255,255,0.5);}
 
 /* ── SHEETS ── */
 .overlay{position:fixed;inset:0;background:rgba(58,16,64,0.45);z-index:1000;display:none;align-items:flex-end;justify-content:center;}
@@ -143,7 +172,7 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
 .sheet{background:var(--pink4);border-top:3px solid var(--dark);width:100%;max-height:93vh;overflow-y:auto;box-shadow:0 -4px 0 var(--dark);padding-bottom:env(safe-area-inset-bottom);}
 .sheet::before{content:'';display:block;width:40px;height:4px;background:var(--dark);margin:10px auto 0;}
 .sh-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 0;}
-.sh-title{font-size:12px;font-weight:700;color:var(--dark);font-family:'Press Start 2P',monospace;}
+.sh-title{font-size:11px;font-weight:700;color:var(--dark);font-family:'Press Start 2P',monospace;}
 .sh-close{background:var(--red);border:2px solid var(--dark);font-size:16px;cursor:pointer;color:#fff;padding:3px 8px;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
 .sh-close:active{box-shadow:none;transform:translate(2px,2px);}
 .sh-body{padding:12px 16px 0;}
@@ -165,12 +194,13 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
 .col-row{display:flex;flex-wrap:wrap;gap:5px;}
 .csw{width:22px;height:22px;cursor:pointer;border:2px solid var(--dark);flex-shrink:0;}
 .csw.on{outline:3px solid var(--dark);outline-offset:2px;}
-.wash-row{display:flex;gap:6px;}
-.wash-opt{flex:1;padding:8px 4px;border:2px solid var(--dark);background:var(--white);font-size:10px;cursor:pointer;font-family:inherit;text-align:center;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
+.wash-row{display:flex;gap:6px;flex-wrap:wrap;}
+.wash-opt{padding:7px 8px;border:2px solid var(--dark);background:var(--white);font-size:10px;cursor:pointer;font-family:inherit;text-align:center;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
 .wash-opt:active{box-shadow:none;transform:translate(2px,2px);}
 .wash-opt.w0.on{background:#78e8a0;}
 .wash-opt.w1.on{background:var(--yellow);}
-.wash-opt.w2.on{background:var(--red);color:#fff;}
+.wash-opt.w2.on{background:#ff9060;color:#fff;}
+.wash-opt.w3.on{background:var(--aqua2);}
 .wash-days{display:flex;align-items:center;gap:8px;margin-top:7px;}
 .wdl{font-size:11px;color:var(--text2);white-space:nowrap;font-weight:700;}
 .wdi{width:50px;border:2px solid var(--dark);padding:5px;font-size:13px;color:var(--text);outline:none;background:var(--white);font-family:inherit;text-align:center;}
@@ -180,8 +210,6 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
 .btn-save{flex:2;padding:11px 0;border:2px solid var(--dark);background:var(--pink);color:#fff;font-size:10px;cursor:pointer;font-family:'Press Start 2P',monospace;font-weight:700;box-shadow:3px 3px 0 var(--dark);}
 .btn-save:active{box-shadow:none;transform:translate(3px,3px);}
 .btn-save:disabled{background:#e8d0e8;color:var(--text3);box-shadow:none;}
-
-/* detail */
 .d-img{height:200px;background:linear-gradient(135deg,var(--pink3),var(--blue3));background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--dark);position:relative;}
 .d-close{position:absolute;top:10px;right:10px;background:var(--red);border:2px solid var(--dark);color:#fff;width:30px;height:30px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:700;box-shadow:2px 2px 0 var(--dark);}
 .d-close:active{box-shadow:none;transform:translate(2px,2px);}
@@ -194,15 +222,13 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
 .dc-n{font-family:'Press Start 2P',monospace;font-size:12px;color:var(--dark);display:block;}
 .dc-l{font-size:9px;color:var(--mid);margin-top:3px;display:block;}
 .d-wash{padding:8px 12px;margin-bottom:10px;font-size:12px;font-weight:700;border:2px solid var(--dark);}
-.d-wash.w0{background:#78e8a0;}.d-wash.w1{background:var(--yellow);}.d-wash.w2{background:var(--red);color:#fff;}
+.d-wash.w0{background:#78e8a0;}.d-wash.w1{background:var(--yellow);}.d-wash.w2{background:#ff9060;color:#fff;}.d-wash.w3{background:var(--aqua2);}
 .d-notes{font-size:12px;color:var(--text2);line-height:1.6;background:var(--blue3);border:1.5px solid #aad0f8;padding:8px 10px;margin-bottom:12px;}
 .d-actions{display:flex;gap:8px;}
 .btn-wear{flex:1;padding:11px 0;border:2px solid var(--dark);background:var(--blue);color:var(--dark);font-size:9px;cursor:pointer;font-family:'Press Start 2P',monospace;box-shadow:3px 3px 0 var(--dark);}
 .btn-wear:active{box-shadow:none;transform:translate(3px,3px);}
 .btn-edit{flex:1;padding:11px 0;border:2px solid var(--dark);background:var(--pink3);color:var(--dark);font-size:9px;cursor:pointer;font-family:'Press Start 2P',monospace;box-shadow:3px 3px 0 var(--dark);}
 .btn-edit:active{box-shadow:none;transform:translate(3px,3px);}
-
-/* picker */
 .pick-filter{display:flex;gap:5px;overflow-x:auto;padding:10px 16px 0;scrollbar-width:none;}
 .pick-filter::-webkit-scrollbar{display:none;}
 .pf-pill{white-space:nowrap;padding:5px 10px;font-size:10px;border:2px solid var(--dark);cursor:pointer;flex-shrink:0;font-family:inherit;background:var(--white);color:var(--text2);font-weight:700;box-shadow:2px 2px 0 var(--dark);}
@@ -216,10 +242,8 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
 .pi-name{font-size:10px;text-align:center;padding:5px 3px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700;}
 .pi-chk{position:absolute;top:4px;right:4px;width:18px;height:18px;background:var(--pink);display:none;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;border:1.5px solid var(--dark);}
 .pi.on .pi-chk{display:flex;}
-.pick-ok{margin:0 16px 20px;padding:13px;border:3px solid var(--dark);background:var(--pink);color:#fff;font-size:10px;font-weight:700;cursor:pointer;width:calc(100% - 32px);font-family:'Press Start 2P',monospace;box-shadow:4px 4px 0 var(--dark);}
+.pick-ok{margin:0 16px 20px;padding:13px;border:3px solid var(--dark);background:var(--pink);color:#fff;font-size:10px;font-weight:700;cursor:pointer;width:calc(100% - 32px);font-family:'Press Start 2P',monospace;box-shadow:4px 4px 0 var(--dark);display:block;}
 .pick-ok:active{box-shadow:none;transform:translate(4px,4px);}
-
-/* sort */
 .sort-bd{display:none;position:fixed;inset:0;background:rgba(58,16,64,0.4);z-index:1999;}
 .sort-menu{position:fixed;bottom:0;left:0;right:0;background:var(--pink4);border-top:3px solid var(--dark);padding:14px 16px 36px;z-index:2000;transform:translateY(100%);transition:transform 0.2s;}
 .sort-menu.open{transform:translateY(0);}
@@ -227,15 +251,13 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
 .sort-title{font-size:10px;font-weight:700;color:var(--dark);margin-bottom:10px;font-family:'Press Start 2P',monospace;}
 .sort-opt{padding:12px 0;border-bottom:1px dashed var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:13px;color:var(--text2);font-weight:700;}
 .sort-opt.on{color:var(--pink);}
-
-/* recover */
 .recover-btn{margin:10px 14px 0;width:calc(100% - 28px);padding:10px;border:3px solid var(--dark);background:var(--yellow);color:var(--dark);font-family:'Press Start 2P',monospace;font-size:9px;cursor:pointer;box-shadow:3px 3px 0 var(--dark);display:block;}
 .recover-btn:active{box-shadow:none;transform:translate(3px,3px);}
 </style>
 </head>
 <body>
 
-<!-- PAGE 1: WARDROBE -->
+<!-- PAGE 1 -->
 <div class="page active" id="page-wardrobe">
   <div class="w-header">
     <div class="w-bow">🎀</div>
@@ -251,19 +273,19 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
   <button class="recover-btn" id="recover-btn" onclick="recoverData()">🔍 恢复丢失的数据</button>
   <div class="w-toolbar">
     <input class="w-search" id="search-inp" placeholder="搜索名称、品牌…" oninput="renderW()">
-    <button class="w-sort-btn" onclick="openSort()">排序▼</button>
+    <button class="w-sort" onclick="openSort()">排序▼</button>
   </div>
   <div class="cats-wrap" id="cats-bar"></div>
   <div id="w-content"></div>
   <button class="fab" id="fab" onclick="openAdd()">+</button>
 </div>
 
-<!-- PAGE 2: TODAY -->
+<!-- PAGE 2 -->
 <div class="page" id="page-today">
   <div class="t-header">
     <div class="t-date-row">
       <span style="font-size:16px">📅</span>
-      <input type="date" class="t-date-picker" id="date-inp" onchange="onDateChange()">
+      <input type="date" class="t-date-pick" id="date-inp" onchange="onDateChange()">
     </div>
     <div class="t-title">TODAY'S OUTFIT</div>
     <div class="t-count" id="t-count">还没有记录哦～</div>
@@ -276,7 +298,7 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
   <button class="save-btn" onclick="saveToday()">SAVE ♡</button>
 </div>
 
-<!-- PAGE 3: HISTORY -->
+<!-- PAGE 3 -->
 <div class="page" id="page-history">
   <div class="h-header">
     <div class="h-sub">OUTFIT DIARY</div>
@@ -285,19 +307,37 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
   <div id="hist-wrap"></div>
 </div>
 
+<!-- PAGE 4 -->
+<div class="page" id="page-laundry">
+  <div class="l-header" style="position:relative;overflow:hidden">
+    <div class="l-deco">🧺 🫧 🧼</div>
+    <div class="l-title">LAUNDRY TIME</div>
+    <div class="l-sub">洗干净才是好孩子 ✨</div>
+    <div class="l-stats">
+      <div class="l-stat"><span class="l-stat-n" id="l-wash-count">0</span><span class="l-stat-l">🧺 待清洗</span></div>
+      <div class="l-stat"><span class="l-stat-n" id="l-dry-count">0</span><span class="l-stat-l">🌬️ 晾晒中</span></div>
+    </div>
+  </div>
+  <div id="laundry-content"></div>
+</div>
+
 <!-- NAV -->
 <nav class="nav">
   <button class="nav-btn active" id="nb-wardrobe" onclick="goTab('wardrobe')">
-    <canvas class="nav-icon" id="ni-0" width="24" height="24"></canvas>
+    <canvas class="nav-icon" id="ni-0" width="22" height="22"></canvas>
     <span>衣橱</span>
   </button>
   <button class="nav-btn" id="nb-today" onclick="goTab('today')">
-    <canvas class="nav-icon" id="ni-1" width="24" height="24"></canvas>
+    <canvas class="nav-icon" id="ni-1" width="22" height="22"></canvas>
     <span>今日</span>
   </button>
   <button class="nav-btn" id="nb-history" onclick="goTab('history')">
-    <canvas class="nav-icon" id="ni-2" width="24" height="24"></canvas>
+    <canvas class="nav-icon" id="ni-2" width="22" height="22"></canvas>
     <span>记录</span>
+  </button>
+  <button class="nav-btn" id="nb-laundry" onclick="goTab('laundry')">
+    <canvas class="nav-icon" id="ni-3" width="22" height="22"></canvas>
+    <span>洗衣</span>
   </button>
 </nav>
 
@@ -313,7 +353,7 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
   <div class="sort-opt" id="so-5" onclick="setSort(5)"><span>价格 高→低</span><span id="sc-5" style="display:none">✓</span></div>
 </div>
 
-<!-- FORM SHEET -->
+<!-- FORM -->
 <div class="overlay" id="form-ol" onclick="if(event.target===this)closeSheet('form-ol')">
   <div class="sheet" onclick="event.stopPropagation()">
     <div class="sh-head">
@@ -346,13 +386,14 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
         <div class="fl">WASH STATUS</div>
         <div class="wash-row">
           <button class="wash-opt w0 on" id="wo-0" onclick="setWash(0)">✅ 干净</button>
-          <button class="wash-opt w1" id="wo-1" onclick="setWash(1)">⚠️ 穿过</button>
-          <button class="wash-opt w2" id="wo-2" onclick="setWash(2)">🚫 要洗</button>
+          <button class="wash-opt w1" id="wo-1" onclick="setWash(1)">👕 穿过</button>
+          <button class="wash-opt w2" id="wo-2" onclick="setWash(2)">🧺 要洗</button>
+          <button class="wash-opt w3" id="wo-3" onclick="setWash(3)">🌬️ 晾晒</button>
         </div>
         <div class="wash-days">
-          <span class="wdl">穿几天提醒洗：</span>
+          <span class="wdl">穿几次提醒洗：</span>
           <input class="wdi" id="f-days" type="number" min="1" max="30" value="3">
-          <span style="font-size:12px;color:var(--text2);font-weight:700">天</span>
+          <span style="font-size:12px;color:var(--text2);font-weight:700">次</span>
         </div>
       </div>
       <div class="field"><div class="fl">NOTES</div><textarea class="inp" id="f-notes" placeholder="备注…" style="resize:vertical;min-height:52px"></textarea></div>
@@ -364,7 +405,7 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
   </div>
 </div>
 
-<!-- DETAIL SHEET -->
+<!-- DETAIL -->
 <div class="overlay" id="detail-ol" onclick="if(event.target===this)closeSheet('detail-ol')">
   <div class="sheet" onclick="event.stopPropagation()">
     <div class="d-img" id="d-img"><button class="d-close" onclick="closeSheet('detail-ol')">✕</button></div>
@@ -382,7 +423,7 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
   </div>
 </div>
 
-<!-- PICKER SHEET -->
+<!-- PICKER -->
 <div class="overlay" id="picker-ol" onclick="if(event.target===this)closeSheet('picker-ol')">
   <div class="sheet" onclick="event.stopPropagation()">
     <div class="sh-head"><span class="sh-title">SELECT ITEMS</span><button class="sh-close" onclick="closeSheet('picker-ol')">✕</button></div>
@@ -396,25 +437,27 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;min-height:100vh;color:
 const CATS=['上衣','裤子','裙子','外套','鞋子','包包','配饰','内衣','内裤','其他'];
 const COLORS=['黑','白','灰','米','粉','红','橙','黄','绿','蓝','紫','棕'];
 const CMAP={黑:'#1a1a1a',白:'#f0ede8',灰:'#9e9e9e',米:'#e8dcc8',粉:'#f4a7b9',红:'#e53935',橙:'#fb8c00',黄:'#fdd835',绿:'#43a047',蓝:'#1e88e5',紫:'#8e24aa',棕:'#6d4c41'};
+// washStatus: 0=干净 1=穿过 2=要洗 3=晾晒中
+const WLABELS=['✅ 干净','👕 穿过','🧺 要洗','🌬️ 晾晒中'];
+const WCLASSES=['bdg-clean','bdg-worn','bdg-wash','bdg-dry'];
 const BRA=['bra','bra2','strapless'],UND=['brief','boxer','highwaist','thong','boyshort'],INNER=['内衣','内裤'];
 const ILABELS={tshirt:'T恤',shirt:'衬衫',knit:'针织衫',camisole:'吊带',crop:'抹胸',sportbra:'运动内衣',jeans:'牛仔裤',widepants:'阔腿裤',shorts:'短裤',leggings:'打底裤',suitpants:'西装裤',drapepants:'垂感裤',yogapants:'瑜伽裤',dress:'连衣裙',slipdress:'吊带裙',skirt:'半身裙',pleated:'百褶裙',coat:'风衣',blazer:'西装',cardigan:'开衫',puffer:'羽绒服',jacket:'外套',uv:'防晒衣',heels:'高跟鞋',sneakers:'运动鞋',boots:'靴子',sandals:'凉鞋',loafers:'乐福鞋',tote:'托特包',crossbody:'斜挎包',handbag:'手提包',bucket:'水桶包',hat:'帽子',scarf:'围巾',belt:'腰带',earrings:'耳环',necklace:'项链',bra:'内衣',bra2:'无钢圈',strapless:'抹胸内衣',brief:'三角裤',boxer:'平角裤',highwaist:'高腰裤',thong:'丁字裤',boyshort:'平口裤'};
 const IKEYS=Object.keys(ILABELS);
 
-// pixel art drawing
 function drawPx(key,size){
   const c=document.createElement('canvas');c.width=size;c.height=size;
   const ctx=c.getContext('2d');ctx.imageSmoothingEnabled=false;
   const S=size/16;
   const f=(x,y,w,h,col)=>{ctx.fillStyle=col;ctx.fillRect(x*S,y*S,w*S,h*S);};
-  const patterns={
-    tshirt:()=>{f(1,4,2,6,'#ff9ec8');f(13,4,2,6,'#ff9ec8');f(3,2,10,10,'#ff9ec8');f(6,0,4,2,'#ff80b0');f(0,3,1,8,'#3a1040');f(15,3,1,8,'#3a1040');f(3,12,10,1,'#3a1040');},
-    shirt:()=>{f(1,4,2,6,'#e0d4f8');f(13,4,2,6,'#e0d4f8');f(3,2,10,10,'#e0d4f8');f(6,0,4,2,'#c8b0f0');f(7,2,2,8,'#c8b0f0');},
+  const p={
+    tshirt:()=>{f(1,4,2,6,'#ff9ec8');f(13,4,2,6,'#ff9ec8');f(3,2,10,10,'#ff9ec8');f(6,0,4,2,'#ff80b0');},
+    shirt:()=>{f(1,4,2,6,'#e0d4f8');f(13,4,2,6,'#e0d4f8');f(3,2,10,10,'#e0d4f8');f(7,2,2,8,'#c8b0f0');},
     knit:()=>{f(1,4,2,6,'#ffd4a8');f(13,4,2,6,'#ffd4a8');f(3,2,10,10,'#ffd4a8');for(let i=0;i<5;i++){f(3+i*2,5,1,2,'#ffb880');f(4+i*2,8,1,2,'#ffb880');}},
     camisole:()=>{f(4,0,8,2,'#ff9ec8');f(3,2,10,10,'#ffb8d8');f(4,1,1,2,'#ff80b0');f(11,1,1,2,'#ff80b0');},
-    crop:()=>{f(2,2,12,7,'#ffd4e8');f(1,1,1,8,'#3a1040');f(14,1,1,8,'#3a1040');},
+    crop:()=>{f(2,2,12,7,'#ffd4e8');},
     sportbra:()=>{f(2,2,12,7,'#c8e8ff');f(5,1,2,2,'#80c8ff');f(9,1,2,2,'#80c8ff');},
     jeans:()=>{f(2,0,12,2,'#6080c0');f(2,2,5,12,'#4060a0');f(9,2,5,12,'#4060a0');f(7,2,2,6,'#3050a0');},
-    widepants:()=>{f(2,0,12,2,'#d4c0f0');f(2,2,4,12,'#c0a8e8');f(10,2,4,12,'#c0a8e8');f(6,2,4,6,'#b098d8');},
+    widepants:()=>{f(2,0,12,2,'#d4c0f0');f(2,2,4,12,'#c0a8e8');f(10,2,4,12,'#c0a8e8');},
     shorts:()=>{f(2,0,12,2,'#80c8ff');f(2,2,5,7,'#60b0f0');f(9,2,5,7,'#60b0f0');},
     leggings:()=>{f(3,0,10,2,'#d0a8f0');f(3,2,4,13,'#c090e8');f(9,2,4,13,'#c090e8');},
     suitpants:()=>{f(2,0,12,2,'#a0a8c0');f(2,2,5,13,'#9098b8');f(9,2,5,13,'#9098b8');},
@@ -422,48 +465,61 @@ function drawPx(key,size){
     yogapants:()=>{f(3,0,10,2,'#80f0c0');f(3,2,4,13,'#60e0a8');f(9,2,4,13,'#60e0a8');},
     dress:()=>{f(4,0,8,2,'#ff80b0');f(5,1,1,2,'#ff6090');f(10,1,1,2,'#ff6090');f(3,2,10,6,'#ffaac8');f(1,8,14,7,'#ffccd8');f(2,7,12,2,'#ff90b8');},
     slipdress:()=>{f(5,0,2,3,'#ffb8d8');f(9,0,2,3,'#ffb8d8');f(3,3,10,5,'#ffd0e8');f(1,8,14,7,'#ffe0f0');},
-    skirt:()=>{f(3,0,10,3,'#c0d8ff');f(1,3,14,12,'#d8e8ff');f(4,5,8,1,'#b0c8f8');},
+    skirt:()=>{f(3,0,10,3,'#c0d8ff');f(1,3,14,12,'#d8e8ff');},
     pleated:()=>{f(3,0,10,3,'#d0b0f0');f(1,3,14,12,'#e8d0f8');for(let i=0;i<6;i++)f(2+i*2,3,1,12,'#c8a0e8');},
-    coat:()=>{f(1,3,3,9,'#b8c8e8');f(12,3,3,9,'#b8c8e8');f(4,1,8,11,'#c8d8f0');f(6,0,4,2,'#a8b8d8');f(7,2,2,9,'#a8b8d8');},
+    coat:()=>{f(1,3,3,9,'#b8c8e8');f(12,3,3,9,'#b8c8e8');f(4,1,8,11,'#c8d8f0');f(7,2,2,9,'#a8b8d8');},
     blazer:()=>{f(1,3,3,9,'#a0a8c8');f(12,3,3,9,'#a0a8c8');f(4,1,8,11,'#b0b8d0');f(5,1,3,5,'#fff');f(8,1,3,5,'#fff');},
-    cardigan:()=>{f(1,3,3,9,'#f0c8e0');f(12,3,3,9,'#f0c8e0');f(4,1,8,11,'#f8d8f0');f(7,1,2,9,'#e0b0d0');f(8,3,1,1,'#ff80b0');f(8,6,1,1,'#ff80b0');f(8,9,1,1,'#ff80b0');},
+    cardigan:()=>{f(1,3,3,9,'#f0c8e0');f(12,3,3,9,'#f0c8e0');f(4,1,8,11,'#f8d8f0');f(8,3,1,1,'#ff80b0');f(8,6,1,1,'#ff80b0');f(8,9,1,1,'#ff80b0');},
     puffer:()=>{f(1,3,3,8,'#c0e0f8');f(12,3,3,8,'#c0e0f8');f(4,1,8,10,'#d0e8ff');for(let i=0;i<4;i++)f(4,3+i*2,8,1,'#a0c8e8');},
     jacket:()=>{f(1,3,3,9,'#d0d8e8');f(12,3,3,9,'#d0d8e8');f(4,1,8,11,'#e0e8f0');f(7,1,2,9,'#c0c8d8');},
-    uv:()=>{f(1,3,3,8,'#fff8d0');f(12,3,3,8,'#fff8d0');f(4,1,8,10,'#fffce0');f(7,0,2,1,'#ffd840');f(6,1,4,1,'#ffd840');},
-    heels:()=>{f(0,8,10,4,'#ffb8d0');f(2,6,8,3,'#ff90b8');f(9,8,2,7,'#ff80b0');f(0,12,11,1,'#3a1040');},
-    sneakers:()=>{f(0,6,14,5,'#b0d0f8');f(0,10,14,2,'#80b0e8');f(0,4,8,4,'#d0e4ff');f(4,5,6,1,'#6090c8');},
+    uv:()=>{f(1,3,3,8,'#fff8d0');f(12,3,3,8,'#fff8d0');f(4,1,8,10,'#fffce0');f(7,0,2,1,'#ffd840');},
+    heels:()=>{f(0,8,10,4,'#ffb8d0');f(2,6,8,3,'#ff90b8');f(9,8,2,7,'#ff80b0');},
+    sneakers:()=>{f(0,6,14,5,'#b0d0f8');f(0,10,14,2,'#80b0e8');f(4,5,6,1,'#6090c8');},
     boots:()=>{f(3,0,8,12,'#a0a0b8');f(1,10,12,5,'#9090a8');},
-    sandals:()=>{f(1,10,12,3,'#f0d090');f(3,6,4,5,'#e0b060');f(9,6,4,5,'#e0b060');f(2,5,12,2,'#d0a050');},
-    loafers:()=>{f(1,6,12,6,'#c8b0e8');f(1,11,12,2,'#a890c8');f(4,4,8,4,'#d8c0f0');f(6,6,4,2,'#c0a0e0');},
-    tote:()=>{f(2,4,12,11,'#b8d4ff');f(4,1,3,4,'#90b8e8');f(9,1,3,4,'#90b8e8');f(2,8,12,1,'#90b8e8');},
+    sandals:()=>{f(1,10,12,3,'#f0d090');f(3,6,4,5,'#e0b060');f(9,6,4,5,'#e0b060');},
+    loafers:()=>{f(1,6,12,6,'#c8b0e8');f(1,11,12,2,'#a890c8');f(6,6,4,2,'#c0a0e0');},
+    tote:()=>{f(2,4,12,11,'#b8d4ff');f(4,1,3,4,'#90b8e8');f(9,1,3,4,'#90b8e8');},
     crossbody:()=>{f(3,3,10,11,'#ffb8d0');f(5,1,3,3,'#ff98b8');f(8,1,3,3,'#ff98b8');f(5,7,6,3,'#ff80b0');},
     handbag:()=>{f(2,4,12,11,'#e0b8f8');f(4,1,3,4,'#c898e8');f(9,1,3,4,'#c898e8');f(7,9,2,2,'#ffd878');},
-    bucket:()=>{f(3,3,10,12,'#a8f0d0');f(5,1,2,3,'#80d8b0');f(9,1,2,3,'#80d8b0');f(3,6,10,1,'#80d8b0');},
-    hat:()=>{f(0,8,16,4,'#b0d0ff');f(3,2,10,8,'#90b8f0');f(4,1,8,2,'#78a8e0');f(5,9,6,1,'#ffd878');},
-    scarf:()=>{f(2,0,12,5,'#ffb8d0');f(6,4,4,11,'#ff98b8');for(let i=0;i<6;i++)f(2+i*2,0,1,5,'#ff98b8');},
+    bucket:()=>{f(3,3,10,12,'#a8f0d0');f(5,1,2,3,'#80d8b0');f(9,1,2,3,'#80d8b0');},
+    hat:()=>{f(0,8,16,4,'#b0d0ff');f(3,2,10,8,'#90b8f0');f(5,9,6,1,'#ffd878');},
+    scarf:()=>{f(2,0,12,5,'#ffb8d0');f(6,4,4,11,'#ff98b8');},
     belt:()=>{f(0,6,11,4,'#d0b0f0');f(11,5,5,6,'#c090e0');f(13,7,1,2,'#ffd878');},
-    earrings:()=>{f(4,0,2,2,'#ffb8d0');f(10,0,2,2,'#ffb8d0');f(3,2,4,8,'#ffd0e8');f(9,2,4,8,'#ffd0e8');f(4,9,2,3,'#ffb8d0');f(10,9,2,3,'#ffb8d0');},
+    earrings:()=>{f(4,0,2,2,'#ffb8d0');f(10,0,2,2,'#ffb8d0');f(3,2,4,8,'#ffd0e8');f(9,2,4,8,'#ffd0e8');},
     necklace:()=>{for(let i=0;i<8;i++)f(1+i,2+Math.round(Math.sin(i/7*Math.PI)*5),2,2,'#e0b0f8');f(6,10,4,4,'#ffd878');},
-    bra:()=>{f(1,3,6,7,'#ffc8e8');f(9,3,6,7,'#ffc8e8');f(7,6,2,4,'#ff90c0');f(3,2,2,2,'#ffaad0');f(11,2,2,2,'#ffaad0');f(1,10,14,1,'#ff90c0');},
-    bra2:()=>{f(1,4,6,6,'#f0c8ff');f(9,4,6,6,'#f0c8ff');f(7,6,2,4,'#d090f0');f(3,2,2,3,'#e0b0f8');f(11,2,2,3,'#e0b0f8');f(1,10,14,1,'#d090f0');},
+    bra:()=>{f(1,3,6,7,'#ffc8e8');f(9,3,6,7,'#ffc8e8');f(7,6,2,4,'#ff90c0');f(3,2,2,2,'#ffaad0');f(11,2,2,2,'#ffaad0');},
+    bra2:()=>{f(1,4,6,6,'#f0c8ff');f(9,4,6,6,'#f0c8ff');f(7,6,2,4,'#d090f0');f(3,2,2,3,'#e0b0f8');f(11,2,2,3,'#e0b0f8');},
     strapless:()=>{f(1,4,14,7,'#ffb0e0');f(1,4,14,1,'#ff80c0');f(1,10,14,1,'#ff80c0');},
     brief:()=>{f(2,1,12,5,'#ffb0e0');f(2,5,12,9,'#ffc8e8');f(4,9,8,5,'#ffb0d8');},
-    boxer:()=>{f(2,1,12,3,'#a0c8ff');f(2,4,5,10,'#b8d8ff');f(9,4,5,10,'#b8d8ff');f(7,4,2,6,'#90b8f0');},
-    highwaist:()=>{f(2,0,12,4,'#d0a0f0');f(2,4,5,11,'#e0b8f8');f(9,4,5,11,'#e0b8f8');f(7,4,2,7,'#c890e0');},
-    thong:()=>{f(1,2,14,4,'#ffb0d0');f(6,5,4,10,'#ff90b8');f(2,9,5,2,'#ffb0d0');f(9,9,5,2,'#ffb0d0');},
-    boyshort:()=>{f(2,1,12,3,'#b8e0ff');f(2,4,5,9,'#c8e8ff');f(9,4,5,9,'#c8e8ff');f(7,4,2,6,'#a8d0f0');},
+    boxer:()=>{f(2,1,12,3,'#a0c8ff');f(2,4,5,10,'#b8d8ff');f(9,4,5,10,'#b8d8ff');},
+    highwaist:()=>{f(2,0,12,4,'#d0a0f0');f(2,4,5,11,'#e0b8f8');f(9,4,5,11,'#e0b8f8');},
+    thong:()=>{f(1,2,14,4,'#ffb0d0');f(6,5,4,10,'#ff90b8');},
+    boyshort:()=>{f(2,1,12,3,'#b8e0ff');f(2,4,5,9,'#c8e8ff');f(9,4,5,9,'#c8e8ff');},
   };
-  if(patterns[key])patterns[key]();
+  if(p[key])p[key]();
   return c;
 }
-function iconUrl(key,size=30){return drawPx(key||'tshirt',size).toDataURL();}
+function iconUrl(key,size){return drawPx(key||'tshirt',size||30).toDataURL();}
 
-// NAV ICONS
 function drawNavIcons(){
   function px(id,fn){const c=document.getElementById(id);if(!c)return;const ctx=c.getContext('2d');ctx.imageSmoothingEnabled=false;const f=(x,y,w,h,col)=>{ctx.fillStyle=col;ctx.fillRect(x,y,w,h);};fn(f);}
-  px('ni-0',f=>{f(8,2,8,1,'#ff80b0');f(7,3,10,1,'#ff9ec8');f(6,4,12,1,'#ffb8d8');f(5,5,14,2,'#ff9ec8');f(4,7,16,2,'#ffb8d8');f(3,9,18,4,'#ff80b0');f(8,1,8,1,'#ff5090');f(7,0,2,1,'#ff5090');f(15,0,2,1,'#ff5090');f(9,0,6,1,'#ffb8d8');});
-  px('ni-1',f=>{f(10,0,4,4,'#80c8ff');f(10,8,4,16,'#80c8ff');f(0,10,24,4,'#80c8ff');f(4,4,4,4,'#b8e0ff');f(16,4,4,4,'#b8e0ff');f(4,16,4,4,'#b8e0ff');f(16,16,4,4,'#b8e0ff');});
-  px('ni-2',f=>{f(4,1,17,22,'#80e8b0');f(3,1,2,22,'#38c080');f(6,5,10,2,'#3a1040');f(6,9,10,2,'#3a1040');f(6,13,7,2,'#3a1040');f(3,0,18,1,'#3a1040');f(3,23,18,1,'#3a1040');f(2,1,1,22,'#3a1040');f(21,1,1,22,'#3a1040');f(18,0,4,1,'#ff80b0');f(19,1,2,5,'#ff80b0');f(18,6,4,1,'#ff80b0');});
+  // pink dress
+  px('ni-0',f=>{f(7,2,8,1,'#ff80b0');f(6,3,10,1,'#ff9ec8');f(5,4,12,1,'#ffb8d8');f(4,5,14,2,'#ff9ec8');f(3,7,16,4,'#ff80b0');f(7,1,8,1,'#ff5090');f(6,0,2,1,'#ff5090');f(14,0,2,1,'#ff5090');f(8,0,6,1,'#ffb8d8');});
+  // blue star
+  px('ni-1',f=>{f(9,0,4,4,'#80c8ff');f(9,8,4,14,'#80c8ff');f(0,9,22,4,'#80c8ff');f(3,3,4,4,'#b8e0ff');f(15,3,4,4,'#b8e0ff');f(3,15,4,4,'#b8e0ff');f(15,15,4,4,'#b8e0ff');});
+  // green book
+  px('ni-2',f=>{f(3,1,16,20,'#80e8b0');f(2,1,2,20,'#38c080');f(5,4,9,2,'#3a1040');f(5,8,9,2,'#3a1040');f(5,12,6,2,'#3a1040');f(2,0,17,1,'#3a1040');f(2,21,17,1,'#3a1040');f(1,1,1,20,'#3a1040');f(19,1,1,20,'#3a1040');f(17,0,4,1,'#ff80b0');f(18,1,2,4,'#ff80b0');f(17,5,4,1,'#ff80b0');});
+  // aqua bubbles / laundry
+  px('ni-3',f=>{
+    // washing machine pixel
+    f(2,1,18,18,'#60d8f0');f(1,1,1,18,'#3a1040');f(20,1,1,18,'#3a1040');f(2,0,18,1,'#3a1040');f(2,19,18,1,'#3a1040');
+    f(4,3,14,14,'#a8f0ff');f(3,3,1,14,'#40b8d8');
+    // drum circle
+    f(7,6,8,8,'#fff');f(8,5,6,1,'#fff');f(8,14,6,1,'#fff');f(6,7,1,6,'#fff');f(15,7,1,6,'#fff');
+    f(9,8,4,4,'#60d8f0');
+    // bubbles
+    f(4,2,2,1,'#fff');f(8,2,1,1,'#fff');f(14,2,2,1,'#fff');
+  });
 }
 
 // DATA
@@ -473,8 +529,8 @@ let fImg='',fIcon='tshirt',fCat='上衣',fCol='黑',fWash=0,pickSel=[],pickFil='
 function todayStr(){const n=new Date();return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;}
 
 function migrate(){
-  const ks=['wardrobe','wardrobe2','wardrobe3','wardrobe4','wd5','wd6','wd7','wd8'];
-  const hks=['wardrobe3-history','wardrobe4-history','wd5-hist','wd6-hist','wd7-hist','wd8-hist'];
+  const ks=['wardrobe','wardrobe2','wardrobe3','wardrobe4','wd5','wd6','wd7','wd8','wd9'];
+  const hks=['wardrobe3-history','wardrobe4-history','wd5-hist','wd6-hist','wd7-hist','wd8-hist','wd9-hist'];
   let best=[];
   for(const k of ks){try{const d=localStorage.getItem(k);if(d){const p=JSON.parse(d);if(p.length>best.length)best=p;}}catch(_){}}
   if(best.length>0)items=best;
@@ -485,13 +541,12 @@ function migrate(){
 
 function load(){
   migrate();
-  const di=document.getElementById('date-inp');
-  di.value=todayStr();di.max=todayStr();
+  const di=document.getElementById('date-inp');di.value=todayStr();di.max=todayStr();
   loadDay(todayStr());
   if(items.length>0)document.getElementById('recover-btn').style.display='none';
 }
-function save(){try{localStorage.setItem('wd9',JSON.stringify(items));}catch(_){}}
-function saveH(){try{localStorage.setItem('wd9-hist',JSON.stringify(history));}catch(_){}}
+function save(){try{localStorage.setItem('wd10',JSON.stringify(items));}catch(_){}}
+function saveH(){try{localStorage.setItem('wd10-hist',JSON.stringify(history));}catch(_){}}
 function loadDay(date){
   const r=history.find(h=>h.date===date);
   outfit=r?JSON.parse(JSON.stringify(r.outfit_items||[])):[];
@@ -504,68 +559,57 @@ function recoverData(){
   else alert('❌ 没有找到历史数据');
 }
 
-// TAB
 function goTab(t){
-  ['wardrobe','today','history'].forEach(p=>{
+  ['wardrobe','today','history','laundry'].forEach(p=>{
     document.getElementById('page-'+p).classList.toggle('active',p===t);
     document.getElementById('nb-'+p).classList.toggle('active',p===t);
   });
   document.getElementById('fab').classList.toggle('hidden',t!=='wardrobe');
   if(t==='today')renderToday();
   if(t==='history')renderHistory();
+  if(t==='laundry')renderLaundry();
 }
 
-// WARDROBE RENDER
+// WARDROBE
 function renderW(){
   const q=document.getElementById('search-inp').value.toLowerCase();
   let list=items.filter(i=>(filter==='全部'||i.category===filter)&&(!q||i.name.toLowerCase().includes(q)||(i.brand||'').toLowerCase().includes(q)));
-  // sort
   if(sortMode===1)list.sort((a,b)=>(b.wornCount||0)-(a.wornCount||0));
   else if(sortMode===2)list.sort((a,b)=>(a.wornCount||0)-(b.wornCount||0));
   else if(sortMode===3)list.sort((a,b)=>(b.price&&b.wornCount?b.price/b.wornCount:0)-(a.price&&a.wornCount?a.price/a.wornCount:0));
   else if(sortMode===4)list.sort((a,b)=>(a.price&&a.wornCount?a.price/a.wornCount:9999)-(b.price&&b.wornCount?b.price/b.wornCount:9999));
   else if(sortMode===5)list.sort((a,b)=>(b.price||0)-(a.price||0));
-
   const tc=items.reduce((s,i)=>s+(i.price||0),0);
   const wi=items.filter(i=>i.wornCount>0&&i.price);
   const avg=wi.length?wi.reduce((s,i)=>s+i.price/i.wornCount,0)/wi.length:0;
   document.getElementById('s-total').textContent=items.length;
-  document.getElementById('s-dirty').textContent=items.filter(i=>i.washStatus===2).length;
+  document.getElementById('s-dirty').textContent=items.filter(i=>i.washStatus===2||i.washStatus===3).length;
   document.getElementById('s-cost').textContent='¥'+tc;
   document.getElementById('s-avg').textContent='¥'+(avg?avg.toFixed(0):0);
-
   const el=document.getElementById('w-content');
-  if(list.length===0){el.innerHTML=`<div class="empty"><div class="empty-e">🎀</div><div class="empty-t">衣橱空空的</div><div class="empty-s">点右下角 + 添加第一件单品</div></div>`;return;}
-
-  const wc=i=>i.washStatus===2?'bdg-dirty':i.washStatus===1&&i.wornCount>=(i.washDays||3)?'bdg-warn':'bdg-clean';
-  const wb=i=>i.washStatus===2?'要洗':i.washStatus===1&&i.wornCount>=(i.washDays||3)?'快洗':'干净';
+  if(!list.length){el.innerHTML=`<div class="empty"><div class="empty-e">🎀</div><div class="empty-t">衣橱空空的</div><div class="empty-s">点右下角 + 添加第一件单品</div></div>`;return;}
   const uc=i=>i.price&&i.wornCount?(i.price/i.wornCount).toFixed(1):null;
-
-  const normal=list.filter(i=>!INNER.includes(i.category));
-  const bras=list.filter(i=>i.category==='内衣');
-  const undies=list.filter(i=>i.category==='内裤');
-
-  let html='';
   const cardHtml=item=>{
-    const u=uc(item);
-    const imgContent=item.image?`<div style="position:absolute;inset:0;background:url(${item.image}) center/cover no-repeat"></div>`:`<img src="${iconUrl(item.iconKey||'tshirt',70)}" style="width:70px;height:70px;image-rendering:pixelated" alt="">`;
+    const u=uc(item);const ws=item.washStatus||0;
+    const imgC=item.image?`<div style="position:absolute;inset:0;background:url(${item.image}) center/cover no-repeat"></div>`:`<img src="${iconUrl(item.iconKey||'tshirt',70)}" style="width:70px;height:70px;image-rendering:pixelated" alt="">`;
     return `<div class="card" onclick="openDetail('${item.id}')">
-      <div class="card-img" style="position:relative">${imgContent}<span class="wash-bdg ${wc(item)}">${wb(item)}</span>${u?`<span class="cost-bdg">¥${u}/次</span>`:''}</div>
+      <div class="card-img" style="position:relative">${imgC}<span class="wash-bdg ${WCLASSES[ws]}">${WLABELS[ws]}</span>${u?`<span class="cost-bdg">¥${u}/次</span>`:''}</div>
       <div class="card-body"><div class="card-name">${item.name}</div><div class="card-tags"><span class="tag tag-p">${item.category}</span>${item.season?`<span class="tag tag-b">${item.season}</span>`:''} ${item.color?`<span class="cdot" style="background:${CMAP[item.color]||'#ccc'}"></span>`:''}</div>${item.brand?`<div class="card-brand">${item.brand}</div>`:''}</div>
     </div>`;
   };
-
+  const normal=list.filter(i=>!INNER.includes(i.category));
+  const bras=list.filter(i=>i.category==='内衣');
+  const undies=list.filter(i=>i.category==='内裤');
+  let html='';
   if(normal.length){if(filter==='全部'&&(bras.length||undies.length))html+=`<div class="sec-head">ITEMS</div>`;html+=`<div class="grid">${normal.map(cardHtml).join('')}</div>`;}
   if(bras.length){html+=`<div class="sec-head">内衣</div><div class="grid">${bras.map(cardHtml).join('')}</div>`;}
   if(undies.length){
     html+=`<div class="sec-head">内裤</div><div class="undies-list">${undies.map(item=>{
-      const u=uc(item);const wcc=item.washStatus===2?'bdg-dirty':item.washStatus===1&&item.wornCount>=(item.washDays||3)?'bdg-warn':'bdg-clean';
-      const wbb=item.washStatus===2?'要洗':item.washStatus===1&&item.wornCount>=(item.washDays||3)?'快洗':'干净';
-      const bc=wcc==='bdg-dirty'?'background:var(--red);color:#fff':wcc==='bdg-warn'?'background:var(--yellow);color:var(--dark)':'background:#78e8a0;color:var(--dark)';
+      const u=uc(item);const ws=item.washStatus||0;
       return `<div class="u-row" onclick="openDetail('${item.id}')">
         <div class="u-icon"><img src="${iconUrl(item.iconKey||'brief',32)}" style="width:32px;height:32px;image-rendering:pixelated" alt=""></div>
-        <div class="u-info"><div class="u-name">${item.name}</div><div class="u-meta">${item.color?`<span class="cdot" style="background:${CMAP[item.color]||'#ccc'}"></span>`:''} ${item.brand?`<span>${item.brand}</span>`:''} ${item.wornCount?`<span>穿${item.wornCount}次</span>`:''} ${u?`<span class="u-cost">¥${u}/次</span>`:''}</div></div>
-        <span style="font-size:9px;padding:2px 6px;font-weight:700;border:2px solid var(--dark);font-family:'Press Start 2P',monospace;${bc}">${wbb}</span>
+        <div class="u-info"><div class="u-name">${item.name}</div><div class="u-meta">${item.color?`<span class="cdot" style="background:${CMAP[item.color]||'#ccc'}"></span>`:''} ${item.brand||''} ${item.wornCount?`穿${item.wornCount}次`:''} ${u?`¥${u}/次`:''}</div></div>
+        <span style="font-size:9px;padding:2px 5px;font-weight:700;border:2px solid var(--dark);font-family:'Press Start 2P',monospace;background:${['#78e8a0',WLABELS[1]?'#ffd878':'','#ff9060','#60d8f0'][ws]};color:${ws===2?'#fff':'var(--dark)'}">${WLABELS[ws]}</span>
       </div>`;
     }).join('')}</div>`;
   }
@@ -574,11 +618,56 @@ function renderW(){
 
 function renderCats(){document.getElementById('cats-bar').innerHTML=['全部',...CATS].map(c=>`<button class="cat-pill${filter===c?' on':''}" onclick="setFilter('${c}')">${c}</button>`).join('');}
 function setFilter(c){filter=c;renderCats();renderW();}
-
-// SORT
 function openSort(){document.getElementById('sort-menu').classList.add('open');document.getElementById('sort-bd').style.display='block';}
 function closeSort(){document.getElementById('sort-menu').classList.remove('open');document.getElementById('sort-bd').style.display='none';}
 function setSort(v){sortMode=v;for(let i=0;i<6;i++){document.getElementById('so-'+i).classList.toggle('on',i===v);document.getElementById('sc-'+i).style.display=i===v?'':'none';}closeSort();renderW();}
+
+// LAUNDRY PAGE
+function renderLaundry(){
+  const toWash=items.filter(i=>i.washStatus===2);
+  const drying=items.filter(i=>i.washStatus===3);
+  document.getElementById('l-wash-count').textContent=toWash.length;
+  document.getElementById('l-dry-count').textContent=drying.length;
+
+  const itemHtml=(item,actions)=>{
+    const thumbStyle=item.image?`background-image:url(${item.image});background-size:cover;background-position:center`:'';
+    const thumbContent=item.image?'':`<img src="${iconUrl(item.iconKey||'tshirt',32)}" style="width:32px;height:32px;image-rendering:pixelated" alt="">`;
+    return `<div class="l-item">
+      <div class="l-thumb" style="${thumbStyle}">${thumbContent}</div>
+      <div class="l-info"><div class="l-name">${item.name}</div><div class="l-meta">${item.category}${item.brand?' · '+item.brand:''}${item.wornCount?' · 穿'+item.wornCount+'次':''}</div></div>
+      <div class="l-actions">${actions}</div>
+    </div>`;
+  };
+
+  let html='<div class="laundry-section">';
+  html+=`<div class="l-sec-head">🧺 待清洗 (${toWash.length})</div>`;
+  if(!toWash.length){html+=`<div class="l-empty">🎉 没有待清洗的衣物！</div>`;}
+  else{
+    html+=`<div class="l-items">${toWash.map(item=>itemHtml(item,
+      `<button class="l-action-btn btn-todry" onclick="setWashStatus('${item.id}',3)">去洗了→</button>
+       <button class="l-action-btn btn-undo" onclick="setWashStatus('${item.id}',1)">撤回</button>`
+    )).join('')}</div>`;
+  }
+  html+=`</div><div class="laundry-section">`;
+  html+=`<div class="l-sec-head">🌬️ 晾晒中 (${drying.length})</div>`;
+  if(!drying.length){html+=`<div class="l-empty">没有晾晒中的衣物</div>`;}
+  else{
+    html+=`<div class="l-items">${drying.map(item=>itemHtml(item,
+      `<button class="l-action-btn btn-toclean" onclick="setWashStatus('${item.id}',0)">晾干了→</button>
+       <button class="l-action-btn btn-undo" onclick="setWashStatus('${item.id}',2)">撤回</button>`
+    )).join('')}</div>`;
+  }
+  html+=`</div>`;
+  document.getElementById('laundry-content').innerHTML=html;
+}
+
+function setWashStatus(id,status){
+  const item=items.find(i=>i.id===id);
+  if(!item)return;
+  item.washStatus=status;
+  if(status===0)item.wornCount=0; // reset worn count when clean
+  save();renderW();renderLaundry();
+}
 
 // FORM
 function renderIconGrid(){
@@ -595,7 +684,7 @@ function renderFormCats(){document.getElementById('f-cats').innerHTML=CATS.map(c
 function setFCat(c){fCat=c;if(c==='内衣')fIcon='bra';else if(c==='内裤')fIcon='brief';else if(BRA.includes(fIcon)||UND.includes(fIcon))fIcon='tshirt';renderFormCats();renderIconGrid();}
 function renderFormCols(){document.getElementById('f-colors').innerHTML=COLORS.map(c=>`<div class="csw${fCol===c?' on':''}" style="background:${CMAP[c]}" title="${c}" onclick="setFCol('${c}')"></div>`).join('');}
 function setFCol(c){fCol=c;renderFormCols();}
-function setWash(v){fWash=v;[0,1,2].forEach(i=>document.getElementById('wo-'+i).classList.toggle('on',i===v));}
+function setWash(v){fWash=v;[0,1,2,3].forEach(i=>document.getElementById('wo-'+i).classList.toggle('on',i===v));}
 function handleImg(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{fImg=ev.target.result;const el=document.getElementById('img-prev');el.style.backgroundImage=`url(${fImg})`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.innerHTML='';};r.readAsDataURL(f);}
 function checkSave(){document.getElementById('btn-save').disabled=!document.getElementById('f-name').value.trim();}
 
@@ -620,7 +709,11 @@ function saveItem(){
   else items=[item,...items];
   save();closeSheet('form-ol');renderW();
 }
-function delItem(){items=items.filter(i=>i.id!==editId);save();closeSheet('form-ol');renderW();}
+function delItem(){
+  if(!confirm('确定要删除这件单品吗？'))return;
+  items=items.filter(i=>i.id!==editId);
+  save();closeSheet('form-ol');renderW();
+}
 
 // DETAIL
 function openDetail(id){
@@ -636,10 +729,11 @@ function openDetail(id){
     item.brand?`<span class="dtag" style="background:var(--yellow)">${item.brand}</span>`:''
   ].join('');
   const u=item.price&&item.wornCount?(item.price/item.wornCount).toFixed(1):'-';
-  document.getElementById('d-cost').innerHTML=`<div class="dc"><span class="dc-n">¥${item.price||0}</span><span class="dc-l">购买价格</span></div><div class="dc"><span class="dc-n">${item.wornCount||0}次</span><span class="dc-l">穿着次数</span></div><div class="dc"><span class="dc-n">${u==='−'?'-':'¥'+u}</span><span class="dc-l">每次成本</span></div>`;
-  const wc=item.washStatus===2?'w2':item.washStatus===1&&item.wornCount>=(item.washDays||3)?'w1':'w0';
-  const dw=document.getElementById('d-wash');dw.className=`d-wash ${wc}`;
-  dw.textContent=item.washStatus===2?'🚫 需要清洗':item.washStatus===1&&item.wornCount>=(item.washDays||3)?`⚠️ 已穿${item.wornCount}次，该洗了`:`✅ 干净（已穿${item.wornCount||0}次）`;
+  document.getElementById('d-cost').innerHTML=`<div class="dc"><span class="dc-n">¥${item.price||0}</span><span class="dc-l">购买价格</span></div><div class="dc"><span class="dc-n">${item.wornCount||0}次</span><span class="dc-l">穿着次数</span></div><div class="dc"><span class="dc-n">${u==='-'?'-':'¥'+u}</span><span class="dc-l">每次成本</span></div>`;
+  const ws=item.washStatus||0;
+  const dw=document.getElementById('d-wash');
+  dw.className=`d-wash w${ws}`;
+  dw.textContent=WLABELS[ws];
   const dn=document.getElementById('d-notes');
   if(item.notes){dn.textContent=item.notes;dn.style.display='block';}else{dn.style.display='none';}
   document.getElementById('detail-ol').classList.add('open');
@@ -692,7 +786,8 @@ function renderPickGrid(){
   g.innerHTML='';
   filtered.forEach(item=>{
     const sel=pickSel.includes(item.id);
-    const div=document.createElement('div');div.className='pi'+(sel?' on':'');div.onclick=()=>{const i=pickSel.indexOf(item.id);if(i>=0)pickSel.splice(i,1);else pickSel.push(item.id);renderPickGrid();};
+    const div=document.createElement('div');div.className='pi'+(sel?' on':'');
+    div.onclick=()=>{const i=pickSel.indexOf(item.id);if(i>=0)pickSel.splice(i,1);else pickSel.push(item.id);renderPickGrid();};
     const thumb=document.createElement('div');thumb.className='pi-thumb';
     if(item.image){thumb.style.backgroundImage=`url(${item.image})`;thumb.style.backgroundSize='cover';thumb.style.backgroundPosition='center';}
     else{const img=document.createElement('img');img.src=iconUrl(item.iconKey||'tshirt',40);img.style.cssText='width:40px;height:40px;image-rendering:pixelated;';thumb.appendChild(img);}
@@ -715,7 +810,12 @@ function saveToday(){
     const item=items.find(i=>i.id===o.id);
     if(item){
       const already=existing&&(existing.outfit_items||[]).find(oi=>oi.id===o.id);
-      if(!already){item.wornCount=(item.wornCount||0)+1;if(item.washStatus===0)item.washStatus=1;if(item.wornCount>=(item.washDays||3))item.washStatus=2;}
+      if(!already){
+        item.wornCount=(item.wornCount||0)+1;
+        // update wash status based on worn count
+        if(item.washStatus===0)item.washStatus=1; // clean→worn
+        if(item.wornCount>=(item.washDays||3))item.washStatus=2; // worn→needs wash
+      }
     }
   });
   save();
@@ -731,7 +831,16 @@ function saveToday(){
 function renderHistory(){
   const w=document.getElementById('hist-wrap');
   if(!history.length){w.innerHTML=`<div class="empty"><div class="empty-e">📖</div><div class="empty-t">还没有穿搭记录</div><div class="empty-s">在今日页面保存后显示</div></div>`;return;}
-  w.innerHTML=`<div class="hist-list">${history.map(h=>`<div class="hist-card"><div class="hist-date">🌿 ${h.date}</div><div class="hist-chips">${(h.outfit||[]).map(n=>`<span class="hist-chip">${n}</span>`).join('')}</div>${h.note?`<div class="hist-note">💭 ${h.note}</div>`:''}</div>`).join('')}</div>`;
+  w.innerHTML=`<div class="hist-list">${history.map((h,idx)=>`<div class="hist-card">
+    <div class="hist-date"><span>🌿 ${h.date}</span><button class="hist-date-del" onclick="delHistory(${idx})">删除</button></div>
+    <div class="hist-chips">${(h.outfit||[]).map(n=>`<span class="hist-chip">${n}</span>`).join('')}</div>
+    ${h.note?`<div class="hist-note">💭 ${h.note}</div>`:''}
+  </div>`).join('')}</div>`;
+}
+function delHistory(idx){
+  if(!confirm('确定要删除这条记录吗？'))return;
+  history.splice(idx,1);
+  saveH();renderHistory();
 }
 
 function closeSheet(id){document.getElementById(id).classList.remove('open');}
@@ -740,8 +849,8 @@ function closeSheet(id){document.getElementById(id).classList.remove('open');}
 (function(){
   const c=document.createElement('canvas');c.width=180;c.height=180;
   const ctx=c.getContext('2d');
-  const bg=ctx.createLinearGradient(0,0,180,180);bg.addColorStop(0,'#ffd0e8');bg.addColorStop(1,'#ffaac8');
   ctx.fillStyle='#3a1040';ctx.fillRect(0,0,180,180);
+  const bg=ctx.createLinearGradient(0,0,180,180);bg.addColorStop(0,'#ffd0e8');bg.addColorStop(1,'#ffaac8');
   ctx.fillStyle=bg;ctx.fillRect(8,8,164,164);
   const S=180/24;
   const f=(x,y,w,h,col)=>{ctx.fillStyle=col;ctx.fillRect(x*S,y*S,w*S,h*S);};
@@ -749,10 +858,8 @@ function closeSheet(id){document.getElementById(id).classList.remove('open');}
   f(7,2,10,1,'#ffd878');f(5,3,14,1,'#e8c060');f(4,4,16,1,'#ffd878');f(3,5,18,1,'#e8c060');f(3,6,1,10,'#ffd878');f(20,6,1,10,'#ffd878');f(3,16,18,1,'#e8c060');f(4,17,14,1,'#ffd878');
   f(4,5,16,12,'#d8f0ff');f(5,5,14,12,'#e8f8ff');f(6,6,4,3,'#ffffff');
   f(5,8,12,1,'rgba(255,255,255,0.5)');f(5,11,10,1,'rgba(255,255,255,0.4)');
-  f(10,17,4,1,'#3a1040');f(10,18,4,1,'#e8c060');f(11,19,2,1,'#3a1040');f(11,20,2,1,'#e8c060');f(11,21,2,1,'#3a1040');
-  f(8,21,8,1,'#3a1040');f(8,22,8,1,'#e8c060');f(7,22,10,1,'#3a1040');
-  f(8,1,2,2,'#ff80b0');f(14,1,2,2,'#ff80b0');f(10,1,4,1,'#ff9ec8');f(10,2,4,1,'#ffd0e8');
-  f(2,3,1,1,'#ffd878');f(21,4,1,1,'#ffd878');f(1,12,1,1,'#ff9ec8');f(22,10,1,1,'#ff9ec8');
+  f(10,17,4,1,'#3a1040');f(10,18,4,1,'#e8c060');f(11,19,2,2,'#e8c060');f(8,21,8,1,'#e8c060');f(7,22,10,1,'#3a1040');
+  f(8,1,2,2,'#ff80b0');f(14,1,2,2,'#ff80b0');f(10,1,4,1,'#ff9ec8');f(2,3,1,1,'#ffd878');f(21,4,1,1,'#ffd878');
   let link=document.querySelector('link[rel="apple-touch-icon"]');
   if(!link){link=document.createElement('link');link.rel='apple-touch-icon';document.head.appendChild(link);}
   link.href=c.toDataURL('image/png');
