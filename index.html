@@ -867,19 +867,17 @@ function renderHistory(){
 function delHistory(idx){
   if(!confirm('确定要删除这条记录吗？'))return;
   const rec=history[idx];
-  if(rec&&rec.outfit_items){
-    rec.outfit_items.forEach(o=>{
-      const item=items.find(i=>i.id===o.id);
-      if(item&&item.wornCount>0){
-        item.wornCount--;
-        if(item.wornCount===0)item.washStatus=0;
-        else if(item.washStatus===2&&item.wornCount<(item.washDays||3))item.washStatus=1;
-      }
-    });
-    save();
-  }
+  const outfitItems=rec.outfit_items||[];
+  outfitItems.forEach(o=>{
+    const item=items.find(i=>i.id===o.id);
+    if(item&&item.wornCount>0){
+      item.wornCount--;
+      if(item.wornCount===0){item.washStatus=0;}
+      else if(item.wornCount<(item.washDays||3)&&item.washStatus>=2){item.washStatus=1;}
+    }
+  });
   history.splice(idx,1);
-  saveH();renderHistory();renderW();
+  save();saveH();renderHistory();renderW();
 }
 
 function closeSheet(id){document.getElementById(id).classList.remove('open');}
