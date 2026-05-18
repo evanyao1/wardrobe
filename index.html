@@ -528,22 +528,41 @@ let fImg='',fIcon='tshirt',fCat='上衣',fCol='黑',fWash=0,pickSel=[],pickFil='
 
 function todayStr(){const n=new Date();return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;}
 
+const STORE_KEY='mywardrobe';
+const STORE_HIST='mywardrobe-hist';
+
 function migrate(){
-  // If wd10 already exists, use it directly — don't overwrite with old data
-  try{const d=localStorage.getItem('wd10');if(d){items=JSON.parse(d);} }catch(_){}
-  try{const d=localStorage.getItem('wd10-hist');if(d){history=JSON.parse(d);} }catch(_){}
-  // Only migrate from old keys if wd10 is empty
-  if(items.length===0){
-    const ks=['wardrobe','wardrobe2','wardrobe3','wardrobe4','wd5','wd6','wd7','wd8','wd9'];
-    let best=[];
-    for(const k of ks){try{const d=localStorage.getItem(k);if(d){const p=JSON.parse(d);if(p.length>best.length)best=p;}}catch(_){}}
-    if(best.length>0)items=best;
+  // Step 1: load from permanent key first
+  try{const d=localStorage.getItem(STORE_KEY);if(d)items=JSON.parse(d);}catch(_){}
+  try{const d=localStorage.getItem(STORE_HIST);if(d)history=JSON.parse(d);}catch(_){}
+
+  // Step 2: scan ALL old keys and merge any items not already in our list
+  const oldKeys=['wardrobe','wardrobe2','wardrobe3','wardrobe4','wd5','wd6','wd7','wd8','wd9','wd10'];
+  const oldHist=['wardrobe3-history','wardrobe4-history','wd5-hist','wd6-hist','wd7-hist','wd8-hist','wd9-hist','wd10-hist'];
+  let changed=false;
+  for(const k of oldKeys){
+    try{
+      const d=localStorage.getItem(k);
+      if(!d)continue;
+      const p=JSON.parse(d);
+      for(const item of p){
+        if(!items.find(i=>i.id===item.id)){items.push(item);changed=true;}
+      }
+    }catch(_){}
   }
-  if(history.length===0){
-    const hks=['wardrobe3-history','wardrobe4-history','wd5-hist','wd6-hist','wd7-hist','wd8-hist','wd9-hist'];
-    let bh=[];
-    for(const k of hks){try{const d=localStorage.getItem(k);if(d){const p=JSON.parse(d);if(p.length>bh.length)bh=p;}}catch(_){}}
-    if(bh.length>0)history=bh;
+  for(const k of oldHist){
+    try{
+      const d=localStorage.getItem(k);
+      if(!d)continue;
+      const p=JSON.parse(d);
+      for(const h of p){
+        if(!history.find(x=>x.date===h.date)){history.push(h);changed=true;}
+      }
+    }catch(_){}
+  }
+  if(changed){
+    history.sort((a,b)=>b.date.localeCompare(a.date));
+    save();saveH();
   }
 }
 
@@ -553,8 +572,8 @@ function load(){
   loadDay(todayStr());
   if(items.length>0)document.getElementById('recover-btn').style.display='none';
 }
-function save(){try{localStorage.setItem('wd10',JSON.stringify(items));}catch(_){}}
-function saveH(){try{localStorage.setItem('wd10-hist',JSON.stringify(history));}catch(_){}}
+function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(items));}catch(_){}}
+function saveH(){try{localStorage.setItem(STORE_HIST,JSON.stringify(history));}catch(_){}}
 function loadDay(date){
   const r=history.find(h=>h.date===date);
   outfit=r?JSON.parse(JSON.stringify(r.outfit_items||[])):[];
